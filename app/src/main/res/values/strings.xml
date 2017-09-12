@@ -3,4 +3,5 @@
     <string name="hello">hello araba app!!!!</string>
     <string name="loginpage">loginpage</string>
     <string name="fbtext">login with facebook</string>
+    <string name="emailtext">login with email</string>
 </resources>

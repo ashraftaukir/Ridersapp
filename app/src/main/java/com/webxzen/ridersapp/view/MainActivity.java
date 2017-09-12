@@ -7,6 +7,7 @@ import android.os.Bundle;
 
 import com.webxzen.ridersapp.R;
 import com.webxzen.ridersapp.view.fragment.HomeScreenFragment;
+import com.webxzen.ridersapp.view.fragment.LoginFragment;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -17,9 +18,13 @@ public class MainActivity extends AppCompatActivity {
         //our project is starting
 
 
-        Fragment homescreen = new HomeScreenFragment();
+//        Fragment homescreen = new HomeScreenFragment();
+//        FragmentTransaction ft = getFragmentManager().beginTransaction();
+//        ft.add(R.id.fragment_container, homescreen).commit();
+
+        Fragment loginfragment = new LoginFragment();
         FragmentTransaction ft = getFragmentManager().beginTransaction();
-        ft.add(R.id.fragment_container, homescreen).commit();
+        ft.add(R.id.fragment_container, loginfragment).commit();
 
     }
 }

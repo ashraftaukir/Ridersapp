@@ -4,36 +4,49 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:contentDescription="@string/loginpage"
-            android:src="@color/colorBlack" />
-
-
-<RelativeLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:gravity="center_horizontal"
-    >
-
-    <Button
-        android:id="@+id/loginwithfb"
+    <ImageView
         android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:contentDescription="@string/loginpage"
+        android:src="@color/colorBlack" />
+
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/fbbutton"
-        android:gravity="center"
-        android:layout_marginLeft="40dp"
-        android:layout_marginRight="40dp"
-        android:text="@string/fbtext"
-        android:textColor="@color/colorWhite"
 
-        />
-</RelativeLayout>
+        >
 
+        <Button
+            android:id="@+id/loginwithfb"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp"
+            android:layout_marginTop="250dp"
+            android:background="@drawable/fbbutton"
+            android:gravity="center"
+            android:text="@string/fbtext"
+            android:textColor="@color/colorWhite"
 
+            />
 
+        <Button
+            android:id="@+id/loginwithemail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/loginwithfb"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/emailbutton"
+            android:gravity="center"
+            android:text="@string/emailtext"
+            android:textColor="@color/colorWhite"
 
+            />
+
+    </RelativeLayout>
 
 
 </RelativeLayout>
