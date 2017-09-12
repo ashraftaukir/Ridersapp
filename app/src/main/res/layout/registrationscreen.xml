@@ -5,79 +5,85 @@
     android:orientation="vertical"
     android:background="@color/colorBlack"
     >
-    <EditText
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/margin"
-        android:layout_marginRight="@dimen/margin"
-        android:background="@drawable/customedittext"
-        android:inputType="text"
-        android:padding="@dimen/margin10dp"
-        android:hint="@string/fullnamehint"
-        android:textSize="@dimen/registertextsize"
-        android:layout_above="@+id/emailet"
-        android:layout_marginBottom="@dimen/forgotpasswordtextsize"
+        android:layout_height="match_parent">
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/margin"
+            android:layout_marginRight="@dimen/margin"
+            android:background="@drawable/customedittext"
+            android:inputType="text"
+            android:padding="@dimen/margin10dp"
+            android:hint="@string/fullnamehint"
+            android:textSize="@dimen/registertextsize"
+            android:layout_above="@+id/emailet"
+            android:layout_marginBottom="@dimen/forgotpasswordtextsize"
 
-        />
-    <EditText
-        android:id="@+id/emailet"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:layout_marginLeft="@dimen/margin"
-        android:layout_marginRight="@dimen/margin"
-        android:background="@drawable/customedittext"
-        android:inputType="textEmailAddress"
-        android:padding="@dimen/margin10dp"
-        android:hint="@string/email"
-        android:textSize="@dimen/registertextsize" />
+            />
+        <EditText
+            android:id="@+id/emailet"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="@dimen/margin"
+            android:layout_marginRight="@dimen/margin"
+            android:background="@drawable/customedittext"
+            android:inputType="textEmailAddress"
+            android:padding="@dimen/margin10dp"
+            android:hint="@string/email"
+            android:textSize="@dimen/registertextsize" />
 
 
-    <EditText
-        android:id="@+id/phoneet"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/emailet"
-        android:layout_marginTop="@dimen/forgotpasswordtextsize"
-        android:hint="@string/phonehint"
-        android:inputType="phone"
-        android:layout_marginLeft="@dimen/margin"
-        android:layout_marginRight="@dimen/margin"
-        android:textSize="@dimen/registertextsize"
-        android:background="@drawable/customedittext"
-        android:padding="@dimen/margin10dp"
+        <EditText
+            android:id="@+id/phoneet"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/emailet"
+            android:layout_marginTop="@dimen/forgotpasswordtextsize"
+            android:hint="@string/phonehint"
+            android:inputType="phone"
+            android:layout_marginLeft="@dimen/margin"
+            android:layout_marginRight="@dimen/margin"
+            android:textSize="@dimen/registertextsize"
+            android:background="@drawable/customedittext"
+            android:padding="@dimen/margin10dp"
 
-        />
+            />
 
-    <EditText
-        android:id="@+id/passwordet"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/phoneet"
-        android:layout_marginTop="@dimen/forgotpasswordtextsize"
-        android:hint="@string/passwordhint"
-        android:inputType="textPassword"
-        android:layout_marginLeft="@dimen/margin"
-        android:layout_marginRight="@dimen/margin"
-        android:textSize="@dimen/registertextsize"
-        android:background="@drawable/customedittext"
-        android:padding="@dimen/margin10dp"
+        <EditText
+            android:id="@+id/passwordet"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/phoneet"
+            android:layout_marginTop="@dimen/forgotpasswordtextsize"
+            android:hint="@string/passwordhint"
+            android:inputType="textPassword"
+            android:layout_marginLeft="@dimen/margin"
+            android:layout_marginRight="@dimen/margin"
+            android:textSize="@dimen/registertextsize"
+            android:background="@drawable/customedittext"
+            android:padding="@dimen/margin10dp"
 
-        />
+            />
 
-    <Button
-        android:id="@+id/signup"
-        android:layout_below="@+id/passwordet"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/margin"
-        android:layout_marginRight="@dimen/margin"
-        android:background="@drawable/customloginbutton"
-        android:text="@string/signup"
-        android:textColor="@color/colorWhite"
-        android:textSize="@dimen/margin"
-        android:layout_marginTop="@dimen/margin"
-        />
+        <Button
+            android:id="@+id/signup"
+            android:layout_below="@+id/passwordet"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/margin"
+            android:layout_marginRight="@dimen/margin"
+            android:background="@drawable/customloginbutton"
+            android:text="@string/signup"
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/margin"
+            android:layout_marginTop="@dimen/margin"
+            />
 
+
+
+    </RelativeLayout>
 
 </RelativeLayout>
