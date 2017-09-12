@@ -1,13 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorBlack"
+    android:orientation="vertical">
 
-    >
-<TextView
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:text="abc"
 
-    />
-</LinearLayout>
+
+
+    <EditText
+        android:id="@+id/emailet"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_marginLeft="@dimen/margin"
+        android:layout_marginRight="@dimen/margin"
+        android:background="@drawable/customedittext"
+        android:inputType="textEmailAddress"
+        android:padding="@dimen/margin10dp"
+        android:textSize="@dimen/registertextsize" />
+
+    <EditText
+        android:id="@+id/passwordet"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/emailet"
+        android:layout_centerInParent="true"
+        android:layout_marginLeft="@dimen/margin"
+        android:layout_marginRight="@dimen/margin"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/customedittext"
+        android:inputType="textPassword"
+        android:padding="@dimen/margin10dp"
+        android:textSize="@dimen/registertextsize" />
+
+    <Button
+        android:id="@+id/loginbtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/passwordet"
+        android:layout_marginLeft="@dimen/margin"
+        android:layout_marginRight="@dimen/margin"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/customloginbutton"
+        android:text="@string/login"
+        android:textColor="@color/colorWhite"
+        android:textSize="@dimen/registertextsize" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/loginbtn"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="@dimen/margin"
+        android:text="@string/forgotpassword"
+        android:textColor="@color/colorfiroza"
+        android:textSize="@dimen/forgotpasswordtextsize"
+
+
+        />
+
+</RelativeLayout>

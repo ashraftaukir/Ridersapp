@@ -51,7 +51,8 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
 
         switch (v.getId()) {
             case R.id.loginwithemail:
-                getFragmentManager().beginTransaction().replace(R.id.fragment_container, new LoginwithemailFragment()).commit();
+
+                gotologinwithEmail();
 
                 break;
             case R.id.loginwithfb:
@@ -66,5 +67,10 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
             default:
                 break;
         }
+    }
+
+    private void gotologinwithEmail() {
+        getFragmentManager().beginTransaction().replace(R.id.fragment_container, new LoginwithemailFragment()).commit();
+
     }
 }
