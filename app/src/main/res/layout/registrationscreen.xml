@@ -17,6 +17,7 @@
         android:textSize="@dimen/registertextsize"
         android:layout_above="@+id/emailet"
         android:layout_marginBottom="@dimen/forgotpasswordtextsize"
+
         />
     <EditText
         android:id="@+id/emailet"
