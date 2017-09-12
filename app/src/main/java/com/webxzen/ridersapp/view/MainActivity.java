@@ -6,7 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.webxzen.ridersapp.R;
-import com.webxzen.ridersapp.view.fragment.HomeScreen;
+import com.webxzen.ridersapp.view.fragment.HomeScreenFragment;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -17,9 +17,8 @@ public class MainActivity extends AppCompatActivity {
         //our project is starting
 
 
-      //  getSupportFragmentManager().beginTransaction().add(R.id.fragment_container,new HomeScreen()).commit();
-        Fragment homescreen = new HomeScreen();
-       FragmentTransaction ft = getFragmentManager().beginTransaction();
+        Fragment homescreen = new HomeScreenFragment();
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
         ft.add(R.id.fragment_container, homescreen).commit();
 
     }

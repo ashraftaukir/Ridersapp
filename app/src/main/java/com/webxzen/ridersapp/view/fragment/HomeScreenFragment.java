@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import com.webxzen.ridersapp.R;
 
 
-public class HomeScreen extends Fragment{
+public class HomeScreenFragment extends Fragment{
 
    View view;
     @Nullable
