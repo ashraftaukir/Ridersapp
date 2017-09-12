@@ -3,7 +3,6 @@ package com.webxzen.ridersapp.view.fragment;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,7 +11,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.webxzen.ridersapp.R;
-import com.webxzen.ridersapp.view.MainActivity;
 
 
 public class LoginFragment extends Fragment implements View.OnClickListener {

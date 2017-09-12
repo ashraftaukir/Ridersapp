@@ -1,4 +1,4 @@
-package com.webxzen.ridersapp.view;
+package com.webxzen.ridersapp.view.activitypkg;
 
 import android.app.Fragment;
 import android.app.FragmentTransaction;
@@ -15,16 +15,14 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        //our project is starting
+        fragmenttransition();
 
+    }
 
-//        Fragment homescreen = new HomeScreenFragment();
-//        FragmentTransaction ft = getFragmentManager().beginTransaction();
-//        ft.add(R.id.fragment_container, homescreen).commit();
-
+    private void fragmenttransition() {
         Fragment loginfragment = new LoginFragment();
-        FragmentTransaction ft = getFragmentManager().beginTransaction();
-        ft.add(R.id.fragment_container, loginfragment).commit();
+        FragmentTransaction fragmenttransition = getFragmentManager().beginTransaction();
+        fragmenttransition.add(R.id.fragment_container, loginfragment).commit();
 
     }
 }
