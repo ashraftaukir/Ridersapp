@@ -12,18 +12,17 @@
 
 
     <RelativeLayout
+        android:id="@+id/loginpagerelativelayout"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-
-        >
+        android:layout_height="wrap_content">
 
         <Button
             android:id="@+id/loginwithfb"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="40dp"
-            android:layout_marginRight="40dp"
-            android:layout_marginTop="250dp"
+            android:layout_marginLeft="@dimen/marginleft"
+            android:layout_marginRight="@dimen/marginleft"
+            android:layout_marginTop="@dimen/margintop"
             android:background="@drawable/fbbutton"
             android:gravity="center"
             android:text="@string/fbtext"
@@ -36,15 +35,27 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/loginwithfb"
-            android:layout_marginLeft="40dp"
-            android:layout_marginRight="40dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginLeft="@dimen/marginleft"
+            android:layout_marginRight="@dimen/marginleft"
+            android:layout_marginTop="@dimen/registertextsize"
             android:background="@drawable/emailbutton"
             android:gravity="center"
             android:text="@string/emailtext"
             android:textColor="@color/colorWhite"
 
             />
+
+        <TextView
+            android:id="@+id/register"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/loginwithemail"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/alligntop"
+            android:text="@string/registrationmessage"
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/registertextsize" />
+
 
     </RelativeLayout>
 
