@@ -44,10 +44,8 @@ public class RegistrationFragment extends Fragment implements View.OnClickListen
 
         switch (v.getId()) {
             case R.id.signup:
-                Log.d("on", "on");
                 gotologinPage();
                 break;
-
 
             default:
                 break;
@@ -56,7 +54,7 @@ public class RegistrationFragment extends Fragment implements View.OnClickListen
     }
 
     private void gotologinPage() {
-        getFragmentManager().beginTransaction().replace(R.id.fragment_container, new LoginFragment()).commit();
+        getFragmentManager().beginTransaction().replace(R.id.fragment_container, new LoginwithemailFragment()).commit();
 
 
     }

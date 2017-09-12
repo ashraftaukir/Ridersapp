@@ -20,9 +20,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void fragmenttransition() {
-        Fragment loginfragment = new LoginFragment();
-        FragmentTransaction fragmenttransition = getFragmentManager().beginTransaction();
-        fragmenttransition.add(R.id.fragment_container, loginfragment).commit();
+
+        getFragmentManager().beginTransaction().replace(R.id.fragment_container, new LoginFragment()).commit();
 
     }
 }
