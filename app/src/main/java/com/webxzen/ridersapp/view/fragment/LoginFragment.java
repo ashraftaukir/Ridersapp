@@ -34,6 +34,8 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
 
     private void listeners() {
         loginwitheamilbtn.setOnClickListener(this);
+        loginwithfbbtn.setOnClickListener(this);
+        registrationtv.setOnClickListener(this);
     }
 
     private void initialization() {
@@ -49,11 +51,18 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
 
         switch (v.getId()) {
             case R.id.loginwithemail:
+                getFragmentManager().beginTransaction().replace(R.id.fragment_container, new LoginwithemailFragment()).commit();
 
-                Toast.makeText(getContext(), "hello", Toast.LENGTH_SHORT).show();
-              //  Log.d("abcd","abcd");
+                break;
+            case R.id.loginwithfb:
+                Toast.makeText(getContext(), "comming soon", Toast.LENGTH_SHORT).show();
                 break;
 
+
+            case R.id.register:
+
+                Toast.makeText(getContext(), "comming soon", Toast.LENGTH_SHORT).show();
+                break;
             default:
                 break;
         }
