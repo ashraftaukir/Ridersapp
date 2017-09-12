@@ -49,25 +49,28 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
 
         switch (v.getId()) {
             case R.id.loginwithemail:
-
-                gotologinwithEmail();
-
+                gotologinwithEmailPage();
                 break;
+
             case R.id.loginwithfb:
                 Toast.makeText(getContext(), "comming soon", Toast.LENGTH_SHORT).show();
                 break;
 
-
             case R.id.register:
-
-                Toast.makeText(getContext(), "comming soon", Toast.LENGTH_SHORT).show();
+                gotoregisterPage();
                 break;
+
             default:
                 break;
         }
     }
 
-    private void gotologinwithEmail() {
+    private void gotoregisterPage() {
+        getFragmentManager().beginTransaction().replace(R.id.fragment_container, new RegistrationFragment()).commit();
+
+    }
+
+    private void gotologinwithEmailPage() {
         getFragmentManager().beginTransaction().replace(R.id.fragment_container, new LoginwithemailFragment()).commit();
 
     }

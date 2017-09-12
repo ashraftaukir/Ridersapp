@@ -19,6 +19,7 @@
         android:background="@drawable/customedittext"
         android:inputType="textEmailAddress"
         android:padding="@dimen/margin10dp"
+        android:hint="@string/emailhit"
         android:textSize="@dimen/registertextsize" />
 
     <EditText
@@ -33,6 +34,7 @@
         android:background="@drawable/customedittext"
         android:inputType="textPassword"
         android:padding="@dimen/margin10dp"
+        android:hint="@string/passwordhint"
         android:textSize="@dimen/registertextsize" />
 
     <Button

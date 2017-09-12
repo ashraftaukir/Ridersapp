@@ -7,4 +7,10 @@
     <string name="registrationmessage">Register here</string>
     <string name="login">LOGIN</string>
     <string name="forgotpassword">FORGOT PASSWORD</string>
+    <string name="emailhit">email or phone</string>
+    <string name="fullnamehint">full name</string>
+    <string name="passwordhint">password</string>
+    <string name="email">email</string>
+    <string name="phonehint">phone</string>
+    <string name="signup">SIGN UP</string>
 </resources>
