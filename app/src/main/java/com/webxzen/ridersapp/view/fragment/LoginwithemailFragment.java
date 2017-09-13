@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.webxzen.ridersapp.R;
@@ -16,7 +17,7 @@ public class LoginwithemailFragment extends Fragment implements View.OnClickList
 
     View view;
     TextView forgotpass;
-
+Button applogin;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
@@ -30,9 +31,11 @@ public class LoginwithemailFragment extends Fragment implements View.OnClickList
     private void initializeListener() {
 
         forgotpass.setOnClickListener(this);
+        applogin.setOnClickListener(this);
     }
 
     private void initialization() {
+        applogin = (Button) view.findViewById(R.id.apploginbtn);
         forgotpass = (TextView) view.findViewById(R.id.forgotpassword);
 
     }
@@ -43,10 +46,17 @@ public class LoginwithemailFragment extends Fragment implements View.OnClickList
             case R.id.forgotpassword:
                 gotoforgotpasswordPage();
                 break;
+            case R.id.apploginbtn:
+                gotohomePage();
 
             default:
                 break;
         }
+    }
+
+    private void gotohomePage() {
+        getFragmentManager().beginTransaction().replace(R.id.fragment_container, new HomeScreenFragment()).commit();
+
     }
 
     private void gotoforgotpasswordPage() {
