@@ -49,6 +49,8 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
             @Override
             public void onSuccess(LoginResult loginResult) {
                 showinfo.setText("success");
+
+
             }
 
             @Override
