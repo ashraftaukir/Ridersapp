@@ -22,9 +22,8 @@ public class LoginwithemailFragment extends Fragment implements View.OnClickList
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
 
         view = inflater.inflate(R.layout.loginwithemail, container, false);
-        initViews();
+        initialization();
         initializeListener();
-
         return view;
     }
 
@@ -33,7 +32,7 @@ public class LoginwithemailFragment extends Fragment implements View.OnClickList
         forgotpass.setOnClickListener(this);
     }
 
-    private void initViews() {
+    private void initialization() {
         forgotpass = (TextView) view.findViewById(R.id.forgotpassword);
 
     }

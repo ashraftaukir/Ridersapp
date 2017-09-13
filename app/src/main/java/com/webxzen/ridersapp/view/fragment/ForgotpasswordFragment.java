@@ -9,9 +9,7 @@ import android.view.ViewGroup;
 
 import com.webxzen.ridersapp.R;
 
-/**
- * Created by hello on 9/12/17.
- */
+
 
 public class ForgotpasswordFragment extends Fragment {
 

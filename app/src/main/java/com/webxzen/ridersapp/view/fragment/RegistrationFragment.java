@@ -25,11 +25,11 @@ public class RegistrationFragment extends Fragment implements View.OnClickListen
 
         view = inflater.inflate(R.layout.registrationscreen, container, false);
         initialization();
-        initializeListener();
+        initiaLizeListener();
         return view;
     }
 
-    private void initializeListener() {
+    private void initiaLizeListener() {
     signupbtn.setOnClickListener(this);
 
     }
