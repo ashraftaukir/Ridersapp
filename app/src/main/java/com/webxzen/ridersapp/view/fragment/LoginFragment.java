@@ -81,6 +81,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
     private void initialization() {
         fakefbloginbtn = (LoginButton) view.findViewById(R.id.fakefbloginbtn);
         fakefbloginbtn.setFragment(this);
+        fakefbloginbtn.setVisibility(View.GONE);
         loginwitheamilbtn = (Button) view.findViewById(R.id.loginwithemail);
         loginwithfbbtn = (Button) view.findViewById(R.id.loginwithfb);
         registrationtv = (TextView) view.findViewById(R.id.register);

@@ -54,7 +54,7 @@
         android:id="@+id/forgotpassword"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/loginbtn"
+        android:layout_below="@+id/apploginbtn"
         android:layout_centerInParent="true"
         android:layout_marginTop="@dimen/margin"
         android:text="@string/forgotpassword"

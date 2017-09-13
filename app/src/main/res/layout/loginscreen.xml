@@ -31,7 +31,7 @@
             android:layout_marginLeft="@dimen/marginleft"
             android:layout_marginRight="@dimen/marginleft"
             android:layout_marginTop="@dimen/margintop"
-            android:visibility="gone"
+
             />
 
         <Button
