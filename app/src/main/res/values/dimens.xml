@@ -7,4 +7,5 @@
     <dimen name="forgotpasswordtextsize">15sp</dimen>
     <dimen name="margin">20dp</dimen>
     <dimen name="margin10dp">10dp</dimen>
+    <dimen name="margin15dp">15dp</dimen>
 </resources>

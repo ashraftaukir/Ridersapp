@@ -13,5 +13,6 @@
     <string name="email">email</string>
     <string name="phonehint">phone</string>
     <string name="signup">SIGN UP</string>
+    <string name="send">Send</string>
     <string name="facebook_app_id">1336474566461130</string>
 </resources>
