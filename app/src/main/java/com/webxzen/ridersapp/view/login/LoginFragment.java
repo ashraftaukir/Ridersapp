@@ -1,4 +1,4 @@
-package com.webxzen.ridersapp.view.fragment;
+package com.webxzen.ridersapp.view.login;
 
 import android.app.Fragment;
 import android.content.Intent;
@@ -9,7 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
@@ -18,6 +17,7 @@ import com.facebook.FacebookSdk;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.webxzen.ridersapp.R;
+import com.webxzen.ridersapp.view.home.HomeScreenActivity;
 
 
 public class LoginFragment extends Fragment implements View.OnClickListener {
@@ -49,10 +49,11 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
             @Override
             public void onSuccess(LoginResult loginResult) {
 
-                getFragmentManager().beginTransaction().replace(R.id.fragment_container, new HomeScreenFragment()).commit();
+                // getFragmentManager().beginTransaction().replace(R.id.fragment_container, new HomeScreenActivity()).commit();
 
                 //  testtv.setText(loginResult.getAccessToken().getToken());
-
+                Intent i = new Intent(getActivity(), HomeScreenActivity.class);
+                startActivity(i);
 
             }
 
@@ -88,7 +89,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
         loginwitheamilbtn = (Button) view.findViewById(R.id.loginwithemail);
         loginwithfbbtn = (Button) view.findViewById(R.id.loginwithfb);
         registrationtv = (TextView) view.findViewById(R.id.register);
-       // testtv = (TextView) view.findViewById(R.id.testtv);
+        // testtv = (TextView) view.findViewById(R.id.testtv);
 
     }
 
