@@ -34,6 +34,17 @@
 
             />
 
+        <!--<TextView-->
+            <!--android:id="@+id/testtv"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_margin="@dimen/margin"-->
+            <!--android:textSize="18sp"-->
+            <!--android:textColor="@color/colorWhite"-->
+
+            <!--/>-->
+
+
         <Button
             android:id="@+id/loginwithfb"
             android:layout_width="match_parent"

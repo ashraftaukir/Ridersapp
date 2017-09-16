@@ -24,7 +24,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
 
 
     Button loginwithfbbtn, loginwitheamilbtn;
-    TextView registrationtv;
+    TextView registrationtv, testtv;
     LoginButton fakefbloginbtn;
     CallbackManager callbackManager;
 
@@ -51,6 +51,9 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
 
                 getFragmentManager().beginTransaction().replace(R.id.fragment_container, new HomeScreenFragment()).commit();
 
+                //  testtv.setText(loginResult.getAccessToken().getToken());
+
+
             }
 
             @Override
@@ -74,7 +77,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
 
     private void listeners() {
         loginwitheamilbtn.setOnClickListener(this);
-       loginwithfbbtn.setOnClickListener(this);
+        loginwithfbbtn.setOnClickListener(this);
         registrationtv.setOnClickListener(this);
     }
 
@@ -85,6 +88,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
         loginwitheamilbtn = (Button) view.findViewById(R.id.loginwithemail);
         loginwithfbbtn = (Button) view.findViewById(R.id.loginwithfb);
         registrationtv = (TextView) view.findViewById(R.id.register);
+       // testtv = (TextView) view.findViewById(R.id.testtv);
 
     }
 
