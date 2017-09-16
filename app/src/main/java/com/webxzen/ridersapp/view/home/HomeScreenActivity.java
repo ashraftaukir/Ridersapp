@@ -30,16 +30,18 @@ public class HomeScreenActivity extends AppCompatActivity implements OnMapReadyC
         //Remove title bar
         //this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         //Remove notification bar
-        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+       // this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.homescreenactivity);
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
+        Bottomsheet bottomSheetDialogFragment = new Bottomsheet();
+        bottomSheetDialogFragment.show(getSupportFragmentManager(), bottomSheetDialogFragment.getTag());
+      //  BottomSheetLayout bottomSheet = (BottomSheetLayout) findViewById(R.id.bottomsheet);
+       // bottomSheet.showWithSheetView(LayoutInflater.from(getBaseContext()).inflate(R.layout.my_sheet_layout, bottomSheet, false));
 
-        BottomSheetLayout bottomSheet = (BottomSheetLayout) findViewById(R.id.bottomsheet);
-        bottomSheet.showWithSheetView(LayoutInflater.from(getBaseContext()).inflate(R.layout.my_sheet_layout, bottomSheet, false));
     }
 
 
