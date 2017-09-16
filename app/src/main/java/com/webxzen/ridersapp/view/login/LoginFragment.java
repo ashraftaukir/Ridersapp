@@ -14,18 +14,20 @@ import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
+import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.webxzen.ridersapp.R;
 import com.webxzen.ridersapp.view.home.HomeScreenActivity;
+
+import java.util.Arrays;
 
 
 public class LoginFragment extends Fragment implements View.OnClickListener {
 
 
     Button loginwithfbbtn, loginwitheamilbtn;
-    TextView registrationtv, testtv;
-    LoginButton fakefbloginbtn;
+    TextView registrationtv;
     CallbackManager callbackManager;
 
 
@@ -45,7 +47,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
     private void fbloginprocess() {
 
         callbackManager = CallbackManager.Factory.create();
-        fakefbloginbtn.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+        LoginManager.getInstance().registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
 
@@ -83,9 +85,6 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
     }
 
     private void initialization() {
-        fakefbloginbtn = (LoginButton) view.findViewById(R.id.fakefbloginbtn);
-        fakefbloginbtn.setFragment(this);
-        fakefbloginbtn.setVisibility(View.GONE);
         loginwitheamilbtn = (Button) view.findViewById(R.id.loginwithemail);
         loginwithfbbtn = (Button) view.findViewById(R.id.loginwithfb);
         registrationtv = (TextView) view.findViewById(R.id.register);
@@ -102,7 +101,9 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
                 break;
 
             case R.id.loginwithfb:
-                fakefbloginbtn.performClick();
+               // fakefbloginbtn.performClick();
+                LoginManager.getInstance().logInWithReadPermissions(getActivity(), Arrays.asList("public_profile"));
+
                 break;
 
             case R.id.register:

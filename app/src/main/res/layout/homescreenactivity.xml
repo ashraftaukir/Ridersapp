@@ -12,5 +12,23 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context="com.webxzen.ridersapp.view.home.HomeScreenActivity" />
+    <com.flipboard.bottomsheet.BottomSheetLayout
+        android:id="@+id/bottomsheet"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
+        <LinearLayout
+            android:id="@+id/root"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <View
+                android:id="@+id/view1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+
+        </LinearLayout>
+
+    </com.flipboard.bottomsheet.BottomSheetLayout>
 </LinearLayout>
