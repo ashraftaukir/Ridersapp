@@ -7,6 +7,52 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
+    <style name="AppThemesecond" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorBlack</item>
+        <item name="colorPrimaryDark">@color/colorBlack</item>
+        <item name="colorAccent">@color/colorBlack</item>
+        <item name="android:editTextStyle">@style/App_EditTextStyle</item>
+    </style>
+    <style name="App_ButtonStyle" parent="@android:style/Widget.Button">
+
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginLeft">@dimen/margin</item>
+        <item name="android:layout_marginRight">@dimen/margin</item>
+        <item name="android:background">@drawable/customloginbutton</item>
+        <item name="android:textColor">@color/colorWhite</item>
+        <item name="android:textSize">@dimen/forgotpasswordtextsize</item>
+
+    </style>
+
+    <style name="App_EditTextStyle" parent="@android:style/Widget.EditText">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_marginLeft">@dimen/margin</item>
+        <item name="android:layout_marginRight">@dimen/margin</item>
+        <item name="android:padding">@dimen/margin15dp</item>
+        <item name="android:textSize">@dimen/forgotpasswordtextsize</item>
+        <item name="android:textColor">@color/colorWhite</item>
+
+    </style>
+    <style name="TextLabel" parent="TextAppearance.AppCompat">
+        <!-- Hint color and label color in FALSE state -->
+
+
+
+        <item name="android:textColorHint">@color/colorWhite</item>
+        <item name="android:textSize">20sp</item>
+        <!-- Label color in TRUE state and bar color FALSE and TRUE State -->
+        <item name="colorAccent">@color/colorWhite</item>
+        <item name="colorControlNormal">@color/colorWhite</item>
+        <item name="colorControlActivated">@color/colorWhite</item>
+    </style>
+
+    <style name="Active" parent="TextAppearance.AppCompat">
+        <item name="android:textColorPrimary">@color/colorBlack</item>
+        <item name="android:textColor">@color/colorRed</item>
+    </style>
 
 
     <!--<style name="FacebookLoginButton">-->

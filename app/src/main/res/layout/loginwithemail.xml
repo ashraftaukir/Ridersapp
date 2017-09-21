@@ -9,46 +9,49 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <EditText
+    <android.support.design.widget.TextInputLayout
         android:id="@+id/emailet"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:layout_marginLeft="@dimen/margin"
-        android:layout_marginRight="@dimen/margin"
-        android:background="@drawable/customedittext"
-        android:inputType="textEmailAddress"
-        android:padding="@dimen/margin10dp"
-        android:hint="@string/emailhit"
-        android:textSize="@dimen/registertextsize" />
+        android:theme="@style/TextLabel">
 
-    <EditText
+
+        <EditText
+            android:id="@+id/emailedittext"
+            style="@style/App_EditTextStyle"
+            android:hint="@string/emailhit"
+            android:inputType="textEmailAddress"
+
+            />
+
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
         android:id="@+id/passwordet"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/emailet"
-        android:layout_centerInParent="true"
-        android:layout_marginLeft="@dimen/margin"
-        android:layout_marginRight="@dimen/margin"
-        android:layout_marginTop="20dp"
-        android:background="@drawable/customedittext"
-        android:inputType="textPassword"
-        android:padding="@dimen/margin10dp"
-        android:hint="@string/passwordhint"
-        android:textSize="@dimen/registertextsize" />
+        android:theme="@style/TextLabel">
+
+        <EditText
+            android:id="@+id/passwordedittext"
+            style="@style/App_EditTextStyle"
+            android:layout_marginTop="20dp"
+            android:hint="@string/passwordhint"
+            android:inputType="textPassword" />
+
+
+    </android.support.design.widget.TextInputLayout>
 
     <Button
         android:id="@+id/apploginbtn"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        style="@style/App_ButtonStyle"
         android:layout_below="@+id/passwordet"
-        android:layout_marginLeft="@dimen/margin"
-        android:layout_marginRight="@dimen/margin"
         android:layout_marginTop="20dp"
-        android:background="@drawable/customloginbutton"
         android:text="@string/login"
-        android:textColor="@color/colorWhite"
-        android:textSize="@dimen/registertextsize" />
+
+        />
 
     <TextView
         android:id="@+id/forgotpassword"

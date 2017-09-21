@@ -39,6 +39,11 @@ public class HomeScreenActivity extends AppCompatActivity implements OnMapReadyC
 
         Bottomsheet bottomSheetDialogFragment = new Bottomsheet();
         bottomSheetDialogFragment.show(getSupportFragmentManager(), bottomSheetDialogFragment.getTag());
+
+
+
+
+
       //  BottomSheetLayout bottomSheet = (BottomSheetLayout) findViewById(R.id.bottomsheet);
        // bottomSheet.showWithSheetView(LayoutInflater.from(getBaseContext()).inflate(R.layout.my_sheet_layout, bottomSheet, false));
 

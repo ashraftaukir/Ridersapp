@@ -7,4 +7,6 @@
     <color name="colorWhite">#FFFFFF</color>
     <color name="colorfiroza">#00FFFF</color>
     <color name="colorash">#E0E0E0</color>
+    <color name="colorextraash">#C0C0C0</color>
+    <color name="colorRed">#FF0000</color>
 </resources>

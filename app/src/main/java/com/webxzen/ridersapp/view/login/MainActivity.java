@@ -18,32 +18,33 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         fragmentcontainer=(FrameLayout)findViewById(R.id.fragment_container);
-
         fragmenttransition();
 
     }
 
+
     private void fragmenttransition() {
 
-        getFragmentManager().beginTransaction().replace(R.id.fragment_container, new LoginFragment()).addToBackStack(null).commit();
+        getFragmentManager().beginTransaction().replace(R.id.fragment_container, new LoginFragment())/*.addToBackStack(null)*/.commit();
 
     }
-    @Override
-    public void onBackPressed() {
-        if(getFragmentManager().getBackStackEntryCount() == 0) {
-            super.onBackPressed();
-        }
-        else {
-            getFragmentManager().popBackStack();
-        }
-    }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        Fragment fragment = (LoginFragment)getFragmentManager().findFragmentById(fragmentcontainer.getId());
-        fragment.onActivityResult(requestCode, resultCode, data);
-
-
-    }
+//    @Override
+//    public void onBackPressed() {
+//        if (getFragmentManager().getBackStackEntryCount() == 0) {
+//            super.onBackPressed();
+//            //  finish();
+//        } else {
+//            getFragmentManager().popBackStack();
+//        }
+//    }
+//
+//    @Override
+//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+//        Fragment fragment = (LoginFragment) getFragmentManager().findFragmentById(fragmentcontainer.getId());
+//        fragment.onActivityResult(requestCode, resultCode, data);
+//
+//
+//    }
 }
