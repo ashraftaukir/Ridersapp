@@ -1,4 +1,4 @@
-package com.webxzen.ridersapp.view.login;
+package com.webxzen.ridersapp.login;
 
 import android.app.Fragment;
 import android.content.Intent;
@@ -11,7 +11,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.webxzen.ridersapp.R;
-import com.webxzen.ridersapp.view.home.HomeScreenActivity;
+import com.webxzen.ridersapp.home.HomeScreenActivity;
 
 
 public class LoginwithemailFragment extends Fragment implements View.OnClickListener {

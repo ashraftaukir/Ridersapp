@@ -1,14 +1,12 @@
-package com.webxzen.ridersapp.view.login;
+package com.webxzen.ridersapp.login;
 
-import android.app.Fragment;
-import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.FrameLayout;
 
 import com.webxzen.ridersapp.R;
 
-public class MainActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity {
 
 
 

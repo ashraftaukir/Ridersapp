@@ -1,4 +1,4 @@
-package com.webxzen.ridersapp.view.login;
+package com.webxzen.ridersapp.login;
 
 import android.app.Fragment;
 import android.content.Intent;
@@ -16,9 +16,8 @@ import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
-import com.facebook.login.widget.LoginButton;
 import com.webxzen.ridersapp.R;
-import com.webxzen.ridersapp.view.home.HomeScreenActivity;
+import com.webxzen.ridersapp.home.HomeScreenActivity;
 
 import java.util.Arrays;
 

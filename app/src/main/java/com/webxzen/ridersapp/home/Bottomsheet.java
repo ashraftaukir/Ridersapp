@@ -1,4 +1,4 @@
-package com.webxzen.ridersapp.view.home;
+package com.webxzen.ridersapp.home;
 
 import android.app.Dialog;
 import android.support.design.widget.BottomSheetDialogFragment;
