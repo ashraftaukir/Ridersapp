@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="api_server_url">http://api.araba.com/</string>
+    <string name="api_assets">http://cdn.araba.com/assets/</string>
+    <string name="files_server_url">file.araba.com/</string>
+    <string name="web_url">http://araba.com/pages/</string>
+
+    <!--<string name="facebook_app_id">1286798358090922</string>-->
+    <!--<string name="client_secret">363e0c3bc51bdc36ecc2edd9c9eab629</string>-->
+</resources>
