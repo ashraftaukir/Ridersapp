@@ -7,8 +7,10 @@ import android.os.Bundle;
 import android.widget.FrameLayout;
 
 import com.webxzen.ridersapp.R;
+import com.webxzen.ridersapp.view.shared.Appinfo;
+import com.webxzen.ridersapp.view.shared.BaseActivity;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity {
 
 
 
@@ -18,16 +20,13 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         fragmentcontainer=(FrameLayout)findViewById(R.id.fragment_container);
-        fragmenttransition();
+        addFragment(new LoginFragment(), Appinfo.LOGIN_FRAGMENT,fragmentcontainer.getId());
+
 
     }
 
 
-    private void fragmenttransition() {
 
-        getFragmentManager().beginTransaction().replace(R.id.fragment_container, new LoginFragment())/*.addToBackStack(null)*/.commit();
-
-    }
 
 //    @Override
 //    public void onBackPressed() {
@@ -39,12 +38,12 @@ public class MainActivity extends AppCompatActivity {
 //        }
 //    }
 //
-//    @Override
-//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        super.onActivityResult(requestCode, resultCode, data);
-//        Fragment fragment = (LoginFragment) getFragmentManager().findFragmentById(fragmentcontainer.getId());
-//        fragment.onActivityResult(requestCode, resultCode, data);
-//
-//
-//    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Fragment fragment = (LoginFragment) getFragmentManager().findFragmentById(fragmentcontainer.getId());
+        fragment.onActivityResult(requestCode, resultCode, data);
+
+
+    }
 }

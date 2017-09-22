@@ -12,14 +12,17 @@ import android.widget.TextView;
 
 import com.webxzen.ridersapp.R;
 import com.webxzen.ridersapp.view.home.HomeScreenActivity;
+import com.webxzen.ridersapp.view.shared.Appinfo;
+import com.webxzen.ridersapp.view.shared.BaseFragment;
 
 
-public class LoginwithemailFragment extends Fragment implements View.OnClickListener {
+public class LoginwithemailFragment extends BaseFragment implements View.OnClickListener {
 
 
     View view;
     TextView forgotpass;
-Button applogin;
+    Button applogin;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
@@ -46,7 +49,7 @@ Button applogin;
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.forgotpassword:
-                gotoforgotpasswordPage();
+                gotoForgotpasswordPage();
                 break;
             case R.id.apploginbtn:
                 gotohomePage();
@@ -57,15 +60,15 @@ Button applogin;
     }
 
     private void gotohomePage() {
-       // getFragmentManager().beginTransaction().replace(R.id.fragment_container, new HomeScreenActivity()).addToBackStack(null).commit();
 
-        Intent i=new Intent(getActivity(),HomeScreenActivity.class);
+        Intent i = new Intent(getActivity(), HomeScreenActivity.class);
         startActivity(i);
     }
 
-    private void gotoforgotpasswordPage() {
+    private void gotoForgotpasswordPage() {
 
-        getFragmentManager().beginTransaction().replace(R.id.fragment_container, new ForgotpasswordFragment()).commit();
+        replaceFragment(new ForgotpasswordFragment(),
+                Appinfo.FORGOTPASSWORD_FRAGMENT, Appinfo.LOGIN_WITH_EMAIL_FRAGMENT, R.id.fragment_container);
 
     }
 }

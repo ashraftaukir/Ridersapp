@@ -19,11 +19,13 @@ import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.webxzen.ridersapp.R;
 import com.webxzen.ridersapp.view.home.HomeScreenActivity;
+import com.webxzen.ridersapp.view.shared.Appinfo;
+import com.webxzen.ridersapp.view.shared.BaseFragment;
 
 import java.util.Arrays;
 
 
-public class LoginFragment extends Fragment implements View.OnClickListener {
+public class LoginFragment extends BaseFragment implements View.OnClickListener {
 
 
     Button loginwithfbbtn, loginwitheamilbtn;
@@ -97,17 +99,17 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
 
         switch (v.getId()) {
             case R.id.loginwithemail:
-                gotologinwithEmailPage();
+                gotoLoginwithEmailPage();
                 break;
 
             case R.id.loginwithfb:
-               // fakefbloginbtn.performClick();
+
                 LoginManager.getInstance().logInWithReadPermissions(getActivity(), Arrays.asList("public_profile"));
 
                 break;
 
             case R.id.register:
-                gotoregisterPage();
+                gotoRegisterPage();
                 break;
 
             default:
@@ -115,13 +117,15 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
         }
     }
 
-    private void gotoregisterPage() {
-        getFragmentManager().beginTransaction().replace(R.id.fragment_container, new RegistrationFragment()).commit();
+    private void gotoRegisterPage() {
+        replaceFragment(new RegistrationFragment(),
+                Appinfo.REGISTER_FRAGMENT, Appinfo.LOGIN_FRAGMENT, R.id.fragment_container);
 
     }
 
-    private void gotologinwithEmailPage() {
-        getFragmentManager().beginTransaction().replace(R.id.fragment_container, new LoginwithemailFragment()).commit();
+    private void gotoLoginwithEmailPage() {
+        replaceFragment(new RegistrationFragment(),
+                Appinfo.LOGIN_WITH_EMAIL_FRAGMENT, Appinfo.LOGIN_FRAGMENT, R.id.fragment_container);
 
     }
 }

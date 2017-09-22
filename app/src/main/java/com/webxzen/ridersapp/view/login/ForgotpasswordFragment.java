@@ -12,10 +12,10 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.webxzen.ridersapp.R;
+import com.webxzen.ridersapp.view.shared.BaseFragment;
 
 
-
-public class ForgotpasswordFragment extends Fragment implements View.OnClickListener{
+public class ForgotpasswordFragment extends BaseFragment implements View.OnClickListener{
 
     View view;
     EditText emailorphonenumber;

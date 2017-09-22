@@ -14,9 +14,10 @@ import android.widget.Toast;
 
 import com.webxzen.ridersapp.R;
 import com.webxzen.ridersapp.view.home.HomeScreenActivity;
+import com.webxzen.ridersapp.view.shared.BaseFragment;
 
 
-public class RegistrationFragment extends Fragment implements View.OnClickListener {
+public class RegistrationFragment extends BaseFragment implements View.OnClickListener {
 
     View view;
     Button signupbtn;
