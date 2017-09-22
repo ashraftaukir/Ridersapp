@@ -22,11 +22,5 @@ public class BaseActivity extends AppCompatActivity {
                 .commit();
     }
 
-//    protected void replaceFragment(Fragment fragment, String id, String oldId, int resId){
-//        getSupportFragmentManager()
-//                .beginTransaction()
-//                .replace(resId, fragment, id)
-//                .addToBackStack(oldId)
-//                .commit();
-//    }
+
 }
