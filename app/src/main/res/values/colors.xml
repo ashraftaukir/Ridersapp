@@ -9,4 +9,15 @@
     <color name="colorash">#E0E0E0</color>
     <color name="colorextraash">#C0C0C0</color>
     <color name="colorRed">#FF0000</color>
+    <color name="colorAccentDark">#7c1217</color>
+    <color name="colorGrayBackground">#ECEFF1</color>
+    <color name="colorDarkGray">#9E9E9E</color>
+    <color name="colorLinkedIn">#0077b5</color>
+    <color name="colorLightBlue">#00adee</color>
+    <color name="colorBlueDark">#2185d0</color>
+    <color name="colorOrange">#f8a41a</color>
+    <color name="colorTransparentBlack">#99000000</color>
+    <color name="colorTransparentBlackSemi">#40000000</color>
+    <color name="colorGrayText">#c6c6c7</color>
+    <color name="colorGreen">#008000</color>
 </resources>

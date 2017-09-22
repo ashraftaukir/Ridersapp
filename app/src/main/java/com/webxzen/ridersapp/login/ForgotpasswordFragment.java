@@ -1,4 +1,4 @@
-package com.webxzen.ridersapp.view.login;
+package com.webxzen.ridersapp.login;
 
 import android.app.Fragment;
 import android.os.Bundle;
