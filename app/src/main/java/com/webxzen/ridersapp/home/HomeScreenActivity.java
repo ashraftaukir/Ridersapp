@@ -2,8 +2,11 @@ package com.webxzen.ridersapp.home;
 
 import android.location.Location;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.widget.Toast;
+import android.support.design.widget.BottomSheetBehavior;
+import android.util.Log;
+import android.view.View;
 
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -32,28 +35,6 @@ public class HomeScreenActivity extends BaseActivity implements OnMapReadyCallba
 
 
 
-
-    //    @Override
-//    public boolean onKeyDown(int keyCode, KeyEvent event)
-//    {
-//        if ((keyCode == KeyEvent.KEYCODE_BACK))
-//        {
-//            finish();
-//        }
-//        return super.onKeyDown(keyCode, event);
-//    }
-
-//    @Override
-//    public void onBackPressed() {
-//        if (getFragmentManager().getBackStackEntryCount() == 0) {
-//            super.onBackPressed();
-//            finish();
-//        } else {
-//            getFragmentManager().popBackStack();
-//        }
-//    }
-
-
     private void initialization() {
 
         mapinitialization();
@@ -62,10 +43,36 @@ public class HomeScreenActivity extends BaseActivity implements OnMapReadyCallba
 
     private void bottomsheetinitialization() {
 
-        Bottomsheet bottomSheetDialogFragment = new Bottomsheet();
-        bottomSheetDialogFragment.show(getSupportFragmentManager(), bottomSheetDialogFragment.getTag());
-        //  BottomSheetLayout bottomSheet = (BottomSheetLayout) findViewById(R.id.bottomsheet);
-        // bottomSheet.showWithSheetView(LayoutInflater.from(getBaseContext()).inflate(R.layout.my_sheet_layout, bottomSheet, false));
+
+        View bottomSheet = findViewById(R.id.design_bottom_sheet);
+        final BottomSheetBehavior behavior = BottomSheetBehavior.from(bottomSheet);
+        behavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
+            @Override
+            public void onStateChanged(@NonNull View bottomSheet, int newState) {
+                switch (newState) {
+                    case BottomSheetBehavior.STATE_DRAGGING:
+                        Log.i("BottomSheetCallback", "BottomSheetBehavior.STATE_DRAGGING");
+                        break;
+                    case BottomSheetBehavior.STATE_SETTLING:
+                        Log.i("BottomSheetCallback", "BottomSheetBehavior.STATE_SETTLING");
+                        break;
+                    case BottomSheetBehavior.STATE_EXPANDED:
+                        Log.i("BottomSheetCallback", "BottomSheetBehavior.STATE_EXPANDED");
+                        break;
+                    case BottomSheetBehavior.STATE_COLLAPSED:
+                        Log.i("BottomSheetCallback", "BottomSheetBehavior.STATE_COLLAPSED");
+                        break;
+                    case BottomSheetBehavior.STATE_HIDDEN:
+                        Log.i("BottomSheetCallback", "BottomSheetBehavior.STATE_HIDDEN");
+                        break;
+                }
+            }
+
+            @Override
+            public void onSlide(@NonNull View bottomSheet, float slideOffset) {
+                Log.i("BottomSheetCallback", "slideOffset: " + slideOffset);
+            }
+        });
 
     }
 
@@ -82,11 +89,9 @@ public class HomeScreenActivity extends BaseActivity implements OnMapReadyCallba
     public void onMapReady(GoogleMap googleMap) {
 
 
-        //  Toast.makeText(getApplicationContext(), "onmap", Toast.LENGTH_SHORT).show();
 
         LatLng sydney = new LatLng(-33.852, 151.211);
         googleMap.addMarker(new MarkerOptions().position(sydney)
-                //        .title("Marker in Sydney")
 
 
         );

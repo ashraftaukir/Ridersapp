@@ -59,9 +59,9 @@
             android:layout_below="@+id/loginwithemail"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="@dimen/alligntop"
-            android:text="@string/registrationmessage"
+            android:text="@string/register_now"
             android:textColor="@color/colorWhite"
-            android:textSize="@dimen/registertextsize" />
+            android:textSize="@dimen/forgotpasswordtextsize" />
 
 
     </RelativeLayout>

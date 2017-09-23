@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <shape xmlns:android="http://schemas.android.com/apk/res/android" >
     <stroke android:width="3dp"
-        android:color="#00CCCC" />
+        android:color="@color/colorfiroza" />
 
     <corners android:radius="5dp" />
 
     <gradient android:angle="270"
-        android:centerColor="#00CCCC"
-        android:endColor="#00CCCC"
-        android:startColor="#00CCCC"
+        android:centerColor="@color/colorfiroza"
+        android:endColor="@color/colorfiroza"
+        android:startColor="@color/colorfiroza"
 
         />
 </shape>
