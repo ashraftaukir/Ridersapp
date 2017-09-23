@@ -1,4 +1,4 @@
-package com.webxzen.ridersapp.view.home;
+package com.webxzen.ridersapp.home;
 
 import android.location.Location;
 import android.os.Bundle;
@@ -21,7 +21,7 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.webxzen.ridersapp.R;
-import com.webxzen.ridersapp.view.shared.BaseActivity;
+import com.webxzen.ridersapp.base.BaseActivity;
 
 
 public class HomeScreenActivity extends BaseActivity implements OnMapReadyCallback, LocationListener {

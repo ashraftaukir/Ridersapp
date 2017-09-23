@@ -1,4 +1,4 @@
-package com.webxzen.ridersapp.view.shared;
+package com.webxzen.ridersapp.util;
 
 
 public class Appinfo {

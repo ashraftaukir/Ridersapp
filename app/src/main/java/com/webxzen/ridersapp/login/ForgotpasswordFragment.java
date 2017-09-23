@@ -12,7 +12,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.webxzen.ridersapp.R;
-import com.webxzen.ridersapp.view.shared.BaseFragment;
+import com.webxzen.ridersapp.base.BaseFragment;
 
 
 public class ForgotpasswordFragment extends BaseFragment implements View.OnClickListener{
