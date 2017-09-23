@@ -2,17 +2,9 @@ package com.webxzen.ridersapp.home;
 
 import android.location.Location;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
-import android.view.KeyEvent;
-import android.view.LayoutInflater;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.Toast;
 
-import com.flipboard.bottomsheet.BottomSheetLayout;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -39,7 +31,9 @@ public class HomeScreenActivity extends BaseActivity implements OnMapReadyCallba
     }
 
 
-//    @Override
+
+
+    //    @Override
 //    public boolean onKeyDown(int keyCode, KeyEvent event)
 //    {
 //        if ((keyCode == KeyEvent.KEYCODE_BACK))

@@ -1,6 +1,5 @@
 package com.webxzen.ridersapp.login;
 
-import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -52,17 +51,20 @@ public class LoginWithEmailFragment extends BaseFragment implements View.OnClick
                 gotoForgotpasswordPage();
                 break;
             case R.id.apploginbtn:
-                gotohomePage();
+                gotoHomePage();
 
             default:
                 break;
         }
     }
 
-    private void gotohomePage() {
+    private void gotoHomePage() {
 
-        Intent i = new Intent(getActivity(), HomeScreenActivity.class);
-        startActivity(i);
+        Intent intent = new Intent(getActivity(), HomeScreenActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK); // clears all previous activities task
+        getActivity().finish();
+        startActivity(intent);
     }
 
     private void gotoForgotpasswordPage() {

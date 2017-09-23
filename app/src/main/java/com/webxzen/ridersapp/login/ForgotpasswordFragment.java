@@ -1,6 +1,5 @@
 package com.webxzen.ridersapp.login;
 
-import android.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputLayout;
