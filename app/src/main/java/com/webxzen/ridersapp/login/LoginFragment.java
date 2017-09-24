@@ -16,6 +16,8 @@ import com.facebook.FacebookSdk;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.webxzen.ridersapp.R;
+import com.webxzen.ridersapp.api.AuthAPI;
+import com.webxzen.ridersapp.api.RetrofitService;
 import com.webxzen.ridersapp.base.BaseFragment;
 import com.webxzen.ridersapp.home.HomeScreenActivity;
 import com.webxzen.ridersapp.util.Appinfo;
@@ -30,6 +32,9 @@ public class LoginFragment extends BaseFragment implements View.OnClickListener 
     TextView registrationtv;
     CallbackManager callbackManager;
 
+    public LoginFragment() {
+
+    }
 
     View view;
 
@@ -37,16 +42,23 @@ public class LoginFragment extends BaseFragment implements View.OnClickListener 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         FacebookSdk.sdkInitialize(getActivity().getApplicationContext());
+
+        callbackManager = CallbackManager.Factory.create();
+
         view = inflater.inflate(R.layout.loginscreen, container, false);
+
         initialization();
         listeners();
         fbloginprocess();
         return view;
     }
 
+
+
+
     private void fbloginprocess() {
 
-        callbackManager = CallbackManager.Factory.create();
+        //callbackManager = CallbackManager.Factory.create();
         LoginManager.getInstance().registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {

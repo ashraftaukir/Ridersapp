@@ -50,8 +50,10 @@ public class HomeScreenActivity extends BaseActivity implements OnMapReadyCallba
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
 
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
+
+//        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+//                WindowManager.LayoutParams.FLAG_FULLSCREEN);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.homescreenactivity);
         prepareAdevertisementModel();
@@ -108,7 +110,7 @@ public class HomeScreenActivity extends BaseActivity implements OnMapReadyCallba
         String[] mPlanetTitles = getResources().getStringArray(R.array.string_array_name);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerList = (ListView) findViewById(R.id.left_drawer);
-        //mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+
         // Set the adapter for the list view
         mDrawerList.setAdapter(new ArrayAdapter<String>(this,
                 R.layout.navdrawerlistitem, R.id.navitem_tv, mPlanetTitles));

@@ -12,7 +12,8 @@ import com.webxzen.ridersapp.R;
 
 public class HistoryFragment extends Fragment {
 
-View view;
+    View view;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

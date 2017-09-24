@@ -21,6 +21,10 @@ public class ForgotpasswordFragment extends BaseFragment implements View.OnClick
     Button sendbtn;
     TextInputLayout textInputLayoutemail;
 
+    public ForgotpasswordFragment() {
+
+
+    }
 
     @Nullable
     @Override
@@ -39,7 +43,6 @@ public class ForgotpasswordFragment extends BaseFragment implements View.OnClick
     }
 
     private void initialization() {
-
         emailorphonenumber = (EditText) view.findViewById(R.id.emailorphoneinfo);
         sendbtn = (Button) view.findViewById(R.id.sendbutton);
         textInputLayoutemail = (TextInputLayout) view.findViewById(R.id.emailorphoneet);
@@ -50,13 +53,10 @@ public class ForgotpasswordFragment extends BaseFragment implements View.OnClick
     private void gotoValidationProcess() {
         String emailorphone = emailorphonenumber.getText().toString();
         if (isValidEmail(emailorphone) || (emailorphone.length() == 11)) {
-
-            Toast.makeText(getActivity(), "Sending u message", Toast.LENGTH_SHORT).show();
-
+            Toast.makeText(getActivity(), "Sending you message", Toast.LENGTH_SHORT).show();
         } else {
             Toast.makeText(getActivity(), "Check your email or phonenumber", Toast.LENGTH_SHORT).show();
         }
-
     }
 
     public static boolean isValidEmail(CharSequence target) {
@@ -67,15 +67,15 @@ public class ForgotpasswordFragment extends BaseFragment implements View.OnClick
     @Override
     public void onClick(View view) {
         switch(view.getId()){
+
             case R.id.sendbutton:
                 gotoValidationProcess();
                 break;
 
             default:
                 break;
-
-
         }
     }
+
 
 }

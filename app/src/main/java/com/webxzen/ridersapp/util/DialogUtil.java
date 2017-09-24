@@ -12,9 +12,7 @@ import android.widget.LinearLayout;
 import com.webxzen.ridersapp.R;
 
 
-/**
- * Created by behestee on 9/22/17.
- */
+
 
 public class DialogUtil {
 
@@ -180,18 +178,7 @@ public class DialogUtil {
         dialog.show();
     }
 
-    /**
-     * Dialog with edittext and custom message with customisation and callback
-     * @param context
-     * @param title
-     * @param editTextHint
-     * @param value
-     * @param allCaps
-     * @param yesButton
-     * @param yesClickListener
-     * @param noButton
-     * @param noClickListener
-     */
+
     public void showDialogWithEditText(Context context, String title, String editTextHint,
                                        String value, boolean allCaps, String yesButton,
                                        DialogInterface.OnClickListener yesClickListener,

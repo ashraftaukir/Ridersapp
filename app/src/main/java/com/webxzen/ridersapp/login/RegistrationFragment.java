@@ -24,6 +24,10 @@ public class RegistrationFragment extends BaseFragment implements View.OnClickLi
     TextInputLayout textInputLayoutfullname, textInputLayoutemailaddress,
             textInputLayoutphonenumber, textInputLayoutpassword;
 
+    public RegistrationFragment() {
+
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
