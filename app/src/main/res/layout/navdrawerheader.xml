@@ -36,7 +36,7 @@
             android:layout_marginTop="20dp"
             android:text="Ashraf Taukir"
             android:textColor="@color/colorWhite"
-            android:textSize="@dimen/margin"
+            android:textSize="@dimen/forgotpasswordtextsize"
 
             />
 

@@ -15,6 +15,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
@@ -47,12 +49,10 @@ public class HomeScreenActivity extends BaseActivity implements OnMapReadyCallba
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        //Remove title bar
-        //this.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        //Remove notification bar
-        // this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        super.onCreate(savedInstanceState);
         setContentView(R.layout.homescreenactivity);
         prepareAdevertisementModel();
         initialization();
@@ -108,7 +108,7 @@ public class HomeScreenActivity extends BaseActivity implements OnMapReadyCallba
         String[] mPlanetTitles = getResources().getStringArray(R.array.string_array_name);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerList = (ListView) findViewById(R.id.left_drawer);
-
+        //mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
         // Set the adapter for the list view
         mDrawerList.setAdapter(new ArrayAdapter<String>(this,
                 R.layout.navdrawerlistitem, R.id.navitem_tv, mPlanetTitles));
@@ -150,7 +150,15 @@ public class HomeScreenActivity extends BaseActivity implements OnMapReadyCallba
             case 1:
                 fragment = new HistoryFragment();
                 break;
-
+            case 2:
+                fragment = new HistoryFragment();
+                break;
+            case 3:
+                fragment = new HistoryFragment();
+                break;
+            case 4:
+                fragment = new HistoryFragment();
+                break;
             default:
                 break;
 
