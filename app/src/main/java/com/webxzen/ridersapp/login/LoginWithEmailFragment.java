@@ -117,18 +117,12 @@ public class LoginWithEmailFragment extends BaseFragment implements View.OnClick
                     @Override
                     public void onResponse(Call<AuthModel> call, Response<AuthModel> response) {
 
-
                         if (dialogUtil != null) {
 
                             dialogUtil.dismissProgress();
 
                         }
-
                         if (response.isSuccessful()) {
-
-
-                            Log.d("gotoHomePage", "gotoHomePage");
-
                             if (response.body().success) {
                                 LoginModel loginModel = response.body().result.login;
                                 if (loginModel != null) {

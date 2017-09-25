@@ -63,8 +63,6 @@ public class LoginFragment extends BaseFragment implements View.OnClickListener 
             @Override
             public void onSuccess(LoginResult loginResult) {
 
-                // getFragmentManager().beginTransaction().replace(R.id.fragment_container, new HomeScreenActivity()).commit();
-
                 //  testtv.setText(loginResult.getAccessToken().getToken());
                 Intent i = new Intent(getActivity(), HomeScreenActivity.class);
                 startActivity(i);

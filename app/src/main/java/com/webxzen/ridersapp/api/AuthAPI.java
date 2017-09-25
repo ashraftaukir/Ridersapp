@@ -13,7 +13,7 @@ import retrofit2.http.POST;
 public interface AuthAPI {
 
     @FormUrlEncoded
-    @POST("api/auth/register/rider")
+    @POST("api/auth/signup/rider")
     Call<AuthModel> register(
             @Field("fullname") String fullname,
             @Field("email") String email,
