@@ -23,4 +23,8 @@
     <color name="colorgraklight">#808080</color>
     <color name="colorTransparent">#77ffffff</color>
     <color name="colorTransparentblack">#7F000000</color>
+    <color name="logofontcolor">#cbe8e4</color>
+    <color name="maincolor">#035448</color>
+    <color name="loginbuttoncolor">#da2028</color>
+    <color name="buttonbordercolor">#99cbe8e4</color>
 </resources>

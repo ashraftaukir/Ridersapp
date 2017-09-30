@@ -3,16 +3,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/colorBlack">
+    android:background="@color/logofontcolor">
 
     <ImageView
         android:id="@+id/img_splash"
         android:layout_centerInParent="true"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="100dp"
         android:scaleType="fitCenter"
         android:adjustViewBounds="true"
-        android:src="@drawable/logo"
+        android:src="@drawable/applogo"
         android:contentDescription="@string/imageViewdescription" />
 
 </RelativeLayout>

@@ -2,15 +2,15 @@
 <shape xmlns:android="http://schemas.android.com/apk/res/android">
     <stroke
         android:width="3dp"
-        android:color="@color/colorRed" />
+        android:color="@color/loginbuttoncolor" />
 
     <corners android:radius="5dp" />
 
     <gradient
         android:angle="270"
-        android:centerColor="@color/colorRed"
-        android:endColor="@color/colorRed"
-        android:startColor="@color/colorRed"
+        android:centerColor="@color/loginbuttoncolor"
+        android:endColor="@color/loginbuttoncolor"
+        android:startColor="@color/loginbuttoncolor"
 
         />
 </shape>
