@@ -45,7 +45,7 @@
     <string name="forgot_password_desc">We need your registered email address to send you password reset instructions.</string>
     <string name="email">Email</string>
     <string name="password">Password</string>
-    <string name="login">Login</string>
+    <string name="login">LOGIN</string>
     <string name="reset_password">Reset Password</string>
     <string name="back_to_login">Back to Login</string>
     <string name="verify_email">Please verify your email to continue.</string>

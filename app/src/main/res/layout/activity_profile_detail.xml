@@ -33,7 +33,7 @@
                     android:adjustViewBounds="true"
                     android:scaleType="fitCenter"
                     android:layout_centerInParent="true"
-                    android:src="@drawable/blackimg"/>
+                    android:src="@drawable/applogo"/>
 
 
             <LinearLayout

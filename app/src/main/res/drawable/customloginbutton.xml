@@ -1,14 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<shape xmlns:android="http://schemas.android.com/apk/res/android" >
-    <stroke android:width="3dp"
-        android:color="@color/colorfiroza" />
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <stroke
+        android:width="1dp"
+        android:color="@color/buttonbordercolor" />
 
     <corners android:radius="5dp" />
 
-    <gradient android:angle="270"
-        android:centerColor="@color/colorfiroza"
-        android:endColor="@color/colorfiroza"
-        android:startColor="@color/colorfiroza"
+    <gradient
+        android:angle="270"
+        android:centerColor="@color/colorTransparentBlack"
+        android:endColor="@color/colorTransparentBlack"
+        android:startColor="@color/colorTransparentBlack"
 
         />
 </shape>
