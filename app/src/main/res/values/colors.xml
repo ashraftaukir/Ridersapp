@@ -23,4 +23,5 @@
     <color name="colorgraklight">#808080</color>
     <color name="colorTransparent">#77ffffff</color>
     <color name="colorTransparentblack">#7F000000</color>
+    <color name="logofontcolor">#cbe8e4</color>
 </resources>
