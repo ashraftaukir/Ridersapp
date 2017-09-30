@@ -23,3 +23,8 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+
+
+# Paper
+-keep class com.webxzen.ridersapp.model.** { *; }
+-keep class * implements java.io.Serializable { *; }

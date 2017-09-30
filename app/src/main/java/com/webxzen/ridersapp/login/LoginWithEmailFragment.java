@@ -126,10 +126,10 @@ public class LoginWithEmailFragment extends BaseFragment implements View.OnClick
                             if (response.body().success) {
                                 LoginModel loginModel = response.body().data.login;
                                 if (loginModel != null) {
-//                                    if (DBHelper.saveLogin(loginModel)) {
+                                    if (DBHelper.saveLogin(loginModel)) {
                                         startActivity(new Intent(getActivity(), HomeScreenActivity.class));
                                         getActivity().finish();
-//                                    }
+                                    }
                                 }
                             }
 
