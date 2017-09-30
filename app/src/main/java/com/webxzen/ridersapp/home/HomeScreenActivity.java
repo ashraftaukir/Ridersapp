@@ -6,10 +6,21 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetBehavior;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ImageView;
+import android.widget.ListView;
 
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -32,18 +43,28 @@ public class HomeScreenActivity extends BaseActivity implements OnMapReadyCallba
     AdvertisementAdapter advertisementAdapter;
     ArrayList<AdvertisementModel> advertiseList = new ArrayList<>();
     AdvertisementModel advertisementModel;
+    private DrawerLayout mDrawerLayout;
+    private ListView mDrawerList;
+
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        //Remove title bar
-        //this.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        //Remove notification bar
-        // this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
+
+
+//        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+//                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        super.onCreate(savedInstanceState);
         setContentView(R.layout.homescreenactivity);
         prepareAdevertisementModel();
         initialization();
+        initListeners();
+    }
+
+    private void initListeners() {
+
+        mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
+
     }
 
     private void prepareAdevertisementModel() {
@@ -86,16 +107,83 @@ public class HomeScreenActivity extends BaseActivity implements OnMapReadyCallba
 
     private void initialization() {
 
+        String[] mPlanetTitles = getResources().getStringArray(R.array.string_array_name);
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        mDrawerList = (ListView) findViewById(R.id.left_drawer);
+
+        // Set the adapter for the list view
+        mDrawerList.setAdapter(new ArrayAdapter<String>(this,
+                R.layout.navdrawerlistitem, R.id.navitem_tv, mPlanetTitles));
+
+
         cardListRecylerview = (RecyclerView) findViewById(R.id.cardListRecylerview);
         advertisementAdapter = new AdvertisementAdapter(advertiseList);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         cardListRecylerview.setLayoutManager(linearLayoutManager);
         cardListRecylerview.setAdapter(advertisementAdapter);
+
+        // Add header
+        LayoutInflater inflater = getLayoutInflater();
+        ViewGroup header = (ViewGroup) inflater.inflate(R.layout.navdrawerheader, mDrawerList, false);
+        mDrawerList.addHeaderView(header, null, false);
         mapinitialization();
         bottomsheetinitialization();
 
     }
+
+
+    private class DrawerItemClickListener implements ListView.OnItemClickListener {
+        @Override
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            displayView(position);
+        }
+    }
+
+    private void displayView(int position) {
+
+
+        Fragment fragment = null;
+        switch (position) {
+
+            case 0:
+                break;
+
+            case 1:
+                fragment = new HistoryFragment();
+                break;
+            case 2:
+                fragment = new HistoryFragment();
+                break;
+            case 3:
+                fragment = new HistoryFragment();
+                break;
+            case 4:
+                fragment = new HistoryFragment();
+                break;
+            default:
+                break;
+
+        }
+
+        if (fragment != null) {
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            fragmentManager.beginTransaction()
+                    .replace(R.id.frame_container, fragment).commit();
+
+            // update selected item and title, then close the drawer
+            mDrawerList.setItemChecked(position, true);
+            mDrawerList.setSelection(position);
+            // setTitle(navMenuTitles[position]);
+            mDrawerLayout.closeDrawer(mDrawerList);
+        } else {
+            // error in creating fragment
+            Log.e("MainActivity", "Error in creating fragment");
+        }
+
+
+    }
+
 
     private void bottomsheetinitialization() {
 

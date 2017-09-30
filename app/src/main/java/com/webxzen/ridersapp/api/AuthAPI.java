@@ -8,14 +8,12 @@ import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
 
-/**
- * Created by behestee on 9/22/17.
- */
+
 
 public interface AuthAPI {
 
     @FormUrlEncoded
-    @POST("api/auth/register/rider")
+    @POST("api/auth/signup/rider")
     Call<AuthModel> register(
             @Field("fullname") String fullname,
             @Field("email") String email,
@@ -32,7 +30,7 @@ public interface AuthAPI {
             @Field("scope") String scope,
             @Field("platform") String platform,
             @Field("device_token") String deviceToken,
-            @Field("username") String email,
+            @Field("email") String email,
             @Field("password") String password
     );
 

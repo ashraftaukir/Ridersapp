@@ -2,16 +2,15 @@ package com.webxzen.ridersapp.model;
 
 import com.google.gson.annotations.SerializedName;
 
-/**
- * Created by behestee on 9/22/17.
- */
+
 
 public class AuthModel {
-    public int status;
+    public boolean success;
     public String message;
-    public Result result;
+    public Data data;
 
-    public class Result{
+
+    public class Data{
         public String error;
         @SerializedName("error_description")
         public String errorDescription;

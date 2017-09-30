@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="api_server_url">http://api.araba.com/</string>
+    <string name="api_server_url">https://api.arabaworld.com/</string>
     <string name="api_assets">http://cdn.araba.com/assets/</string>
     <string name="files_server_url">file.araba.com/</string>
     <string name="web_url">http://araba.com/pages/</string>
