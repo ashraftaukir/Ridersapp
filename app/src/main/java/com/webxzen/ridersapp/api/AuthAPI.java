@@ -9,7 +9,6 @@ import retrofit2.http.Header;
 import retrofit2.http.POST;
 
 
-
 public interface AuthAPI {
 
     @FormUrlEncoded
@@ -55,6 +54,14 @@ public interface AuthAPI {
             @Field("fb_access_token") String fbAccesToken,
             @Field("platform") String platform,
             @Field("device_token") String deviceToken
+    );
+
+    @FormUrlEncoded
+    @POST("api/auth/forget")
+    Call<AuthModel> forgetPassword(
+            @Field("emailOrMobile") String emailOrMobile
+
+
     );
 
     @FormUrlEncoded

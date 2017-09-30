@@ -123,6 +123,7 @@ public class LoginWithEmailFragment extends BaseFragment implements View.OnClick
 
                         }
                         if (response.isSuccessful()) {
+
                             if (response.body().success) {
                                 LoginModel loginModel = response.body().data.login;
                                 if (loginModel != null) {
@@ -132,6 +133,15 @@ public class LoginWithEmailFragment extends BaseFragment implements View.OnClick
                                     }
                                 }
                             }
+
+
+                            if (!response.body().success) {
+
+                               // String error_msg = response.body().message;
+                                Toast.makeText(getActivity(),"taukir", Toast.LENGTH_SHORT).show();
+
+                            }
+
 
                         }
                     }
@@ -153,7 +163,7 @@ public class LoginWithEmailFragment extends BaseFragment implements View.OnClick
 
     private void gotoForgotpasswordPage() {
 
-        replaceFragment(new ForgotpasswordFragment(),
+        replaceFragment(new ForgotPasswordFragment(),
                 Appinfo.FORGOTPASSWORD_FRAGMENT, Appinfo.LOGIN_WITH_EMAIL_FRAGMENT, R.id.fragment_container);
 
     }
