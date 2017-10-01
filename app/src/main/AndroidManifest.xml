@@ -34,6 +34,7 @@
         </activity>
 
         <activity android:name=".login.LoginActivity"/>
+        <activity android:name=".home.InfoActivity"/>
         <activity android:name=".home.HomeScreenActivity"/>
     </application>
 

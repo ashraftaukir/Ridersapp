@@ -20,4 +20,8 @@ public class HistoryFragment extends Fragment {
         view = inflater.inflate(R.layout.history, container, false);
         return view;
     }
+
+
+
+
 }

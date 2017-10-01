@@ -40,15 +40,27 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/advertisement_tittle_tv"
+            android:layout_marginBottom="@dimen/activity_horizontal_margin"
             android:layout_marginLeft="@dimen/margin"
             android:layout_marginRight="@dimen/margin"
             android:layout_marginTop="@dimen/margin"
             android:text="c"
             android:textColor="@color/colorgraklight"
-            android:textSize="@dimen/forgotpasswordtextsize"
-            android:layout_marginBottom="@dimen/activity_horizontal_margin"
-            />
+            android:textSize="@dimen/forgotpasswordtextsize" />
 
+        <TextView
+            android:id="@+id/visit_our_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/document_tv"
+            android:text="@string/visit"
+            android:layout_marginBottom="@dimen/activity_horizontal_margin"
+            android:layout_marginLeft="@dimen/margin"
+            android:layout_marginRight="@dimen/margin"
+            android:layout_marginTop="@dimen/margin"
+            android:textSize="@dimen/forgotpasswordtextsize"
+            android:textColor="@color/colorPrimary"
+            />
 
     </RelativeLayout>
 

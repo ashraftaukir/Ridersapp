@@ -95,34 +95,34 @@ public class HomeScreenActivity extends BaseActivity implements GoogleApiClient.
     private void prepareAdevertisementModel() {
 
         advertisementModel = new AdvertisementModel(
-                getResources().getString(R.string.app_name),
+                getResources().getString(R.string.welcome),
                 getResources().getString(R.string.advertisementheader),
                 getResources().getString(R.string.advertisement));
         advertiseList.add(advertisementModel);
 
         advertisementModel = new AdvertisementModel(
-                getResources().getString(R.string.app_name),
+                getResources().getString(R.string.welcome),
                 getResources().getString(R.string.advertisementheader),
                 getResources().getString(R.string.advertisement));
         advertiseList.add(advertisementModel);
 
         advertisementModel = new AdvertisementModel(
-                getResources().getString(R.string.app_name),
+                getResources().getString(R.string.welcome),
                 getResources().getString(R.string.advertisementheader),
                 getResources().getString(R.string.advertisement));
         advertiseList.add(advertisementModel);
         advertisementModel = new AdvertisementModel(
-                getResources().getString(R.string.app_name),
+                getResources().getString(R.string.welcome),
                 getResources().getString(R.string.advertisementheader),
                 getResources().getString(R.string.advertisement));
         advertiseList.add(advertisementModel);
         advertisementModel = new AdvertisementModel(
-                getResources().getString(R.string.app_name),
+                getResources().getString(R.string.welcome),
                 getResources().getString(R.string.advertisementheader),
                 getResources().getString(R.string.advertisement));
         advertiseList.add(advertisementModel);
         advertisementModel = new AdvertisementModel(
-                getResources().getString(R.string.app_name),
+                getResources().getString(R.string.welcome),
                 getResources().getString(R.string.advertisementheader),
                 getResources().getString(R.string.advertisement));
         advertiseList.add(advertisementModel);
@@ -142,7 +142,7 @@ public class HomeScreenActivity extends BaseActivity implements GoogleApiClient.
 
 
         cardListRecylerview = (RecyclerView) findViewById(R.id.cardListRecylerview);
-        advertisementAdapter = new AdvertisementAdapter(advertiseList);
+        advertisementAdapter = new AdvertisementAdapter(advertiseList,this);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         cardListRecylerview.setLayoutManager(linearLayoutManager);
@@ -282,23 +282,32 @@ public class HomeScreenActivity extends BaseActivity implements GoogleApiClient.
     private void displayView(int position) {
 
 
-        Fragment fragment = null;
+       // Fragment fragment = null;
+        Intent i;
         switch (position) {
 
             case 0:
                 break;
 
             case 1:
-                fragment = new HistoryFragment();
+                 i=new Intent(this,InfoActivity.class);
+                startActivity(i);
+               // fragment = new HistoryFragment();
                 break;
             case 2:
-                fragment = new HistoryFragment();
+                 i=new Intent(this,InfoActivity.class);
+                startActivity(i);
+                //fragment = new HistoryFragment();
                 break;
             case 3:
-                fragment = new HistoryFragment();
+                 i=new Intent(this,InfoActivity.class);
+                startActivity(i);
+                //fragment = new HistoryFragment();
                 break;
             case 4:
-                fragment = new HistoryFragment();
+                i=new Intent(this,InfoActivity.class);
+                startActivity(i);
+                //fragment = new HistoryFragment();
                 break;
             case 5:
                 logout();
@@ -309,20 +318,21 @@ public class HomeScreenActivity extends BaseActivity implements GoogleApiClient.
 
         }
 
-        if (fragment != null) {
-            FragmentManager fragmentManager = getSupportFragmentManager();
-            fragmentManager.beginTransaction()
-                    .replace(R.id.frame_container, fragment).commit();
-
-            // update selected item and title, then close the drawer
-            mDrawerList.setItemChecked(position, true);
-            mDrawerList.setSelection(position);
-            // setTitle(navMenuTitles[position]);
-            mDrawerLayout.closeDrawer(mDrawerList);
-        } else {
-            // error in creating fragment
-            Log.e("MainActivity", "Error in creating fragment");
-        }
+//        if (fragment != null) {
+//            FragmentManager fragmentManager = getSupportFragmentManager();
+//            fragmentManager.beginTransaction()
+//                    .replace(R.id.frame_container, fragment)
+//                    .commit();
+//
+//            // update selected item and title, then close the drawer
+//            mDrawerList.setItemChecked(position, true);
+//            mDrawerList.setSelection(position);
+//            // setTitle(navMenuTitles[position]);
+//            mDrawerLayout.closeDrawer(mDrawerList);
+//        } else {
+//            // error in creating fragment
+//            Log.e("MainActivity", "Error in creating fragment");
+//        }
 
 
     }
@@ -420,7 +430,6 @@ public class HomeScreenActivity extends BaseActivity implements GoogleApiClient.
         }
 
     }
-
 
 
 }
