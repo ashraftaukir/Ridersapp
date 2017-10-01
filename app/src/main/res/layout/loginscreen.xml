@@ -3,39 +3,34 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/maincolor"
+    android:background="@color/logofontcolor"
     >
 
 
 
-    <!--<FrameLayout-->
-        <!--android:id="@+id/loginpagerelativelayout"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent"-->
-
-        <!--/>-->
-
-    <!--<ImageView-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent"-->
-        <!--android:contentDescription="@string/loginpage"-->
-        <!--android:src="@color/colorBlack" />-->
-
-
     <RelativeLayout
 
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+        <ImageView
+            android:id="@+id/img_splash"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="120dp"
+            android:adjustViewBounds="true"
+            android:src="@drawable/applogo"
+            android:contentDescription="@string/imageViewdescription" />
+
 
         <Button
+            android:layout_below="@+id/img_splash"
             android:id="@+id/loginwithfb"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/marginleft"
             android:layout_marginRight="@dimen/marginleft"
-            android:layout_marginTop="@dimen/margintop"
             android:background="@drawable/fbbutton"
-            android:gravity="center"
             android:text="@string/fbtext"
             android:textColor="@color/colorWhite"
 
@@ -64,7 +59,7 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="@dimen/alligntop"
             android:text="@string/register_now"
-            android:textColor="@color/logofontcolor"
+            android:textColor="@color/maincolor"
             android:textSize="@dimen/forgotpasswordtextsize" />
 
 
