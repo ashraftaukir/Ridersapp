@@ -1,5 +1,6 @@
 package com.webxzen.ridersapp.home;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.location.Location;
 import android.os.Bundle;
@@ -31,7 +32,9 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.webxzen.ridersapp.R;
 import com.webxzen.ridersapp.base.BaseActivity;
+import com.webxzen.ridersapp.login.SplashScreenActivity;
 import com.webxzen.ridersapp.model.AdvertisementModel;
+import com.webxzen.ridersapp.util.DBHelper;
 
 import java.util.ArrayList;
 
@@ -49,8 +52,6 @@ public class HomeScreenActivity extends BaseActivity implements OnMapReadyCallba
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
-
-
 
 //        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
 //                WindowManager.LayoutParams.FLAG_FULLSCREEN);
@@ -161,6 +162,10 @@ public class HomeScreenActivity extends BaseActivity implements OnMapReadyCallba
             case 4:
                 fragment = new HistoryFragment();
                 break;
+            case 5:
+                logout();
+                break;
+
             default:
                 break;
 
@@ -183,6 +188,17 @@ public class HomeScreenActivity extends BaseActivity implements OnMapReadyCallba
 
 
     }
+
+
+ private void logout() {
+        DBHelper.remove(DBHelper.DB_LOGIN);
+        startActivity(new Intent(HomeScreenActivity.this, SplashScreenActivity.class));
+        finishAffinity();
+    }
+
+
+
+
 
 
     private void bottomsheetinitialization() {
