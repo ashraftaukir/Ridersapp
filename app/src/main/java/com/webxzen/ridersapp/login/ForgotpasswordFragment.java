@@ -113,7 +113,7 @@ public class ForgotPasswordFragment extends BaseFragment implements View.OnClick
                             });
 
                         }
-                        if(!response.body().success){
+                        else{
                             Toast.makeText(getActivity(), response.body().message, Toast.LENGTH_LONG).show();
 
                         }

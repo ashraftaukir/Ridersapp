@@ -132,18 +132,17 @@ public class LoginWithEmailFragment extends BaseFragment implements View.OnClick
                                         getActivity().finish();
                                     }
                                 }
-                            }
-
-
-                            if (!response.body().success) {
-
-                               // String error_msg = response.body().message;
-                                Toast.makeText(getActivity(),"taukir", Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(getActivity(), response.body().message, Toast.LENGTH_LONG).show();
 
                             }
 
 
                         }
+//                        else{
+//                            Toast.makeText(getActivity(), response.errorBody().toString(), Toast.LENGTH_LONG).show();
+//
+//                        }
                     }
 
                     @Override
