@@ -84,6 +84,7 @@ public class HomeScreenActivity extends BaseActivity implements GoogleApiClient.
 //                WindowManager.LayoutParams.FLAG_FULLSCREEN);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.homescreenactivity);
+
         prepareAdevertisementModel();
         initialization();
         initListeners();
