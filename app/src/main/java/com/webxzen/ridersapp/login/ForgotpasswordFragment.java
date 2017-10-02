@@ -126,7 +126,7 @@ public class ForgotPasswordFragment extends BaseFragment implements View.OnClick
                     if (dialogUtil != null) {
                         dialogUtil.dismissProgress();
                     }
-                    Toast.makeText(getActivity(), "Testing error", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), getString(R.string.tryagain), Toast.LENGTH_SHORT).show();
                 }
             });
         } else {
