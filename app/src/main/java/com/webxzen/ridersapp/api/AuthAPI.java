@@ -14,10 +14,10 @@ public interface AuthAPI {
     @FormUrlEncoded
     @POST("api/auth/signup/rider")
     Call<AuthModel> register(
-            @Field("fullname") String fullname,
+            @Field("full_name") String fullname,
             @Field("email") String email,
             @Field("password") String password,
-            @Field("phone") String platform,
+            @Field("mobile") String platform,
             @Field("device_token") String deviceToken
     );
 
