@@ -5,6 +5,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.LayerDrawable;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationManager;
@@ -31,6 +33,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RatingBar;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -152,6 +155,12 @@ public class HomeScreenActivity extends BaseActivity implements GoogleApiClient.
         LayoutInflater inflater = getLayoutInflater();
         ViewGroup header = (ViewGroup) inflater.inflate(R.layout.navdrawerheader, mDrawerList, false);
         mDrawerList.addHeaderView(header, null, false);
+
+        RatingBar ratingBar = (RatingBar) header.findViewById(R.id.ratingBar);
+        LayerDrawable stars = (LayerDrawable) ratingBar.getProgressDrawable();
+        stars.getDrawable(2).setColorFilter(getResources().getColor(R.color.colorWhite),
+                PorterDuff.Mode.SRC_ATOP);
+
 
         mapinitialization();
         bottomsheetinitialization();
