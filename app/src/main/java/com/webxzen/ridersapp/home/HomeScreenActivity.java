@@ -460,6 +460,7 @@ public class HomeScreenActivity extends BaseActivity implements GoogleApiClient.
 //                        .setCustomAnimations(R.anim.slide_in_up,
 //                                R.anim.slide_out_up
 //                                )
+
                         .add(R.id.frame_container, new SearchFragment(),Appinfo.SEARCHFRAGMENT)
                         .commit();
 
