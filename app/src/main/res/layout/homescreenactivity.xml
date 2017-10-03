@@ -10,17 +10,18 @@
     xmlns:tools="http://schemas.android.com/tools"-->
 
 
-
     <FrameLayout
         android:id="@+id/frame_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
 
         <android.support.v4.widget.DrawerLayout
 
             android:id="@+id/drawer_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+
 
             <fragment
                 android:id="@+id/googlemap"
@@ -36,6 +37,19 @@
 
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
+
+                <android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:id="@+id/mytoolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize">
+
+                    <ImageView
+                        android:id="@+id/navdrawer_icon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:contentDescription="@string/navicon"
+                        android:src="@drawable/drawer_icon" />
+                </android.support.v7.widget.Toolbar>
 
                 <include layout="@layout/bottomsheet" />
 
@@ -53,9 +67,7 @@
 
                 />
 
-
         </android.support.v4.widget.DrawerLayout>
     </FrameLayout>
-
 
 </RelativeLayout>

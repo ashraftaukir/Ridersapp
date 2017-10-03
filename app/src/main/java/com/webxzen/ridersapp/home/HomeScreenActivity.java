@@ -20,10 +20,13 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -60,7 +63,7 @@ import java.util.ArrayList;
 
 public class HomeScreenActivity extends BaseActivity implements GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,
-        LocationListener, OnMapReadyCallback {
+        LocationListener, OnMapReadyCallback, View.OnClickListener {
 
     RecyclerView cardListRecylerview;
     AdvertisementAdapter advertisementAdapter;
@@ -70,12 +73,13 @@ public class HomeScreenActivity extends BaseActivity implements GoogleApiClient.
     private ListView mDrawerList;
 
     GoogleMap mGoogleMap;
-    SupportMapFragment mapFrag;
     LocationRequest mLocationRequest;
     GoogleApiClient mGoogleApiClient;
     Location mLastLocation;
     Marker mCurrLocationMarker;
-
+    Toolbar toolbar;
+    ImageView navdrawerIcon;
+    ViewGroup header;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -84,14 +88,23 @@ public class HomeScreenActivity extends BaseActivity implements GoogleApiClient.
 //                WindowManager.LayoutParams.FLAG_FULLSCREEN);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.homescreenactivity);
+        setUpToolbar();
         prepareAdevertisementModel();
         initialization();
         initListeners();
     }
 
+    private void setUpToolbar() {
+        toolbar = (Toolbar) findViewById(R.id.mytoolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+
+    }
+
     private void initListeners() {
 
         mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
+        navdrawerIcon.setOnClickListener(this);
 
     }
 
@@ -135,35 +148,42 @@ public class HomeScreenActivity extends BaseActivity implements GoogleApiClient.
 
     private void initialization() {
 
-        String[] mPlanetTitles = getResources().getStringArray(R.array.string_array_name);
+        //toolbar item initialization
+        navdrawerIcon = (ImageView) findViewById(R.id.navdrawer_icon);
+
+        String[] navDrawerTitles = getResources().getStringArray(R.array.string_array_name);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerList = (ListView) findViewById(R.id.left_drawer);
 
         // Set the adapter for the list view
         mDrawerList.setAdapter(new ArrayAdapter<String>(this,
-                R.layout.navdrawerlistitem, R.id.navitem_tv, mPlanetTitles));
-
+                R.layout.navdrawerlistitem, R.id.navitem_tv, navDrawerTitles));
 
         cardListRecylerview = (RecyclerView) findViewById(R.id.cardListRecylerview);
-        advertisementAdapter = new AdvertisementAdapter(advertiseList,this);
+        advertisementAdapter = new AdvertisementAdapter(advertiseList, this);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         cardListRecylerview.setLayoutManager(linearLayoutManager);
         cardListRecylerview.setAdapter(advertisementAdapter);
+        navHeaderSetup();
+        ratingBarSetup();
+        mapinitialization();
+        bottomsheetinitialization();
 
-        // Add header
-        LayoutInflater inflater = getLayoutInflater();
-        ViewGroup header = (ViewGroup) inflater.inflate(R.layout.navdrawerheader, mDrawerList, false);
-        mDrawerList.addHeaderView(header, null, false);
+    }
+
+    private void ratingBarSetup() {
 
         RatingBar ratingBar = (RatingBar) header.findViewById(R.id.ratingBar);
         LayerDrawable stars = (LayerDrawable) ratingBar.getProgressDrawable();
         stars.getDrawable(2).setColorFilter(getResources().getColor(R.color.colorWhite),
                 PorterDuff.Mode.SRC_ATOP);
+    }
 
-
-        mapinitialization();
-        bottomsheetinitialization();
+    private void navHeaderSetup() {
+        LayoutInflater inflater = getLayoutInflater();
+        header = (ViewGroup) inflater.inflate(R.layout.navdrawerheader, mDrawerList, false);
+        mDrawerList.addHeaderView(header, null, false);
 
     }
 
@@ -215,7 +235,7 @@ public class HomeScreenActivity extends BaseActivity implements GoogleApiClient.
     public void onMapReady(GoogleMap googleMap) {
 
 
-        mGoogleMap=googleMap;
+        mGoogleMap = googleMap;
         mGoogleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
 
         //Initialize Google Play Services
@@ -230,8 +250,7 @@ public class HomeScreenActivity extends BaseActivity implements GoogleApiClient.
                 //Request Location Permission
                 checkLocationPermission();
             }
-        }
-        else {
+        } else {
             buildGoogleApiClient();
             mGoogleMap.setMyLocationEnabled(true);
         }
@@ -239,6 +258,7 @@ public class HomeScreenActivity extends BaseActivity implements GoogleApiClient.
     }
 
     public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
+
     private void checkLocationPermission() {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED) {
@@ -249,14 +269,15 @@ public class HomeScreenActivity extends BaseActivity implements GoogleApiClient.
 
                 new AlertDialog.Builder(this)
                         .setTitle("Location Permission Needed")
-                        .setMessage("This app needs the Location permission, please accept to use location functionality")
+                        .setMessage("This app needs the Location permission, " +
+                                "please accept to use location functionality")
                         .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 //Prompt the user once explanation has been shown
                                 ActivityCompat.requestPermissions(HomeScreenActivity.this,
                                         new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
-                                        MY_PERMISSIONS_REQUEST_LOCATION );
+                                        MY_PERMISSIONS_REQUEST_LOCATION);
                             }
                         })
                         .create()
@@ -267,10 +288,11 @@ public class HomeScreenActivity extends BaseActivity implements GoogleApiClient.
                 // No explanation needed, we can request the permission.
                 ActivityCompat.requestPermissions(this,
                         new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
-                        MY_PERMISSIONS_REQUEST_LOCATION );
+                        MY_PERMISSIONS_REQUEST_LOCATION);
             }
         }
     }
+
     protected synchronized void buildGoogleApiClient() {
         mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .addConnectionCallbacks(this)
@@ -278,6 +300,22 @@ public class HomeScreenActivity extends BaseActivity implements GoogleApiClient.
                 .addApi(LocationServices.API)
                 .build();
         mGoogleApiClient.connect();
+    }
+
+    @Override
+    public void onClick(View v) {
+
+        switch (v.getId()) {
+
+            case R.id.navdrawer_icon:
+                mDrawerLayout.openDrawer(Gravity.LEFT);
+                break;
+
+            default:
+                break;
+
+        }
+
     }
 
 
@@ -290,8 +328,6 @@ public class HomeScreenActivity extends BaseActivity implements GoogleApiClient.
 
     private void displayView(int position) {
 
-
-       // Fragment fragment = null;
         Intent i;
         switch (position) {
 
@@ -299,24 +335,20 @@ public class HomeScreenActivity extends BaseActivity implements GoogleApiClient.
                 break;
 
             case 1:
-                 i=new Intent(this,InfoActivity.class);
+                i = new Intent(this, InfoActivity.class);
                 startActivity(i);
-               // fragment = new HistoryFragment();
                 break;
             case 2:
-                 i=new Intent(this,InfoActivity.class);
+                i = new Intent(this, InfoActivity.class);
                 startActivity(i);
-                //fragment = new HistoryFragment();
                 break;
             case 3:
-                 i=new Intent(this,InfoActivity.class);
+                i = new Intent(this, InfoActivity.class);
                 startActivity(i);
-                //fragment = new HistoryFragment();
                 break;
             case 4:
-                i=new Intent(this,InfoActivity.class);
+                i = new Intent(this, InfoActivity.class);
                 startActivity(i);
-                //fragment = new HistoryFragment();
                 break;
             case 5:
                 logout();
@@ -326,24 +358,6 @@ public class HomeScreenActivity extends BaseActivity implements GoogleApiClient.
                 break;
 
         }
-
-//        if (fragment != null) {
-//            FragmentManager fragmentManager = getSupportFragmentManager();
-//            fragmentManager.beginTransaction()
-//                    .replace(R.id.frame_container, fragment)
-//                    .commit();
-//
-//            // update selected item and title, then close the drawer
-//            mDrawerList.setItemChecked(position, true);
-//            mDrawerList.setSelection(position);
-//            // setTitle(navMenuTitles[position]);
-//            mDrawerLayout.closeDrawer(mDrawerList);
-//        } else {
-//            // error in creating fragment
-//            Log.e("MainActivity", "Error in creating fragment");
-//        }
-
-
     }
 
 
