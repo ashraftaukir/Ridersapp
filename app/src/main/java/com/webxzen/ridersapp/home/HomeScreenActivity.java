@@ -457,9 +457,9 @@ public class HomeScreenActivity extends BaseActivity implements GoogleApiClient.
             case R.id.searchBarLinearlayout:
 //                 initFragment(new SearchFragment(), Appinfo.SEARCHFRAGMENT,R.id.frame_container);
                 getSupportFragmentManager().beginTransaction()
-//                        .setCustomAnimations(R.anim.slide_in_up,
-//                                R.anim.slide_out_up
-//                                )
+                        .setCustomAnimations(R.anim.in_from_bottom,0
+//                                R.anim.out_to_top
+                                )
 
                         .add(R.id.frame_container, new SearchFragment(),Appinfo.SEARCHFRAGMENT)
                         .commit();

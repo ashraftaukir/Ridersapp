@@ -2,21 +2,12 @@
 <set xmlns:android="http://schemas.android.com/apk/res/android"
     android:duration="@android:integer/config_mediumAnimTime">
 
-    <!--<translate-->
-        <!--android:fromXDelta="-100%p"-->
-        <!--android:startOffset="25"-->
-        <!--android:toXDelta="0" />-->
-
-
-    <!--my animation code-->
     <translate
-        android:fromYDelta="-100%p"
-        android:startOffset="25"
-        android:toYDelta="0"
-        />
-    <!--<translate-->
-        <!--android:fromYDelta="0%p"-->
-        <!--android:toYDelta="100%p" />-->
+        android:fromYDelta="0%p"
+        android:toYDelta="100%p" />
+
+
+
 
 </set>
 
