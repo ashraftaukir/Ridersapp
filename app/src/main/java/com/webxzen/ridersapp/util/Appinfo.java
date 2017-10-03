@@ -12,7 +12,7 @@ public class Appinfo {
     public static final String FORGOTPASSWORD_FRAGMENT = "forgotpassword_fragment";
 
     public static final String HOME_FRAGMENT = "home_fragment";
-    public static final String SEARCH_JOB_FRAGMENT = "search_job_fragment";
+    public static final String SEARCHFRAGMENT = "search_fragment";
 
 
     public static final String PLATFORM = "android";

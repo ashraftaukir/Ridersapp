@@ -35,6 +35,7 @@ import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RatingBar;
 import android.widget.Toast;
@@ -56,6 +57,7 @@ import com.webxzen.ridersapp.R;
 import com.webxzen.ridersapp.base.BaseActivity;
 import com.webxzen.ridersapp.login.SplashScreenActivity;
 import com.webxzen.ridersapp.model.AdvertisementModel;
+import com.webxzen.ridersapp.util.Appinfo;
 import com.webxzen.ridersapp.util.DBHelper;
 
 import java.util.ArrayList;
@@ -80,6 +82,7 @@ public class HomeScreenActivity extends BaseActivity implements GoogleApiClient.
     Toolbar toolbar;
     ImageView navdrawerIcon;
     ViewGroup header;
+    LinearLayout searchBarLinearLayout;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -150,6 +153,7 @@ public class HomeScreenActivity extends BaseActivity implements GoogleApiClient.
 
         //toolbar item initialization
         navdrawerIcon = (ImageView) findViewById(R.id.navdrawer_icon);
+        searchBarLinearLayout=(LinearLayout)findViewById(R.id.searchBarLinearlayout);
 
         String[] navDrawerTitles = getResources().getStringArray(R.array.string_array_name);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -311,6 +315,9 @@ public class HomeScreenActivity extends BaseActivity implements GoogleApiClient.
                 mDrawerLayout.openDrawer(Gravity.LEFT);
                 break;
 
+            case R.id.searchBarLinearlayout:
+                initFragment(new SearchFragment(), Appinfo.SEARCHFRAGMENT,R.id.frame_container);
+                break;
             default:
                 break;
 
