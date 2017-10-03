@@ -108,6 +108,7 @@ public class HomeScreenActivity extends BaseActivity implements GoogleApiClient.
 
         mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
         navdrawerIcon.setOnClickListener(this);
+        searchBarLinearLayout.setOnClickListener(this);
 
     }
 
@@ -153,7 +154,7 @@ public class HomeScreenActivity extends BaseActivity implements GoogleApiClient.
 
         //toolbar item initialization
         navdrawerIcon = (ImageView) findViewById(R.id.navdrawer_icon);
-        searchBarLinearLayout=(LinearLayout)findViewById(R.id.searchBarLinearlayout);
+        searchBarLinearLayout = (LinearLayout) findViewById(R.id.searchBarLinearlayout);
 
         String[] navDrawerTitles = getResources().getStringArray(R.array.string_array_name);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -306,24 +307,7 @@ public class HomeScreenActivity extends BaseActivity implements GoogleApiClient.
         mGoogleApiClient.connect();
     }
 
-    @Override
-    public void onClick(View v) {
 
-        switch (v.getId()) {
-
-            case R.id.navdrawer_icon:
-                mDrawerLayout.openDrawer(Gravity.LEFT);
-                break;
-
-            case R.id.searchBarLinearlayout:
-                initFragment(new SearchFragment(), Appinfo.SEARCHFRAGMENT,R.id.frame_container);
-                break;
-            default:
-                break;
-
-        }
-
-    }
 
 
     private class DrawerItemClickListener implements ListView.OnItemClickListener {
@@ -461,5 +445,29 @@ public class HomeScreenActivity extends BaseActivity implements GoogleApiClient.
 
     }
 
+    @Override
+    public void onClick(View v) {
 
+        switch (v.getId()) {
+
+            case R.id.navdrawer_icon:
+                mDrawerLayout.openDrawer(Gravity.LEFT);
+                break;
+
+            case R.id.searchBarLinearlayout:
+//                 initFragment(new SearchFragment(), Appinfo.SEARCHFRAGMENT,R.id.frame_container);
+                getSupportFragmentManager().beginTransaction()
+//                        .setCustomAnimations(R.anim.slide_in_up,
+//                                R.anim.slide_out_up
+//                                )
+                        .add(R.id.frame_container, new SearchFragment(),Appinfo.SEARCHFRAGMENT)
+                        .commit();
+
+                break;
+            default:
+                break;
+
+        }
+
+    }
 }
