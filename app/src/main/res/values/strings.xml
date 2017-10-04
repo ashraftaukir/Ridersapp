@@ -71,6 +71,12 @@
     <string name="tryagain">Please try again</string>
     <string name="navicon">NavigationDrawerIcon</string>
     <string name="searchbartext">Where to?</string>
+    <string name="home">Add Home</string>
+    <string name="work">Add Work</string>
+    <string name="gotopin">Go to pin</string>
+    <string name="savedplace">Saved Places</string>
+    <string name="setlocation">Set location on map</string>
+    <string name="enterDestination">Enter destination later</string>
 
     <!--Drawerlayout info-->
 

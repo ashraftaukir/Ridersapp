@@ -308,8 +308,6 @@ public class HomeScreenActivity extends BaseActivity implements GoogleApiClient.
     }
 
 
-
-
     private class DrawerItemClickListener implements ListView.OnItemClickListener {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -457,11 +455,9 @@ public class HomeScreenActivity extends BaseActivity implements GoogleApiClient.
             case R.id.searchBarLinearlayout:
 //                 initFragment(new SearchFragment(), Appinfo.SEARCHFRAGMENT,R.id.frame_container);
                 getSupportFragmentManager().beginTransaction()
-                        .setCustomAnimations(R.anim.in_from_bottom,0
+                        .setCustomAnimations(R.anim.in_from_bottom, 0)
 //                                R.anim.out_to_top
-                                )
-
-                        .add(R.id.frame_container, new SearchFragment(),Appinfo.SEARCHFRAGMENT)
+                        .add(R.id.frame_container, new SearchFragment(mLastLocation.getLatitude(), mLastLocation.getLongitude()), Appinfo.SEARCHFRAGMENT)
                         .commit();
 
                 break;

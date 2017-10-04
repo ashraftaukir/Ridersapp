@@ -2,16 +2,184 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@color/colorWhite"
-    >
+    android:orientation="vertical">
 
-    <TextView
-        android:layout_width="wrap_content"
+    <android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/searchviewtoolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/backbutton_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/alligntop"
+                android:contentDescription="@string/navicon"
+                android:src="@drawable/ic_arrow_back_black_24dp" />
+
+            <EditText
+                android:id="@+id/currentposition_et"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/backbutton_icon"
+                android:layout_marginLeft="@dimen/margin30dp"
+                android:layout_marginRight="@dimen/alligntop"
+                android:layout_marginTop="@dimen/margin10dp"
+                android:hint="@string/gotopin"
+                android:background="@drawable/custom_searchable_edittext"
+                android:padding="@dimen/margin5dp" />
+
+            <EditText
+                android:id="@+id/destination_et"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/currentposition_et"
+                android:layout_marginBottom="@dimen/margin10dp"
+                android:layout_marginLeft="@dimen/margin30dp"
+                android:layout_marginRight="@dimen/alligntop"
+                android:layout_marginTop="@dimen/margin10dp"
+                android:background="@drawable/custom_searchable_edittext"
+                android:hint="@string/searchbartext"
+                android:padding="@dimen/margin5dp"
+
+                />
+
+
+        </RelativeLayout>
+
+
+    </android.support.v7.widget.Toolbar>
+
+
+    <ScrollView
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="asjhdakjhsdakjhdajh"
+        android:layout_below="@+id/searchviewtoolbar">
 
-        />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
+            <TextView
+                android:id="@+id/addhome_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/alligntop"
+                android:drawableLeft="@drawable/ic_home_black_24dp"
+                android:drawablePadding="@dimen/margin10dp"
+                android:gravity="center_vertical"
+                android:text="@string/home"
+                android:textColor="@color/uberblackcolor"
+                android:textSize="@dimen/forgotpasswordtextsize" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="@dimen/margin50dp"
+                android:layout_marginTop="@dimen/alligntop"
+                android:background="@color/colorash"
+
+                />
+
+
+            <TextView
+                android:layout_marginTop="@dimen/alligntop"
+                android:id="@+id/addwork_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/alligntop"
+                android:drawableLeft="@drawable/ic_work_black_24dp"
+                android:drawablePadding="@dimen/margin10dp"
+                android:gravity="center_vertical"
+                android:text="@string/work"
+                android:textColor="@color/uberblackcolor"
+                android:textSize="@dimen/forgotpasswordtextsize" />
+
+            <View
+
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="@dimen/margin50dp"
+                android:layout_marginTop="@dimen/alligntop"
+                android:background="@color/colorash"
+
+                />
+            <TextView
+                android:layout_marginTop="@dimen/alligntop"
+                android:id="@+id/savedplace_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/alligntop"
+                android:drawableLeft="@drawable/ic_add_location_black_24dp"
+                android:drawableRight="@drawable/ic_keyboard_arrow_right_black_24dp"
+                android:drawablePadding="@dimen/margin10dp"
+                android:gravity="center_vertical"
+                android:text="@string/savedplace"
+                android:textColor="@color/uberblackcolor"
+                android:textSize="@dimen/forgotpasswordtextsize" />
+
+            <View
+
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/margin5dp"
+                android:layout_marginTop="@dimen/alligntop"
+                android:background="@color/colorash"
+
+                />
+
+            <TextView
+                android:layout_marginTop="@dimen/alligntop"
+                android:id="@+id/setlocation_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/alligntop"
+                android:drawableLeft="@drawable/ic_edit_location_black_24dp"
+                android:drawablePadding="@dimen/margin10dp"
+                android:gravity="center_vertical"
+                android:text="@string/setlocation"
+                android:textColor="@color/uberblackcolor"
+                android:textSize="@dimen/forgotpasswordtextsize" />
+
+            <View
+
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="@dimen/margin50dp"
+                android:layout_marginTop="@dimen/alligntop"
+                android:background="@color/colorash"
+
+                />
+            <TextView
+                android:layout_marginTop="@dimen/alligntop"
+                android:id="@+id/enterdestinationlatre_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/alligntop"
+                android:drawableLeft="@drawable/ic_arrow_drop_down_black_24dp"
+                android:drawablePadding="@dimen/margin10dp"
+                android:gravity="center_vertical"
+                android:text="@string/enterDestination"
+                android:textColor="@color/uberblackcolor"
+                android:textSize="@dimen/forgotpasswordtextsize" />
+
+            <View
+
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="@dimen/margin50dp"
+                android:layout_marginTop="@dimen/alligntop"
+                android:background="@color/colorash"
+
+                />
+        </LinearLayout>
+
+
+    </ScrollView>
 
 </RelativeLayout>

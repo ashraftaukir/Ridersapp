@@ -27,4 +27,6 @@
     <color name="maincolor">#035448</color>
     <color name="loginbuttoncolor">#da2028</color>
     <color name="buttonbordercolor">#99cbe8e4</color>
+    <color name="color_ash_extra">#F6F6F6</color>
+    <color name="uberblackcolor">#09091a</color>
 </resources>
