@@ -16,11 +16,17 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.android.gms.common.api.Status;
+import com.google.android.gms.location.places.Place;
+import com.google.android.gms.location.places.ui.PlaceAutocompleteFragment;
+import com.google.android.gms.location.places.ui.PlaceSelectionListener;
 import com.webxzen.ridersapp.R;
 import com.webxzen.ridersapp.base.BaseFragment;
 
 import java.util.List;
 import java.util.Locale;
+
+import static com.facebook.login.widget.ProfilePictureView.TAG;
 
 
 @SuppressLint("ValidFragment")
@@ -29,9 +35,6 @@ public class SearchFragment extends BaseFragment {
 
     View view;
     Double lat,lon;
-
-
-
 
     @SuppressLint("ValidFragment")
     public SearchFragment(double lat, double lon) {
@@ -43,6 +46,7 @@ public class SearchFragment extends BaseFragment {
 
     String locationaddress;
     EditText currentposition_et,destination_et;
+    PlaceAutocompleteFragment autocompleteFragment,start_point_fragment;
 
     @Nullable
     @Override
@@ -51,16 +55,56 @@ public class SearchFragment extends BaseFragment {
         view = inflater.inflate(R.layout.searchview, container, false);
         getLocationAddress();
         initialization();
+        initListeners();
         return view;
 
     }
 
+    private void initListeners() {
+
+     autocompleteFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
+            @Override
+            public void onPlaceSelected(Place place) {
+                Log.i(TAG, "Place: " + place.getName());
+            }
+
+            @Override
+            public void onError(Status status) {
+                Log.i(TAG, "An error occurred: " + status);
+            }
+        });
+
+//        start_point_fragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
+//            @Override
+//            public void onPlaceSelected(Place place) {
+//                Log.i(TAG, "Place: " + place.getName());
+//            }
+//
+//            @Override
+//            public void onError(Status status) {
+//                Log.i(TAG, "An error occurred: " + status);
+//            }
+//        });
+//
+//
+//
+
+    }
+
     private void initialization() {
-        destination_et=(EditText)view.findViewById(R.id.destination_et);
+        //destination_et=(EditText)view.findViewById(R.id.destination_et);
         currentposition_et=(EditText)view.findViewById(R.id.currentposition_et);
         currentposition_et.setText(locationaddress);
-        destination_et.requestFocus();
-       getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
+      //  destination_et.requestFocus();
+
+         autocompleteFragment = (PlaceAutocompleteFragment)
+                getActivity().getFragmentManager().findFragmentById(R.id.place_autocomplete_fragment);
+
+//        start_point_fragment = (PlaceAutocompleteFragment)
+//                getActivity().getFragmentManager().findFragmentById(R.id.start_point_fragment);
+
+
+     //  getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
       //  InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
        // imm.showSoftInput(destination_et, InputMethodManager.SHOW_IMPLICIT);
 
@@ -69,11 +113,11 @@ public class SearchFragment extends BaseFragment {
 
     private void getLocationAddress() {
 
-         locationaddress=getCompleteAddressString(lat,lon);
+         locationaddress=getCompleteAddressString(/*lat,lon*/);
 
     }
 
-    private String getCompleteAddressString(double LATITUDE, double LONGITUDE) {
+    private String getCompleteAddressString(/*double LATITUDE, double LONGITUDE*/) {
     String strAdd = "";
     Geocoder geocoder = new Geocoder(getActivity(), Locale.getDefault());
             try {

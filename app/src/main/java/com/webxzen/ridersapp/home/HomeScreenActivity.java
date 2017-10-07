@@ -457,7 +457,8 @@ public class HomeScreenActivity extends BaseActivity implements GoogleApiClient.
                 getSupportFragmentManager().beginTransaction()
                         .setCustomAnimations(R.anim.in_from_bottom, 0)
 //                                R.anim.out_to_top
-                        .add(R.id.frame_container, new SearchFragment(mLastLocation.getLatitude(), mLastLocation.getLongitude()), Appinfo.SEARCHFRAGMENT)
+                        .add(R.id.frame_container, new SearchFragment(mLastLocation.getLatitude(),
+                                mLastLocation.getLongitude()), Appinfo.SEARCHFRAGMENT)
                         .commit();
 
                 break;
