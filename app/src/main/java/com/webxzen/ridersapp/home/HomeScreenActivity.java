@@ -147,9 +147,9 @@ public class HomeScreenActivity extends BaseActivity implements GoogleApiClient.
         advertiseList.add(advertisementModel);
 
         advertisementModel = new AdvertisementModel(
-                getResources().getString(R.string.welcome),
-                getResources().getString(R.string.advertisementheader),
-                getResources().getString(R.string.advertisement));
+                getResources().getString(R.string.welcome2),
+                getResources().getString(R.string.advertisementheader2),
+                getResources().getString(R.string.advertisement2));
         advertiseList.add(advertisementModel);
 
     }

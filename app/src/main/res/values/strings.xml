@@ -12,14 +12,16 @@
     <string name="phonehint">Phone</string>
     <string name="signup">SIGN UP</string>
     <string name="send">SUBMIT</string>
-    <string name="facebook_app_id">1336474566461130</string>
-    <string name="google_map_api_key">AIzaSyDv0IZ4oh8MDVd62n-_KtDxBnEXeV4k2xg</string>
+
     <string name="advertisement">Araba just hit the heart of biggest metropolitan
         city Dhaka with all the best cars and best drivers in best values
         to experience you a new level of comfort while you move.</string>
 
-    <string name="advertisementheader">We launched the best ever transportation experience for you.
-</string>
+    <string name="advertisementheader">We launched the best ever transportation experience for you.</string>
+
+    <string name="advertisement2">Thousands of riders joined as driver just because they finds the dignity.</string>
+
+    <string name="advertisementheader2">Join the drivers</string>
 
     <!--***************Common values*****************-->
 
@@ -67,6 +69,7 @@
     <string name="imageViewdescription">ImageView</string>
     <string name="driverEmailAddress">Ashraf Taukir</string>
     <string name="welcome">Welcome to Araba World</string>
+    <string name="welcome2">Drive in Araba World</string>
     <string name="visit">Visit our site to know more.</string>
     <string name="tryagain">Please try again</string>
     <string name="navicon">NavigationDrawerIcon</string>
