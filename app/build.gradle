@@ -51,7 +51,7 @@ dependencies {
     compile 'com.facebook.android:facebook-android-sdk:4.26.0'
     compile 'com.master.android:permissionhelper:1.1'
     compile 'com.dlazaro66.qrcodereaderview:qrcodereaderview:2.0.2'
-    compile 'com.google.android.gms:play-services:11.0.1'
+    compile 'com.google.android.gms:play-services:11.0.4'
     compile 'me.gujun.android.taggroup:library:1.4@aar'
     compile 'com.github.ronaldsmartin:Material-ViewPagerIndicator:1.0.2'
     compile 'com.thefinestartist:finestwebview:1.2.7'
@@ -62,7 +62,7 @@ dependencies {
     compile 'de.hdodenhof:circleimageview:2.1.0'
     compile 'com.flipboard:bottomsheet-core:1.5.3'
     compile 'de.hdodenhof:circleimageview:2.1.0'
-    compile 'com.google.android.gms:play-services-location:11.0.1'
+    compile 'com.google.android.gms:play-services-location:11.0.4'
 
     testCompile 'junit:junit:4.12'
 }

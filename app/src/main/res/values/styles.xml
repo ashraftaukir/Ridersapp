@@ -57,6 +57,12 @@
     </style>
 
 
+    <style name="QText" parent="@android:style/TextAppearance.Small">
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">@color/colorBlack</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:typeface">sans</item>
+    </style>
     <!--<style name="FacebookLoginButton">-->
     <!--<item name="android:textSize">@dimen/forgotpasswordtextsize</item>-->
     <!--<item name="android:background">@drawable/fbbutton</item>-->

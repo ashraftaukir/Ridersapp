@@ -14,6 +14,7 @@ import android.widget.EditText;
 
 import com.webxzen.ridersapp.R;
 import com.webxzen.ridersapp.model.LoginModel;
+import com.webxzen.ridersapp.util.Appinfo;
 import com.webxzen.ridersapp.util.DBHelper;
 import com.webxzen.ridersapp.util.DialogUtil;
 import com.webxzen.ridersapp.util.PreferenceHelper;
@@ -29,12 +30,14 @@ public class BaseActivity extends AppCompatActivity {
     protected PreferenceHelper preferenceHelper;
     protected ActionBar actionBar;
     private LoginModel loginModel;
+    AppCompatActivity context;
 
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        context=this;
         preferenceHelper = new PreferenceHelper(this);
         dialogUtil = new DialogUtil(this);
         actionBar = getSupportActionBar();
@@ -52,35 +55,35 @@ public class BaseActivity extends AppCompatActivity {
         return true;
     }
 
-    protected void setTitle(String title){
+    protected void setTitle(String title) {
         actionBar.setTitle(title);
     }
 
-    protected void showBackButton(boolean show){
+    protected void showBackButton(boolean show) {
         actionBar.setDisplayHomeAsUpEnabled(show);
         actionBar.setDisplayShowHomeEnabled(show);
     }
 
     protected boolean isNetworkAvailable() {
         ConnectivityManager connectivityManager
-                    = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+                = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
         return activeNetworkInfo != null && activeNetworkInfo.isConnectedOrConnecting();
     }
 
-    protected boolean isEmpty(EditText editText){
+    protected boolean isEmpty(EditText editText) {
 
         String value = editText.getText().toString();
 
-        if(value.trim().length() == 0){
+        if (value.trim().length() == 0) {
             return true;
-        }else {
+        } else {
             return false;
         }
 
     }
 
-    public void showLoadingDialog( final boolean isLoad,final Context dialContext){
+    public void showLoadingDialog(final boolean isLoad, final Context dialContext) {
         final ProgressDialog prog = new ProgressDialog(dialContext);//Assuming that you are using fragments.
         prog.setTitle(getString(R.string.please_wait));
         prog.setMessage(getString(R.string.loading));
@@ -94,14 +97,25 @@ public class BaseActivity extends AppCompatActivity {
         }
     }
 
-    protected void initFragment(Fragment fragment, String id, int resId){
+    protected void initFragment(Fragment fragment, String id, int resId) {
         getSupportFragmentManager()
                 .beginTransaction()
                 .add(resId, fragment, id)
                 .commit();
     }
 
-    protected void replaceFragment(Fragment fragment, String id, String oldId, int resId){
+    protected void initFragmentWithValue(Fragment fragment, String id, int resId, String fragmentName) {
+
+        Bundle bundle = new Bundle();
+        bundle.putString(Appinfo.FRAGMENT_NAME, fragmentName);
+        fragment.setArguments(bundle);
+        getSupportFragmentManager()
+                .beginTransaction()
+                .add(resId, fragment, id)
+                .commit();
+    }
+
+    protected void replaceFragment(Fragment fragment, String id, String oldId, int resId) {
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(resId, fragment, id)

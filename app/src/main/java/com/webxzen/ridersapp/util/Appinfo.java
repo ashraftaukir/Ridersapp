@@ -12,12 +12,15 @@ public class Appinfo {
     public static final String FORGOTPASSWORD_FRAGMENT = "forgotpassword_fragment";
 
     public static final String HOME_FRAGMENT = "home_fragment";
-    public static final String SEARCH_JOB_FRAGMENT = "search_job_fragment";
+    public static final String SEARCHFRAGMENT = "search_fragment";
 
 
     public static final String PLATFORM = "android";
+    public static final String DROP_UP_FRAGMENT = "drop_up_fragment";
     public static final String CLIENT_ID = "ashraftaukir";
     public static final String CLIENT_SECRET = "jojotojo";
     public static final String SCOPE = "rider";
+    public static final String FRAGMENT_NAME="fragment_name";
+
 
 }

@@ -7,7 +7,9 @@ import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.LayerDrawable;
+import android.location.Address;
 import android.location.Criteria;
+import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Build;
@@ -35,20 +37,28 @@ import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RatingBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
+import com.google.android.gms.common.GooglePlayServicesRepairableException;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.location.places.Place;
+import com.google.android.gms.location.places.ui.PlaceAutocomplete;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -56,14 +66,20 @@ import com.webxzen.ridersapp.R;
 import com.webxzen.ridersapp.base.BaseActivity;
 import com.webxzen.ridersapp.login.SplashScreenActivity;
 import com.webxzen.ridersapp.model.AdvertisementModel;
+import com.webxzen.ridersapp.util.Appinfo;
 import com.webxzen.ridersapp.util.DBHelper;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
 
 
 public class HomeScreenActivity extends BaseActivity implements GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,
-        LocationListener, OnMapReadyCallback, View.OnClickListener {
+        LocationListener, OnMapReadyCallback,
+        View.OnClickListener
+        // ,CallBackListener
+{
 
     RecyclerView cardListRecylerview;
     AdvertisementAdapter advertisementAdapter;
@@ -80,6 +96,12 @@ public class HomeScreenActivity extends BaseActivity implements GoogleApiClient.
     Toolbar toolbar;
     ImageView navdrawerIcon;
     ViewGroup header;
+    //  LinearLayout searchBarLinearLayout;
+    TextView pickupAddress, dropupAddress;
+    int PLACE_AUTOCOMPLETE_REQUEST_CODE_FOR_DROPUP = 1;
+    public boolean tracker = false;
+    public LatLng picUpLatLong;
+    public LatLng dropUpLatLong;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -92,7 +114,15 @@ public class HomeScreenActivity extends BaseActivity implements GoogleApiClient.
         prepareAdevertisementModel();
         initialization();
         initListeners();
+
+
     }
+
+    private void setCurrentLocation() {
+        String address = getCompleteAddressString(mLastLocation.getLatitude(), mLastLocation.getLongitude());
+        pickupAddress.setText(address);
+    }
+
 
     private void setUpToolbar() {
         toolbar = (Toolbar) findViewById(R.id.mytoolbar);
@@ -105,8 +135,12 @@ public class HomeScreenActivity extends BaseActivity implements GoogleApiClient.
 
         mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
         navdrawerIcon.setOnClickListener(this);
+        pickupAddress.setOnClickListener(this);
+        dropupAddress.setOnClickListener(this);
+
 
     }
+
 
     private void prepareAdevertisementModel() {
 
@@ -150,6 +184,7 @@ public class HomeScreenActivity extends BaseActivity implements GoogleApiClient.
 
         //toolbar item initialization
         navdrawerIcon = (ImageView) findViewById(R.id.navdrawer_icon);
+        // searchBarLinearLayout = (LinearLayout) findViewById(R.id.searchBarLinearlayout);
 
         String[] navDrawerTitles = getResources().getStringArray(R.array.string_array_name);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -158,6 +193,11 @@ public class HomeScreenActivity extends BaseActivity implements GoogleApiClient.
         // Set the adapter for the list view
         mDrawerList.setAdapter(new ArrayAdapter<String>(this,
                 R.layout.navdrawerlistitem, R.id.navitem_tv, navDrawerTitles));
+
+
+        pickupAddress = (TextView) findViewById(R.id.pickup_tv);
+        dropupAddress = (TextView) findViewById(R.id.dropup_tv);
+
 
         cardListRecylerview = (RecyclerView) findViewById(R.id.cardListRecylerview);
         advertisementAdapter = new AdvertisementAdapter(advertiseList, this);
@@ -228,6 +268,7 @@ public class HomeScreenActivity extends BaseActivity implements GoogleApiClient.
         mCurrLocationMarker = mGoogleMap.addMarker(markerOptions);
         mGoogleMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
         mGoogleMap.animateCamera(CameraUpdateFactory.zoomTo(15));
+        setCurrentLocation();
 
     }
 
@@ -254,6 +295,29 @@ public class HomeScreenActivity extends BaseActivity implements GoogleApiClient.
             buildGoogleApiClient();
             mGoogleMap.setMyLocationEnabled(true);
         }
+
+
+        //centerise marker in google map
+        mGoogleMap.setOnCameraMoveListener(new GoogleMap.OnCameraMoveListener() {
+            @Override
+            public void onCameraMove() {
+
+                //Remove previous center if it exists
+                if (mCurrLocationMarker != null) {
+                    mCurrLocationMarker.remove();
+                }
+
+                CameraPosition test = mGoogleMap.getCameraPosition();
+                //Assign mCenterMarker reference:
+                mCurrLocationMarker =
+                        mGoogleMap.addMarker(new MarkerOptions().position(mGoogleMap.getCameraPosition().target)
+                                        .anchor(0.5f, .05f)
+                                //        .title("Test")
+                        );
+                //Log.d(TAG, "Map Coordinate: " + String.valueOf(test));
+            }
+        });
+
 
     }
 
@@ -302,21 +366,11 @@ public class HomeScreenActivity extends BaseActivity implements GoogleApiClient.
         mGoogleApiClient.connect();
     }
 
-    @Override
-    public void onClick(View v) {
 
-        switch (v.getId()) {
-
-            case R.id.navdrawer_icon:
-                mDrawerLayout.openDrawer(Gravity.LEFT);
-                break;
-
-            default:
-                break;
-
-        }
-
-    }
+//    @Override
+//    public void callback(String address) {
+//        dropupAddress.setText(address);
+//    }
 
 
     private class DrawerItemClickListener implements ListView.OnItemClickListener {
@@ -455,4 +509,126 @@ public class HomeScreenActivity extends BaseActivity implements GoogleApiClient.
     }
 
 
+    private String getCompleteAddressString(double LATITUDE, double LONGITUDE) {
+        String strAdd = "";
+        Geocoder geocoder = new Geocoder(this, Locale.getDefault());
+        try {
+            List<Address> addresses = geocoder.getFromLocation(LATITUDE, LONGITUDE, 1);
+            if (addresses != null) {
+
+                // strAdd=addresses.get(0).getLocality();
+                Address returnedAddress = addresses.get(0);
+
+                StringBuilder strReturnedAddress = new StringBuilder("");
+
+                for (int i = 0; i <= returnedAddress.getMaxAddressLineIndex(); i++) {
+                    strReturnedAddress.append(returnedAddress.getAddressLine(i)).append("\n");
+                }
+                strReturnedAddress.append(returnedAddress.getLocality()).append("\n");
+                //   strReturnedAddress.append(address.getPostalCode()).append("\n");
+                // strReturnedAddress.append(returnedAddress.getCountryName());
+                strAdd = strReturnedAddress.toString();
+                Log.d("Current loction ", strReturnedAddress.toString());
+            } else {
+                Log.d("Current loction", "No Address returned!");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.w(" loction address", "Canont get Address!");
+        }
+        return strAdd;
+    }
+
+
+    @Override
+    public void onClick(View v) {
+
+        switch (v.getId()) {
+
+            case R.id.navdrawer_icon:
+                mDrawerLayout.openDrawer(Gravity.LEFT);
+                break;
+            case R.id.pickup_tv:
+
+                tracker = true;
+                gotoGoogleActivity();
+//                 initFragment(new SearchViewFragment(), Appinfo.SEARCHFRAGMENT,R.id.frame_container);
+
+
+//                getSupportFragmentManager().beginTransaction()
+//                        .setCustomAnimations(R.anim.in_from_bottom, 0)
+//                        .add(R.id.frame_container, new SearchViewFragment(mLastLocation.getLatitude(),
+//                                mLastLocation.getLongitude()), Appinfo.SEARCHFRAGMENT)
+//                        .commit();
+
+                break;
+            case R.id.dropup_tv:
+                tracker = false;
+                gotoGoogleActivity();
+                //goToSearchViewActivity();
+
+
+                break;
+
+            default:
+                break;
+
+        }
+
+    }
+
+    private void gotoGoogleActivity() {
+
+        try {
+            Intent intent =
+                    new PlaceAutocomplete.IntentBuilder(PlaceAutocomplete.MODE_FULLSCREEN)
+                            .build(this);
+            startActivityForResult(intent, PLACE_AUTOCOMPLETE_REQUEST_CODE_FOR_DROPUP);
+        } catch (GooglePlayServicesRepairableException e) {
+            // TODO: Handle the error.
+        } catch (GooglePlayServicesNotAvailableException e) {
+            // TODO: Handle the error.
+        }
+
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == PLACE_AUTOCOMPLETE_REQUEST_CODE_FOR_DROPUP) {
+            if (resultCode == RESULT_OK) {
+                Place place = PlaceAutocomplete.getPlace(this, data);
+                if (!tracker) {
+
+                    dropUpLatLong=place.getLatLng();
+                    dropupAddress.setText(place.getAddress().toString());
+                } else {
+
+                    picUpLatLong=place.getLatLng();
+                    pickupAddress.setText(place.getAddress().toString());
+                }
+            } else if (resultCode == PlaceAutocomplete.RESULT_ERROR) {
+                Status status = PlaceAutocomplete.getStatus(this, data);
+                // TODO: Handle the error.
+                Log.i("STATUS", status.getStatusMessage());
+
+            } else if (resultCode == RESULT_CANCELED) {
+                // The user canceled the operation.
+            }
+        }
+    }
+
+
+    private void goToSearchViewActivity() {
+
+        //  SearchViewActivity helper=new SearchViewActivity(this);
+
+        Intent intent = new Intent(this, SearchViewActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putString(Appinfo.FRAGMENT_NAME, Appinfo.DROP_UP_FRAGMENT);
+        //bundle.putString("Context",Appinfo.DROP_UP_FRAGMENT);
+        intent.putExtras(bundle);
+        startActivity(intent);
+
+    }
 }
