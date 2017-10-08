@@ -37,42 +37,69 @@
                 android:layout_height="match_parent">
 
 
-                <android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+                <android.support.v7.widget.Toolbar
+                    xmlns:android="http://schemas.android.com/apk/res/android"
                     android:id="@+id/mytoolbar"
                     android:layout_width="match_parent"
-                    android:layout_height="?attr/actionBarSize">
+                    android:layout_height="wrap_content">
 
-                    <ImageView
-                        android:id="@+id/navdrawer_icon"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:contentDescription="@string/navicon"
-                        android:src="@drawable/ic_menu_black_24dp" />
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        >
+                        <ImageView
+                            android:layout_marginTop="@dimen/alligntop"
+                            android:id="@+id/navdrawer_icon"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:contentDescription="@string/navicon"
+                            android:src="@drawable/ic_menu_black_24dp" />
 
+                        <TextView
+                            android:id="@+id/pickup_tv"
+                            android:layout_marginTop="@dimen/alligntop"
+                            android:background="@color/colorWhite"
+                            style="@style/QText"
+                            android:layout_below="@+id/navdrawer_icon"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:singleLine="true"
+                            android:padding="@dimen/alligntop"
+                            android:layout_marginRight="@dimen/alligntop"
+                            android:gravity="center_vertical"
+                            android:textSize="@dimen/forgotpasswordtextsize" />
+                        <TextView
+                            android:id="@+id/dropup_tv"
+                            android:background="@color/colorash"
+                            style="@style/QText"
+                            android:layout_below="@+id/pickup_tv"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/setDestination"
+                            android:singleLine="true"
+                            android:padding="@dimen/alligntop"
+                            android:layout_marginRight="@dimen/alligntop"
+                            android:drawableRight="@drawable/ic_search_black_24dp"
+                            android:gravity="center_vertical"
+                            android:textSize="@dimen/forgotpasswordtextsize" />
+
+                    </RelativeLayout>
 
                 </android.support.v7.widget.Toolbar>
 
 
-                <LinearLayout
-                    android:id="@+id/searchBarLinearlayout"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/alligntop"
-                    android:layout_marginRight="@dimen/alligntop"
-                    android:layout_marginTop="?attr/actionBarSize"
-                    android:background="@drawable/shadoweffect"
-                    >
-                    <TextView
-                        style="@style/QText"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:padding="@dimen/alligntop"
-                        android:text="@string/searchbartext"
-                        android:gravity="center_vertical"
-                        android:layout_marginLeft="@dimen/alligntop"
-                        android:textSize="@dimen/registertextsize" />
+                <!--<LinearLayout-->
+                    <!--android:id="@+id/searchBarLinearlayout"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_marginLeft="@dimen/alligntop"-->
+                    <!--android:layout_marginRight="@dimen/alligntop"-->
+                    <!--android:layout_marginTop="?attr/actionBarSize"-->
+                    <!--android:background="@drawable/shadoweffect"-->
+                    <!--&gt;-->
 
-                </LinearLayout>
+
+                <!--</LinearLayout>-->
 
                 <include layout="@layout/bottomsheet" />
 

@@ -16,8 +16,11 @@ public class Appinfo {
 
 
     public static final String PLATFORM = "android";
+    public static final String DROP_UP_FRAGMENT = "drop_up_fragment";
     public static final String CLIENT_ID = "ashraftaukir";
     public static final String CLIENT_SECRET = "jojotojo";
     public static final String SCOPE = "rider";
+    public static final String FRAGMENT_NAME="fragment_name";
+
 
 }

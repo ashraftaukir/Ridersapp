@@ -37,6 +37,10 @@
             </intent-filter>
 
         </activity>
+        <activity
+            android:name=".home.SearchViewActivity"
+
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".login.LoginActivity"

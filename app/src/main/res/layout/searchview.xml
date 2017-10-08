@@ -22,40 +22,20 @@
                 android:contentDescription="@string/navicon"
                 android:src="@drawable/ic_arrow_back_black_24dp" />
 
-            <EditText
-                android:id="@+id/currentposition_et"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/backbutton_icon"
-                android:layout_marginLeft="@dimen/margin30dp"
-                android:layout_marginRight="@dimen/alligntop"
-                android:layout_marginTop="@dimen/margin10dp"
-                android:background="@drawable/custom_searchable_edittext"
-                android:hint="@string/gotopin"
-                android:padding="@dimen/margin5dp" />
-
 
             <LinearLayout
-                android:layout_below="@+id/currentposition_et"
+                android:layout_below="@+id/backbutton_icon"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:background="@color/color_ash_extra"
                 android:layout_marginTop="@dimen/alligntop"
-                android:layout_marginLeft="@dimen/marginleft"
                 android:layout_marginRight="@dimen/alligntop"
                 >
 
-                <!--<fragment-->
 
-                <!--android:id="@+id/start_point_fragment"-->
-                <!--android:name="com.google.android.gms.location.places.ui.PlaceAutocompleteFragment"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--/>-->
 
                 <fragment
-
                     android:id="@+id/place_autocomplete_fragment"
                     android:name="com.google.android.gms.location.places.ui.PlaceAutocompleteFragment"
                     android:layout_width="match_parent"
@@ -65,23 +45,6 @@
 
             </LinearLayout>
 
-
-
-
-            <!--<EditText-->
-                <!--android:id="@+id/destination_et"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_below="@+id/currentposition_et"-->
-                <!--android:layout_marginBottom="@dimen/margin10dp"-->
-                <!--android:layout_marginLeft="@dimen/margin30dp"-->
-                <!--android:layout_marginRight="@dimen/alligntop"-->
-                <!--android:layout_marginTop="@dimen/margin10dp"-->
-                <!--android:background="@drawable/custom_searchable_edittext"-->
-                <!--android:hint="@string/searchbartext"-->
-                <!--android:padding="@dimen/margin5dp"-->
-
-                <!--/>-->
 
 
         </RelativeLayout>
