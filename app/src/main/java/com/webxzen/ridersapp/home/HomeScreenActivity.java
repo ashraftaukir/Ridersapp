@@ -8,21 +8,16 @@ import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.LayerDrawable;
 import android.location.Address;
-import android.location.Criteria;
 import android.location.Geocoder;
 import android.location.Location;
-import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -30,14 +25,13 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -57,7 +51,6 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
@@ -109,18 +102,24 @@ public class HomeScreenActivity extends BaseActivity implements GoogleApiClient.
 //        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
 //                WindowManager.LayoutParams.FLAG_FULLSCREEN);
         super.onCreate(savedInstanceState);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.homescreenactivity);
         setUpToolbar();
-        prepareAdevertisementModel();
+        prepareAdvertisementModel();
         initialization();
         initListeners();
 
 
     }
 
-    private void setCurrentLocation() {
-        String address = getCompleteAddressString(mLastLocation.getLatitude(), mLastLocation.getLongitude());
+    private void setPickupLocation(LatLng latLng) {
+        String address = getCompleteAddressString(latLng.latitude, latLng.longitude);
         pickupAddress.setText(address);
+    }
+
+    private void clearPickupLocation() {
+        pickupAddress.setText("");
     }
 
 
@@ -138,11 +137,10 @@ public class HomeScreenActivity extends BaseActivity implements GoogleApiClient.
         pickupAddress.setOnClickListener(this);
         dropupAddress.setOnClickListener(this);
 
-
     }
 
 
-    private void prepareAdevertisementModel() {
+    private void prepareAdvertisementModel() {
 
         advertisementModel = new AdvertisementModel(
                 getResources().getString(R.string.welcome),
@@ -150,27 +148,6 @@ public class HomeScreenActivity extends BaseActivity implements GoogleApiClient.
                 getResources().getString(R.string.advertisement));
         advertiseList.add(advertisementModel);
 
-        advertisementModel = new AdvertisementModel(
-                getResources().getString(R.string.welcome),
-                getResources().getString(R.string.advertisementheader),
-                getResources().getString(R.string.advertisement));
-        advertiseList.add(advertisementModel);
-
-        advertisementModel = new AdvertisementModel(
-                getResources().getString(R.string.welcome),
-                getResources().getString(R.string.advertisementheader),
-                getResources().getString(R.string.advertisement));
-        advertiseList.add(advertisementModel);
-        advertisementModel = new AdvertisementModel(
-                getResources().getString(R.string.welcome),
-                getResources().getString(R.string.advertisementheader),
-                getResources().getString(R.string.advertisement));
-        advertiseList.add(advertisementModel);
-        advertisementModel = new AdvertisementModel(
-                getResources().getString(R.string.welcome),
-                getResources().getString(R.string.advertisementheader),
-                getResources().getString(R.string.advertisement));
-        advertiseList.add(advertisementModel);
         advertisementModel = new AdvertisementModel(
                 getResources().getString(R.string.welcome),
                 getResources().getString(R.string.advertisementheader),
@@ -227,17 +204,30 @@ public class HomeScreenActivity extends BaseActivity implements GoogleApiClient.
 
     }
 
+    private void startLocationUpdates() {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
+        LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, this);
+    }
+    protected void stopLocationUpdates() {
+        LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this);
+    }
+
     @Override
     public void onConnected(@Nullable Bundle bundle) {
         mLocationRequest = new LocationRequest();
         mLocationRequest.setInterval(1000);
         mLocationRequest.setFastestInterval(1000);
         mLocationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
-        if (ContextCompat.checkSelfPermission(this,
-                Manifest.permission.ACCESS_FINE_LOCATION)
-                == PackageManager.PERMISSION_GRANTED) {
-            LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, this);
-        }
+        startLocationUpdates();
 
     }
 
@@ -267,8 +257,9 @@ public class HomeScreenActivity extends BaseActivity implements GoogleApiClient.
 //        markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_MAGENTA));
         mCurrLocationMarker = mGoogleMap.addMarker(markerOptions);
         mGoogleMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
-        mGoogleMap.animateCamera(CameraUpdateFactory.zoomTo(15));
-        setCurrentLocation();
+        mGoogleMap.animateCamera(CameraUpdateFactory.zoomTo(17));
+        setPickupLocation(latLng);
+        stopLocationUpdates();
 
     }
 
@@ -295,6 +286,10 @@ public class HomeScreenActivity extends BaseActivity implements GoogleApiClient.
             buildGoogleApiClient();
             mGoogleMap.setMyLocationEnabled(true);
         }
+        // TODO: Apply actual padding
+        // please add here the top padding by calculating search text view's hieght
+        // and action bar height and replace 450
+        mGoogleMap.setPadding(0, 450, 0, 0);
 
 
         //centerise marker in google map
@@ -307,14 +302,25 @@ public class HomeScreenActivity extends BaseActivity implements GoogleApiClient.
                     mCurrLocationMarker.remove();
                 }
 
-                CameraPosition test = mGoogleMap.getCameraPosition();
-                //Assign mCenterMarker reference:
+                LatLng position = mGoogleMap.getCameraPosition().target;
                 mCurrLocationMarker =
-                        mGoogleMap.addMarker(new MarkerOptions().position(mGoogleMap.getCameraPosition().target)
-                                        .anchor(0.5f, .05f)
-                                //        .title("Test")
-                        );
-                //Log.d(TAG, "Map Coordinate: " + String.valueOf(test));
+                        mGoogleMap.addMarker(new MarkerOptions().position(position).anchor(0.5f, 1.0f).title("Pickup"));
+            }
+        });
+
+        mGoogleMap.setOnCameraIdleListener(new GoogleMap.OnCameraIdleListener() {
+            @Override
+            public void onCameraIdle() {
+                LatLng position = mGoogleMap.getCameraPosition().target;
+                setPickupLocation(position);
+            }
+        });
+
+        mGoogleMap.setOnCameraMoveStartedListener(new GoogleMap.OnCameraMoveStartedListener(){
+
+            @Override
+            public void onCameraMoveStarted(int i) {
+                clearPickupLocation();
             }
         });
 
@@ -365,7 +371,6 @@ public class HomeScreenActivity extends BaseActivity implements GoogleApiClient.
                 .build();
         mGoogleApiClient.connect();
     }
-
 
 //    @Override
 //    public void callback(String address) {
@@ -600,11 +605,11 @@ public class HomeScreenActivity extends BaseActivity implements GoogleApiClient.
                 Place place = PlaceAutocomplete.getPlace(this, data);
                 if (!tracker) {
 
-                    dropUpLatLong=place.getLatLng();
+                    dropUpLatLong = place.getLatLng();
                     dropupAddress.setText(place.getAddress().toString());
                 } else {
 
-                    picUpLatLong=place.getLatLng();
+                    picUpLatLong = place.getLatLng();
                     pickupAddress.setText(place.getAddress().toString());
                 }
             } else if (resultCode == PlaceAutocomplete.RESULT_ERROR) {
