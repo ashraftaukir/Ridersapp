@@ -58,6 +58,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -77,7 +78,7 @@ public class HomeScreenActivity extends BaseActivity implements GoogleApiClient.
         GoogleApiClient.OnConnectionFailedListener,
         LocationListener, OnMapReadyCallback,
         View.OnClickListener
-       // ,CallBackListener
+        // ,CallBackListener
 {
 
     RecyclerView cardListRecylerview;
@@ -95,9 +96,12 @@ public class HomeScreenActivity extends BaseActivity implements GoogleApiClient.
     Toolbar toolbar;
     ImageView navdrawerIcon;
     ViewGroup header;
-  //  LinearLayout searchBarLinearLayout;
-    TextView pickupAddress,dropupAddress;
-    int PLACE_AUTOCOMPLETE_REQUEST_CODE = 1;
+    //  LinearLayout searchBarLinearLayout;
+    TextView pickupAddress, dropupAddress;
+    int PLACE_AUTOCOMPLETE_REQUEST_CODE_FOR_DROPUP = 1;
+    public boolean tracker = false;
+    public LatLng picUpLatLong;
+    public LatLng dropUpLatLong;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -131,11 +135,12 @@ public class HomeScreenActivity extends BaseActivity implements GoogleApiClient.
 
         mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
         navdrawerIcon.setOnClickListener(this);
-//        searchBarLinearLayout.setOnClickListener(this);
         pickupAddress.setOnClickListener(this);
         dropupAddress.setOnClickListener(this);
 
+
     }
+
 
     private void prepareAdevertisementModel() {
 
@@ -179,7 +184,7 @@ public class HomeScreenActivity extends BaseActivity implements GoogleApiClient.
 
         //toolbar item initialization
         navdrawerIcon = (ImageView) findViewById(R.id.navdrawer_icon);
-       // searchBarLinearLayout = (LinearLayout) findViewById(R.id.searchBarLinearlayout);
+        // searchBarLinearLayout = (LinearLayout) findViewById(R.id.searchBarLinearlayout);
 
         String[] navDrawerTitles = getResources().getStringArray(R.array.string_array_name);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -291,6 +296,29 @@ public class HomeScreenActivity extends BaseActivity implements GoogleApiClient.
             mGoogleMap.setMyLocationEnabled(true);
         }
 
+
+        //centerise marker in google map
+        mGoogleMap.setOnCameraMoveListener(new GoogleMap.OnCameraMoveListener() {
+            @Override
+            public void onCameraMove() {
+
+                //Remove previous center if it exists
+                if (mCurrLocationMarker != null) {
+                    mCurrLocationMarker.remove();
+                }
+
+                CameraPosition test = mGoogleMap.getCameraPosition();
+                //Assign mCenterMarker reference:
+                mCurrLocationMarker =
+                        mGoogleMap.addMarker(new MarkerOptions().position(mGoogleMap.getCameraPosition().target)
+                                        .anchor(0.5f, .05f)
+                                //        .title("Test")
+                        );
+                //Log.d(TAG, "Map Coordinate: " + String.valueOf(test));
+            }
+        });
+
+
     }
 
     public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
@@ -337,7 +365,6 @@ public class HomeScreenActivity extends BaseActivity implements GoogleApiClient.
                 .build();
         mGoogleApiClient.connect();
     }
-
 
 
 //    @Override
@@ -490,7 +517,7 @@ public class HomeScreenActivity extends BaseActivity implements GoogleApiClient.
             if (addresses != null) {
 
                 // strAdd=addresses.get(0).getLocality();
-                 Address returnedAddress = addresses.get(0);
+                Address returnedAddress = addresses.get(0);
 
                 StringBuilder strReturnedAddress = new StringBuilder("");
 
@@ -498,8 +525,8 @@ public class HomeScreenActivity extends BaseActivity implements GoogleApiClient.
                     strReturnedAddress.append(returnedAddress.getAddressLine(i)).append("\n");
                 }
                 strReturnedAddress.append(returnedAddress.getLocality()).append("\n");
-             //   strReturnedAddress.append(address.getPostalCode()).append("\n");
-               // strReturnedAddress.append(returnedAddress.getCountryName());
+                //   strReturnedAddress.append(address.getPostalCode()).append("\n");
+                // strReturnedAddress.append(returnedAddress.getCountryName());
                 strAdd = strReturnedAddress.toString();
                 Log.d("Current loction ", strReturnedAddress.toString());
             } else {
@@ -521,8 +548,10 @@ public class HomeScreenActivity extends BaseActivity implements GoogleApiClient.
             case R.id.navdrawer_icon:
                 mDrawerLayout.openDrawer(Gravity.LEFT);
                 break;
+            case R.id.pickup_tv:
 
-         //   case R.id.pickup_tv:
+                tracker = true;
+                gotoGoogleActivity();
 //                 initFragment(new SearchViewFragment(), Appinfo.SEARCHFRAGMENT,R.id.frame_container);
 
 
@@ -532,9 +561,9 @@ public class HomeScreenActivity extends BaseActivity implements GoogleApiClient.
 //                                mLastLocation.getLongitude()), Appinfo.SEARCHFRAGMENT)
 //                        .commit();
 
-             //   break;
+                break;
             case R.id.dropup_tv:
-
+                tracker = false;
                 gotoGoogleActivity();
                 //goToSearchViewActivity();
 
@@ -554,7 +583,7 @@ public class HomeScreenActivity extends BaseActivity implements GoogleApiClient.
             Intent intent =
                     new PlaceAutocomplete.IntentBuilder(PlaceAutocomplete.MODE_FULLSCREEN)
                             .build(this);
-            startActivityForResult(intent, PLACE_AUTOCOMPLETE_REQUEST_CODE);
+            startActivityForResult(intent, PLACE_AUTOCOMPLETE_REQUEST_CODE_FOR_DROPUP);
         } catch (GooglePlayServicesRepairableException e) {
             // TODO: Handle the error.
         } catch (GooglePlayServicesNotAvailableException e) {
@@ -566,11 +595,18 @@ public class HomeScreenActivity extends BaseActivity implements GoogleApiClient.
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == PLACE_AUTOCOMPLETE_REQUEST_CODE) {
+        if (requestCode == PLACE_AUTOCOMPLETE_REQUEST_CODE_FOR_DROPUP) {
             if (resultCode == RESULT_OK) {
                 Place place = PlaceAutocomplete.getPlace(this, data);
-              dropupAddress.setText(place.getName().toString());
-                //  Log.i("PLACE", "Place: " + place.getName());
+                if (!tracker) {
+
+                    dropUpLatLong=place.getLatLng();
+                    dropupAddress.setText(place.getAddress().toString());
+                } else {
+
+                    picUpLatLong=place.getLatLng();
+                    pickupAddress.setText(place.getAddress().toString());
+                }
             } else if (resultCode == PlaceAutocomplete.RESULT_ERROR) {
                 Status status = PlaceAutocomplete.getStatus(this, data);
                 // TODO: Handle the error.
@@ -585,11 +621,11 @@ public class HomeScreenActivity extends BaseActivity implements GoogleApiClient.
 
     private void goToSearchViewActivity() {
 
-      //  SearchViewActivity helper=new SearchViewActivity(this);
+        //  SearchViewActivity helper=new SearchViewActivity(this);
 
-        Intent intent=new Intent(this,SearchViewActivity.class);
+        Intent intent = new Intent(this, SearchViewActivity.class);
         Bundle bundle = new Bundle();
-        bundle.putString(Appinfo.FRAGMENT_NAME,Appinfo.DROP_UP_FRAGMENT);
+        bundle.putString(Appinfo.FRAGMENT_NAME, Appinfo.DROP_UP_FRAGMENT);
         //bundle.putString("Context",Appinfo.DROP_UP_FRAGMENT);
         intent.putExtras(bundle);
         startActivity(intent);

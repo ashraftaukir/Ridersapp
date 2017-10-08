@@ -58,19 +58,21 @@
                         <TextView
                             android:id="@+id/pickup_tv"
                             android:layout_marginTop="@dimen/alligntop"
-                            android:background="@color/colorWhite"
+                            android:background="@color/color_new_white"
                             style="@style/QText"
                             android:layout_below="@+id/navdrawer_icon"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:singleLine="true"
+                            android:maxLines="1"
                             android:padding="@dimen/alligntop"
+                            android:drawablePadding="@dimen/margin10dp"
                             android:layout_marginRight="@dimen/alligntop"
                             android:gravity="center_vertical"
+                            android:drawableLeft="@drawable/ic_my_location_black_24dp"
                             android:textSize="@dimen/forgotpasswordtextsize" />
                         <TextView
                             android:id="@+id/dropup_tv"
-                            android:background="@color/colorash"
+                            android:background="@color/colorWhite"
                             style="@style/QText"
                             android:layout_below="@+id/pickup_tv"
                             android:layout_width="match_parent"
@@ -80,6 +82,8 @@
                             android:padding="@dimen/alligntop"
                             android:layout_marginRight="@dimen/alligntop"
                             android:drawableRight="@drawable/ic_search_black_24dp"
+                            android:drawableLeft="@drawable/ic_place_black_24dp"
+                            android:drawablePadding="@dimen/margin10dp"
                             android:gravity="center_vertical"
                             android:textSize="@dimen/forgotpasswordtextsize" />
 
