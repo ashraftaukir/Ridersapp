@@ -9,10 +9,11 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
 import com.webxzen.ridersapp.R;
+import com.webxzen.ridersapp.base.BaseActivity;
 import com.webxzen.ridersapp.home.HomeScreenActivity;
 import com.webxzen.ridersapp.util.DBHelper;
 
-public class SplashScreenActivity extends AppCompatActivity {
+public class SplashScreenActivity extends BaseActivity {
 
 
     @Override
