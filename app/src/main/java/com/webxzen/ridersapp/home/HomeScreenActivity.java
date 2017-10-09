@@ -55,6 +55,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
@@ -281,7 +282,7 @@ public class HomeScreenActivity extends BaseActivity implements GoogleApiClient.
         markerOptions.position(latLng);
         mCurrLocationMarker = mGoogleMap.addMarker(markerOptions);
         mGoogleMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
-        mGoogleMap.animateCamera(CameraUpdateFactory.zoomTo(17));
+        mGoogleMap.animateCamera(CameraUpdateFactory.zoomTo(15));
         setPickupLocation(latLng);
         stopLocationUpdates();
 
@@ -671,10 +672,11 @@ public class HomeScreenActivity extends BaseActivity implements GoogleApiClient.
                     confirm_btn.setText(getString(R.string.cancel));
                     buttonClickChecker=true;
                 } else {
-                    bottomRelativeLayout.setVisibility(View.GONE);
-                    doneButton.setVisibility(View.GONE);
-                    bottomSheet.setVisibility(View.VISIBLE);
-
+                    //bottomRelativeLayout.setVisibility(View.GONE);
+                    //doneButton.setVisibility(View.GONE);
+                    //bottomSheet.setVisibility(View.VISIBLE);
+                    finish();
+                    startActivity(getIntent());
                 }
 
                 //Toast.makeText(this, "Test", Toast.LENGTH_SHORT).show();
@@ -749,13 +751,14 @@ public class HomeScreenActivity extends BaseActivity implements GoogleApiClient.
                 title(results.routes[0].legs[0].startAddress));
         mMap.addMarker(new MarkerOptions().position(new LatLng(results.routes[0].
                 legs[0].endLocation.lat, results.routes[0].legs[0].endLocation.lng)).
+                icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE)).
                 title(results.routes[0].legs[0].startAddress).snippet(getEndLocationTitle(results)));
 
         LatLngBounds.Builder builder = new LatLngBounds.Builder();
         builder.include(picUpLatLong);
         builder.include(dropUpLatLong);
         LatLngBounds bounds = builder.build();
-        int padding = 20; // offset from edges of the map in pixels
+        int padding = 50; // offset from edges of the map in pixels
         CameraUpdate zoomlevel = CameraUpdateFactory.newLatLngBounds(bounds, padding);
         mGoogleMap.animateCamera(zoomlevel);
 
