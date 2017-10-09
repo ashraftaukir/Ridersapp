@@ -111,6 +111,7 @@ public class HomeScreenActivity extends BaseActivity implements GoogleApiClient.
     public LatLng dropUpLatLong;
     Button doneButton;
     View bottomSheet;
+    private boolean MarkerRemove = false;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -313,6 +314,7 @@ public class HomeScreenActivity extends BaseActivity implements GoogleApiClient.
             @Override
             public void onCameraMove() {
 
+
                 //Remove previous center if it exists
                 if (mCurrLocationMarker != null) {
                     mCurrLocationMarker.remove();
@@ -321,6 +323,8 @@ public class HomeScreenActivity extends BaseActivity implements GoogleApiClient.
                 LatLng position = mGoogleMap.getCameraPosition().target;
                 mCurrLocationMarker =
                         mGoogleMap.addMarker(new MarkerOptions().position(position).anchor(0.5f, 1.0f).title("Pickup"));
+
+
             }
         });
 
@@ -695,6 +699,11 @@ public class HomeScreenActivity extends BaseActivity implements GoogleApiClient.
     }
 
     private void addMarkersToMap(DirectionsResult results, GoogleMap mMap) {
+
+       // mCurrLocationMarker.remove();
+        mMap.setOnCameraMoveListener(null);
+        mMap.setOnCameraIdleListener(null);
+        mMap.setOnCameraMoveStartedListener(null);
         mMap.addMarker(new MarkerOptions().
                 position(new LatLng(results.routes[0].legs[0].startLocation.lat,
                         results.routes[0].legs[0].startLocation.lng)).
