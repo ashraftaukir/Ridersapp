@@ -1,6 +1,7 @@
 package com.webxzen.ridersapp.home;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -35,6 +36,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RatingBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -104,14 +106,15 @@ public class HomeScreenActivity extends BaseActivity implements GoogleApiClient.
     ImageView navdrawerIcon;
     ViewGroup header;
     //  LinearLayout searchBarLinearLayout;
-    TextView pickupAddress, dropupAddress;
+    TextView pickupAddress, dropupAddress, taxiprice;
     int PLACE_AUTOCOMPLETE_REQUEST_CODE_FOR_DROPUP = 1;
     public boolean tracker = false;
     public LatLng picUpLatLong;
     public LatLng dropUpLatLong;
-    Button doneButton;
+    Button doneButton, confirm_btn;
     View bottomSheet;
-    private boolean MarkerRemove = false;
+    RelativeLayout bottomRelativeLayout;
+    boolean buttonClickChecker = false;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -154,6 +157,7 @@ public class HomeScreenActivity extends BaseActivity implements GoogleApiClient.
         dropupAddress.setOnClickListener(this);
         doneButton.setOnClickListener(this);
         doneButton.setEnabled(false);
+        confirm_btn.setOnClickListener(this);
     }
 
 
@@ -179,6 +183,9 @@ public class HomeScreenActivity extends BaseActivity implements GoogleApiClient.
         //toolbar item initialization
         navdrawerIcon = (ImageView) findViewById(R.id.navdrawer_icon);
         doneButton = (Button) findViewById(R.id.done_btn);
+        confirm_btn = (Button) findViewById(R.id.confirm_btn);
+        bottomRelativeLayout = (RelativeLayout) findViewById(R.id.bottom_RelativeLayout);
+        taxiprice = (TextView) findViewById(R.id.taxiprice);
         // searchBarLinearLayout = (LinearLayout) findViewById(R.id.searchBarLinearlayout);
 
         String[] navDrawerTitles = getResources().getStringArray(R.array.string_array_name);
@@ -637,8 +644,6 @@ public class HomeScreenActivity extends BaseActivity implements GoogleApiClient.
                 tracker = true;
                 gotoGoogleActivity();
 //                 initFragment(new SearchViewFragment(), Appinfo.SEARCHFRAGMENT,R.id.frame_container);
-
-
 //                getSupportFragmentManager().beginTransaction()
 //                        .setCustomAnimations(R.anim.in_from_bottom, 0)
 //                        .add(R.id.frame_container, new SearchViewFragment(mLastLocation.getLatitude(),
@@ -651,13 +656,29 @@ public class HomeScreenActivity extends BaseActivity implements GoogleApiClient.
                 gotoGoogleActivity();
                 //goToSearchViewActivity();
             case R.id.done_btn:
-                //Toast.makeText(this, "Test", Toast.LENGTH_SHORT).show();
                 if (!dropupAddress.getText().toString().isEmpty()) {
-                    if(isNetworkAvailable()){
+                    if (isNetworkAvailable()) {
 
                         callDrawPloyLineApi();
                     }
                 }
+                break;
+            case R.id.confirm_btn:
+
+                if (!buttonClickChecker) {
+
+                //    dialogUtil.showProgressDialog();
+                    confirm_btn.setText(getString(R.string.cancel));
+                    buttonClickChecker=true;
+                } else {
+                    bottomRelativeLayout.setVisibility(View.GONE);
+                    doneButton.setVisibility(View.GONE);
+                    bottomSheet.setVisibility(View.VISIBLE);
+
+                }
+
+                //Toast.makeText(this, "Test", Toast.LENGTH_SHORT).show();
+
                 break;
 
             default:
@@ -679,6 +700,13 @@ public class HomeScreenActivity extends BaseActivity implements GoogleApiClient.
 
             addPolyline(result, mGoogleMap);
             addMarkersToMap(result, mGoogleMap);
+            String value = "BDT";
+            value = value +" "+ String.valueOf(setTaxiPrice(result));
+            taxiprice.setText(value);
+            bottomRelativeLayout.setVisibility(View.VISIBLE);
+            pickupAddress.setEnabled(false);
+            dropupAddress.setEnabled(false);
+
 
         } catch (ApiException e) {
 
@@ -693,6 +721,15 @@ public class HomeScreenActivity extends BaseActivity implements GoogleApiClient.
 
     }
 
+
+    private int setTaxiPrice(DirectionsResult result) {
+
+        String str = result.routes[0].legs[0].distance.humanReadable;
+        str = str.replaceAll("[^\\d.]", "");
+           Double kilometre = Double.valueOf(str)* 20;
+        return kilometre.intValue();
+    }
+
     private void addPolyline(DirectionsResult results, GoogleMap mMap) {
         List<LatLng> decodedPath =
                 PolyUtil.decode(results.routes[0].overviewPolyline.getEncodedPath());
@@ -702,7 +739,7 @@ public class HomeScreenActivity extends BaseActivity implements GoogleApiClient.
 
     private void addMarkersToMap(DirectionsResult results, GoogleMap mMap) {
 
-       // mCurrLocationMarker.remove();
+        // mCurrLocationMarker.remove();
         mMap.setOnCameraMoveListener(null);
         mMap.setOnCameraIdleListener(null);
         mMap.setOnCameraMoveStartedListener(null);

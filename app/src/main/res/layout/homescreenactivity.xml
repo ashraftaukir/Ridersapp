@@ -92,7 +92,23 @@
 
             </android.support.v7.widget.Toolbar>
 
+            <Button
 
+                android:id="@+id/done_btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/price"
+                android:layout_gravity="bottom"
+                android:layout_marginBottom="@dimen/alligntop"
+                android:layout_marginLeft="@dimen/alligntop"
+                android:layout_marginRight="@dimen/alligntop"
+                android:layout_marginTop="@dimen/alligntop"
+                android:background="@drawable/customloginbutton"
+                android:text="@string/done"
+                android:textColor="@color/colorWhite"
+                android:visibility="gone"
+
+                />
 
             <include layout="@layout/bottomsheet" />
 
@@ -116,14 +132,14 @@
     </android.support.v4.widget.DrawerLayout>
 
     <RelativeLayout
+        android:id="@+id/bottom_RelativeLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorWhite"
         android:layout_alignParentBottom="true"
-        >
+        android:background="@color/colorWhite"
+        android:visibility="gone">
 
-        <de.hdodenhof.circleimageview.CircleImageView
-            xmlns:app="http://schemas.android.com/apk/res-auto"
+        <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
             android:id="@+id/car_image"
             android:layout_width="80dp"
             android:layout_height="70dp"
@@ -135,29 +151,29 @@
             app:civ_border_width="2dp" />
 
         <TextView
-            android:layout_marginTop="@dimen/alligntop"
-            android:id="@+id/price"
-            android:layout_below="@id/car_image"
+            android:id="@+id/taxiprice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_below="@id/car_image"
             android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/alligntop"
             android:text="@string/value"
 
             />
 
 
         <Button
-            android:layout_below="@+id/price"
-            android:id="@+id/done_btn"
+            android:id="@+id/confirm_btn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@+id/taxiprice"
             android:layout_gravity="bottom"
             android:layout_marginBottom="@dimen/alligntop"
             android:layout_marginLeft="@dimen/alligntop"
             android:layout_marginRight="@dimen/alligntop"
             android:layout_marginTop="@dimen/alligntop"
-            android:background="@drawable/customloginbutton"
-            android:text="@string/done"
+            android:background="@drawable/confirmbutton"
+            android:text="@string/confirm"
             android:textColor="@color/colorWhite"
 
             />
