@@ -82,6 +82,7 @@
     <string name="enterDestination">Enter destination later</string>
     <string name="setDestination">Tap to select destination</string>
     <string name="setPickUp">Tap to select pickup location</string>
+    <string name="value">Price</string>
 
     <!--Drawerlayout info-->
 

@@ -651,10 +651,12 @@ public class HomeScreenActivity extends BaseActivity implements GoogleApiClient.
                 gotoGoogleActivity();
                 //goToSearchViewActivity();
             case R.id.done_btn:
-
                 //Toast.makeText(this, "Test", Toast.LENGTH_SHORT).show();
                 if (!dropupAddress.getText().toString().isEmpty()) {
-                    callDrawPloyLineApi();
+                    if(isNetworkAvailable()){
+
+                        callDrawPloyLineApi();
+                    }
                 }
                 break;
 
@@ -716,7 +718,7 @@ public class HomeScreenActivity extends BaseActivity implements GoogleApiClient.
         builder.include(picUpLatLong);
         builder.include(dropUpLatLong);
         LatLngBounds bounds = builder.build();
-        int padding = 0; // offset from edges of the map in pixels
+        int padding = 20; // offset from edges of the map in pixels
         CameraUpdate zoomlevel = CameraUpdateFactory.newLatLngBounds(bounds, padding);
         mGoogleMap.animateCamera(zoomlevel);
 

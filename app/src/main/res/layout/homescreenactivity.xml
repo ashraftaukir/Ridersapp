@@ -7,139 +7,164 @@
     android:orientation="vertical">
 
 
-    <FrameLayout
-        android:id="@+id/frame_container"
+    <!--<FrameLayout-->
+    <!--android:id="@+id/frame_container"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent">-->
+
+
+    <android.support.v4.widget.DrawerLayout
+
+        android:id="@+id/drawer_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
 
-        <android.support.v4.widget.DrawerLayout
+        <fragment
+            android:id="@+id/googlemap"
+            android:name="com.google.android.gms.maps.SupportMapFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clickable="true"
+            tools:context=".home.HomeScreenActivity"
 
-            android:id="@+id/drawer_layout"
+            />
+
+
+        <android.support.design.widget.CoordinatorLayout
+
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
 
-            <fragment
-                android:id="@+id/googlemap"
-                android:name="com.google.android.gms.maps.SupportMapFragment"
+            <android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/mytoolbar"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:clickable="true"
-                tools:context=".home.HomeScreenActivity"
+                android:layout_height="wrap_content">
 
-                />
-
-
-            <android.support.design.widget.CoordinatorLayout
-
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-
-                <android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
-                    android:id="@+id/mytoolbar"
+                <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="match_parent">
 
-                    <RelativeLayout
+                    <ImageView
+                        android:id="@+id/navdrawer_icon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/margin30dp"
+                        android:contentDescription="@string/navicon"
+                        android:src="@drawable/ic_menu_black_24dp" />
+
+                    <TextView
+                        android:id="@+id/pickup_tv"
+                        style="@style/QText"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent">
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/navdrawer_icon"
+                        android:layout_marginRight="@dimen/alligntop"
+                        android:layout_marginTop="@dimen/alligntop"
+                        android:background="@color/color_new_white"
+                        android:drawableLeft="@drawable/ic_my_location_black_24dp"
+                        android:drawablePadding="@dimen/margin10dp"
+                        android:gravity="center_vertical"
+                        android:hint="@string/setDestination"
+                        android:maxLines="1"
+                        android:padding="@dimen/alligntop"
+                        android:textSize="@dimen/forgotpasswordtextsize" />
 
-                        <ImageView
-                            android:id="@+id/navdrawer_icon"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/alligntop"
-                            android:contentDescription="@string/navicon"
-                            android:src="@drawable/ic_menu_black_24dp" />
+                    <TextView
+                        android:id="@+id/dropup_tv"
+                        style="@style/QText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/pickup_tv"
+                        android:layout_marginRight="@dimen/alligntop"
+                        android:background="@color/colorWhite"
+                        android:drawableLeft="@drawable/ic_place_black_24dp"
+                        android:drawablePadding="@dimen/margin10dp"
+                        android:drawableRight="@drawable/ic_search_black_24dp"
+                        android:gravity="center_vertical"
+                        android:hint="@string/setDestination"
+                        android:padding="@dimen/alligntop"
+                        android:singleLine="true"
+                        android:textSize="@dimen/forgotpasswordtextsize" />
 
-                        <TextView
-                            android:id="@+id/pickup_tv"
-                            style="@style/QText"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@+id/navdrawer_icon"
-                            android:layout_marginRight="@dimen/alligntop"
-                            android:layout_marginTop="@dimen/alligntop"
-                            android:background="@color/color_new_white"
-                            android:drawableLeft="@drawable/ic_my_location_black_24dp"
-                            android:drawablePadding="@dimen/margin10dp"
-                            android:gravity="center_vertical"
-                            android:hint="@string/setDestination"
-                            android:maxLines="1"
-                            android:padding="@dimen/alligntop"
-                            android:textSize="@dimen/forgotpasswordtextsize" />
+                </RelativeLayout>
 
-                        <TextView
-                            android:id="@+id/dropup_tv"
-                            style="@style/QText"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@+id/pickup_tv"
-                            android:layout_marginRight="@dimen/alligntop"
-                            android:background="@color/colorWhite"
-                            android:drawableLeft="@drawable/ic_place_black_24dp"
-                            android:drawablePadding="@dimen/margin10dp"
-                            android:drawableRight="@drawable/ic_search_black_24dp"
-                            android:gravity="center_vertical"
-                            android:hint="@string/setDestination"
-                            android:padding="@dimen/alligntop"
-                            android:singleLine="true"
-                            android:textSize="@dimen/forgotpasswordtextsize" />
-
-                    </RelativeLayout>
-
-                </android.support.v7.widget.Toolbar>
+            </android.support.v7.widget.Toolbar>
 
 
-                <!--<LinearLayout-->
-                <!--android:id="@+id/searchBarLinearlayout"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_marginLeft="@dimen/alligntop"-->
-                <!--android:layout_marginRight="@dimen/alligntop"-->
-                <!--android:layout_marginTop="?attr/actionBarSize"-->
-                <!--android:background="@drawable/shadoweffect"-->
-                <!--&gt;-->
+
+            <include layout="@layout/bottomsheet" />
 
 
-                <!--</LinearLayout>-->
-                <Button
-                    android:visibility="gone"
-                    android:id="@+id/done_btn"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="bottom"
-                    android:layout_marginBottom="@dimen/alligntop"
-                    android:layout_marginLeft="@dimen/alligntop"
-                    android:layout_marginRight="@dimen/alligntop"
-                    android:background="@drawable/customloginbutton"
-                    android:text="@string/done"
-                    android:textColor="@color/colorWhite"
-
-                    />
-
-                <include layout="@layout/bottomsheet" />
+        </android.support.design.widget.CoordinatorLayout>
 
 
-            </android.support.design.widget.CoordinatorLayout>
+        <ListView
+            android:id="@+id/left_drawer"
+            android:layout_width="240dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+            android:background="@color/colorWhite"
+            android:choiceMode="singleChoice"
+            android:divider="@android:color/transparent"
+            android:dividerHeight="0dp"
+
+            />
 
 
-            <ListView
-                android:id="@+id/left_drawer"
-                android:layout_width="240dp"
-                android:layout_height="match_parent"
-                android:layout_gravity="start"
-                android:background="@color/colorWhite"
-                android:choiceMode="singleChoice"
-                android:divider="@android:color/transparent"
-                android:dividerHeight="0dp"
+    </android.support.v4.widget.DrawerLayout>
 
-                />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorWhite"
+        android:layout_alignParentBottom="true"
+        >
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/car_image"
+            android:layout_width="80dp"
+            android:layout_height="70dp"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/alligntop"
+            android:src="@drawable/car"
+            app:civ_border_color="#FF000000"
+            app:civ_border_width="2dp" />
+
+        <TextView
+            android:layout_marginTop="@dimen/alligntop"
+            android:id="@+id/price"
+            android:layout_below="@id/car_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:text="@string/value"
+
+            />
 
 
-        </android.support.v4.widget.DrawerLayout>
-    </FrameLayout>
+        <Button
+            android:layout_below="@+id/price"
+            android:id="@+id/done_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_marginBottom="@dimen/alligntop"
+            android:layout_marginLeft="@dimen/alligntop"
+            android:layout_marginRight="@dimen/alligntop"
+            android:layout_marginTop="@dimen/alligntop"
+            android:background="@drawable/customloginbutton"
+            android:text="@string/done"
+            android:textColor="@color/colorWhite"
+
+            />
+
+
+    </RelativeLayout>
+    <!--</FrameLayout>-->
+
 
 </RelativeLayout>
