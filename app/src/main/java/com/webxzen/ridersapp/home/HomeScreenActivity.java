@@ -271,6 +271,7 @@ public class HomeScreenActivity extends BaseActivity implements GoogleApiClient.
     @Override
     public void onLocationChanged(Location location) {
 
+        Log.d("onLocationChanged", "onLocationChanged");
         mLastLocation = location;
         if (mCurrLocationMarker != null) {
             mCurrLocationMarker.remove();
@@ -290,7 +291,6 @@ public class HomeScreenActivity extends BaseActivity implements GoogleApiClient.
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
-
 
         mGoogleMap = googleMap;
         mGoogleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
@@ -322,7 +322,7 @@ public class HomeScreenActivity extends BaseActivity implements GoogleApiClient.
             @Override
             public void onCameraMove() {
 
-
+                Log.d("setOnCameraMoveListener", "setOnCameraMoveListener");
                 //Remove previous center if it exists
                 if (mCurrLocationMarker != null) {
                     mCurrLocationMarker.remove();
@@ -339,6 +339,7 @@ public class HomeScreenActivity extends BaseActivity implements GoogleApiClient.
         mGoogleMap.setOnCameraIdleListener(new GoogleMap.OnCameraIdleListener() {
             @Override
             public void onCameraIdle() {
+                Log.d("setOnCameraIdleListener", "setOnCameraIdleListener");
                 LatLng position = mGoogleMap.getCameraPosition().target;
                 setPickupLocation(position);
             }
@@ -348,6 +349,7 @@ public class HomeScreenActivity extends BaseActivity implements GoogleApiClient.
 
             @Override
             public void onCameraMoveStarted(int i) {
+                Log.d("MoveStartedListener", "tartedListener");
                 clearPickupLocation();
             }
         });
@@ -741,10 +743,11 @@ public class HomeScreenActivity extends BaseActivity implements GoogleApiClient.
 
     private void addMarkersToMap(DirectionsResult results, GoogleMap mMap) {
 
-        // mCurrLocationMarker.remove();
+         mCurrLocationMarker.remove();
         mMap.setOnCameraMoveListener(null);
         mMap.setOnCameraIdleListener(null);
         mMap.setOnCameraMoveStartedListener(null);
+
         mMap.addMarker(new MarkerOptions().
                 position(new LatLng(results.routes[0].legs[0].startLocation.lat,
                         results.routes[0].legs[0].startLocation.lng)).
