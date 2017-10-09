@@ -48,14 +48,23 @@ import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlaceAutocomplete;
+import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.PolylineOptions;
+import com.google.maps.DirectionsApi;
+import com.google.maps.GeoApiContext;
+import com.google.maps.android.PolyUtil;
+import com.google.maps.errors.ApiException;
+import com.google.maps.model.DirectionsResult;
+import com.google.maps.model.TravelMode;
 import com.webxzen.ridersapp.R;
 import com.webxzen.ridersapp.base.BaseActivity;
 import com.webxzen.ridersapp.login.SplashScreenActivity;
@@ -63,9 +72,13 @@ import com.webxzen.ridersapp.model.AdvertisementModel;
 import com.webxzen.ridersapp.util.Appinfo;
 import com.webxzen.ridersapp.util.DBHelper;
 
+import org.joda.time.DateTime;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.concurrent.TimeUnit;
 
 
 public class HomeScreenActivity extends BaseActivity implements GoogleApiClient.ConnectionCallbacks,
@@ -115,7 +128,7 @@ public class HomeScreenActivity extends BaseActivity implements GoogleApiClient.
     }
 
     private void setPickupLocation(LatLng latLng) {
-
+        picUpLatLong = latLng;
         String address = getCompleteAddressString(latLng.latitude, latLng.longitude);
         pickupAddress.setText(address);
     }
@@ -139,7 +152,7 @@ public class HomeScreenActivity extends BaseActivity implements GoogleApiClient.
         pickupAddress.setOnClickListener(this);
         dropupAddress.setOnClickListener(this);
         doneButton.setOnClickListener(this);
-
+        doneButton.setEnabled(false);
     }
 
 
@@ -221,6 +234,7 @@ public class HomeScreenActivity extends BaseActivity implements GoogleApiClient.
         }
         LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, this);
     }
+
     protected void stopLocationUpdates() {
         LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this);
     }
@@ -318,7 +332,7 @@ public class HomeScreenActivity extends BaseActivity implements GoogleApiClient.
             }
         });
 
-        mGoogleMap.setOnCameraMoveStartedListener(new GoogleMap.OnCameraMoveStartedListener(){
+        mGoogleMap.setOnCameraMoveStartedListener(new GoogleMap.OnCameraMoveStartedListener() {
 
             @Override
             public void onCameraMoveStarted(int i) {
@@ -432,7 +446,7 @@ public class HomeScreenActivity extends BaseActivity implements GoogleApiClient.
     private void bottomsheetinitialization() {
 
 
-         bottomSheet = findViewById(R.id.design_bottom_sheet_relativelayout);
+        bottomSheet = findViewById(R.id.design_bottom_sheet_relativelayout);
         BottomSheetBehavior behavior = BottomSheetBehavior.from(bottomSheet);
         behavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
             @Override
@@ -543,9 +557,9 @@ public class HomeScreenActivity extends BaseActivity implements GoogleApiClient.
             }
         } catch (Exception e) {
             e.printStackTrace();
-          //  Log.w(" loction address", "Canont get Address!");
+            //  Log.w(" loction address", "Canont get Address!");
             //Log.d("loction_address", String.valueOf(e));
-            Log.d(" loction address", "Canont get Address!",e);
+            Log.d(" loction address", "Canont get Address!", e);
         }
         return strAdd;
     }
@@ -578,15 +592,20 @@ public class HomeScreenActivity extends BaseActivity implements GoogleApiClient.
                     dropupAddress.setText(place.getAddress().toString());
 
                     //invisible bottom sheet and visible button
+
                     bottomSheet.setVisibility(View.GONE);
                     doneButton.setVisibility(View.VISIBLE);
-
+                    doneButton.setEnabled(true);
 
                 } else {
 
                     picUpLatLong = place.getLatLng();
                     pickupAddress.setText(place.getAddress().toString());
+
+
                 }
+
+
             } else if (resultCode == PlaceAutocomplete.RESULT_ERROR) {
                 Status status = PlaceAutocomplete.getStatus(this, data);
                 // TODO: Handle the error.
@@ -595,10 +614,10 @@ public class HomeScreenActivity extends BaseActivity implements GoogleApiClient.
             } else if (resultCode == RESULT_CANCELED) {
                 // The user canceled the operation.
             }
+
+
         }
     }
-
-
 
 
     @Override
@@ -629,8 +648,10 @@ public class HomeScreenActivity extends BaseActivity implements GoogleApiClient.
                 //goToSearchViewActivity();
             case R.id.done_btn:
 
-              //  Toast.makeText(this, "Test", Toast.LENGTH_SHORT).show();
-                callDrawPloyLineApi();
+                //Toast.makeText(this, "Test", Toast.LENGTH_SHORT).show();
+                if (!dropupAddress.getText().toString().isEmpty()) {
+                    callDrawPloyLineApi();
+                }
                 break;
 
             default:
@@ -641,20 +662,70 @@ public class HomeScreenActivity extends BaseActivity implements GoogleApiClient.
     }
 
     private void callDrawPloyLineApi() {
+        Log.d("callDrawPloyLineApi", "callDrawPloyLineApi: ");
+        DateTime now = new DateTime();
+        try {
+            DirectionsResult result = DirectionsApi.newRequest(getGeoContext())
+                    .mode(TravelMode.DRIVING).origin(/*String.valueOf(picUpLatLong)*/pickupAddress.getText().toString())
+                    .destination(/*String.valueOf(dropUpLatLong)*/dropupAddress.getText().toString())
+                    .departureTime(now)
+                    .await();
+
+            addPolyline(result, mGoogleMap);
+            addMarkersToMap(result, mGoogleMap);
+
+        } catch (ApiException e) {
+
+            e.printStackTrace();
+            Log.d("ApiException", "Canont get Address!", e);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
 
     }
 
+    private void addPolyline(DirectionsResult results, GoogleMap mMap) {
+        List<LatLng> decodedPath =
+                PolyUtil.decode(results.routes[0].overviewPolyline.getEncodedPath());
+        mMap.addPolyline(new PolylineOptions().addAll(decodedPath));
 
-//    private void goToSearchViewActivity() {
-//
-//
-//        Intent intent = new Intent(this, SearchViewActivity.class);
-//        Bundle bundle = new Bundle();
-//        bundle.putString(Appinfo.FRAGMENT_NAME, Appinfo.DROP_UP_FRAGMENT);
-//        //bundle.putString("Context",Appinfo.DROP_UP_FRAGMENT);
-//        intent.putExtras(bundle);
-//        startActivity(intent);
-//
-//    }
+    }
+
+    private void addMarkersToMap(DirectionsResult results, GoogleMap mMap) {
+        mMap.addMarker(new MarkerOptions().
+                position(new LatLng(results.routes[0].legs[0].startLocation.lat,
+                        results.routes[0].legs[0].startLocation.lng)).
+                title(results.routes[0].legs[0].startAddress));
+        mMap.addMarker(new MarkerOptions().position(new LatLng(results.routes[0].
+                legs[0].endLocation.lat, results.routes[0].legs[0].endLocation.lng)).
+                title(results.routes[0].legs[0].startAddress).snippet(getEndLocationTitle(results)));
+
+        LatLngBounds.Builder builder = new LatLngBounds.Builder();
+        builder.include(picUpLatLong);
+        builder.include(dropUpLatLong);
+        LatLngBounds bounds = builder.build();
+        int padding = 0; // offset from edges of the map in pixels
+        CameraUpdate zoomlevel = CameraUpdateFactory.newLatLngBounds(bounds, padding);
+        mGoogleMap.animateCamera(zoomlevel);
+
+
+    }
+
+    private GeoApiContext getGeoContext() {
+        GeoApiContext geoApiContext = new GeoApiContext();
+        return geoApiContext.setQueryRateLimit(3)
+                .setApiKey(getString(R.string.google_map_api_key))
+                .setConnectTimeout(1, TimeUnit.SECONDS)
+                .setReadTimeout(1, TimeUnit.SECONDS)
+                .setWriteTimeout(1, TimeUnit.SECONDS);
+    }
+
+    private String getEndLocationTitle(DirectionsResult results) {
+        return "Time :" + results.routes[0].legs[0].duration.humanReadable +
+                " Distance :" + results.routes[0].legs[0].distance.humanReadable;
+    }
+
 }
