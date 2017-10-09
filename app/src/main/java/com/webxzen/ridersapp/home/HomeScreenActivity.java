@@ -5,6 +5,8 @@ import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.LayerDrawable;
@@ -35,6 +37,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.RatingBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -116,6 +119,7 @@ public class HomeScreenActivity extends BaseActivity implements GoogleApiClient.
     View bottomSheet;
     RelativeLayout bottomRelativeLayout;
     boolean buttonClickChecker = false;
+    ProgressBar progressbar;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -187,6 +191,7 @@ public class HomeScreenActivity extends BaseActivity implements GoogleApiClient.
         confirm_btn = (Button) findViewById(R.id.confirm_btn);
         bottomRelativeLayout = (RelativeLayout) findViewById(R.id.bottom_RelativeLayout);
         taxiprice = (TextView) findViewById(R.id.taxiprice);
+        progressbar=(ProgressBar)findViewById(R.id.progressbar);
         // searchBarLinearLayout = (LinearLayout) findViewById(R.id.searchBarLinearlayout);
 
         String[] navDrawerTitles = getResources().getStringArray(R.array.string_array_name);
@@ -663,6 +668,9 @@ public class HomeScreenActivity extends BaseActivity implements GoogleApiClient.
                     if (isNetworkAvailable()) {
 
                         callDrawPloyLineApi();
+                    }else{
+                        dialogUtil.showDialogOk(getString(R.string.no_internet));
+
                     }
                 }
                 break;
@@ -673,7 +681,10 @@ public class HomeScreenActivity extends BaseActivity implements GoogleApiClient.
                 //    dialogUtil.showProgressDialog();
                     confirm_btn.setText(getString(R.string.cancel));
                     buttonClickChecker=true;
+                    progressbar.setVisibility(View.VISIBLE);
+
                 } else {
+                    progressbar.setVisibility(View.GONE);
                     //bottomRelativeLayout.setVisibility(View.GONE);
                     //doneButton.setVisibility(View.GONE);
                     //bottomSheet.setVisibility(View.VISIBLE);
@@ -696,11 +707,14 @@ public class HomeScreenActivity extends BaseActivity implements GoogleApiClient.
         Log.d("callDrawPloyLineApi", "callDrawPloyLineApi: ");
         DateTime now = new DateTime();
         try {
+
+            dialogUtil.showProgressDialog();
             DirectionsResult result = DirectionsApi.newRequest(getGeoContext())
                     .mode(TravelMode.DRIVING).origin(/*String.valueOf(picUpLatLong)*/pickupAddress.getText().toString())
                     .destination(/*String.valueOf(dropUpLatLong)*/dropupAddress.getText().toString())
                     .departureTime(now)
                     .await();
+            dialogUtil.dismissProgress();
 
             addPolyline(result, mGoogleMap);
             addMarkersToMap(result, mGoogleMap);
@@ -748,6 +762,8 @@ public class HomeScreenActivity extends BaseActivity implements GoogleApiClient.
         mMap.setOnCameraIdleListener(null);
         mMap.setOnCameraMoveStartedListener(null);
 
+
+
         mMap.addMarker(new MarkerOptions().
                 position(new LatLng(results.routes[0].legs[0].startLocation.lat,
                         results.routes[0].legs[0].startLocation.lng)).
@@ -755,7 +771,7 @@ public class HomeScreenActivity extends BaseActivity implements GoogleApiClient.
         mMap.addMarker(new MarkerOptions().position(new LatLng(results.routes[0].
                 legs[0].endLocation.lat, results.routes[0].legs[0].endLocation.lng)).
                 icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE)).
-                title(results.routes[0].legs[0].startAddress).snippet(getEndLocationTitle(results)));
+                       title(results.routes[0].legs[0].startAddress).snippet(getEndLocationTitle(results)));
 
         LatLngBounds.Builder builder = new LatLngBounds.Builder();
         builder.include(picUpLatLong);

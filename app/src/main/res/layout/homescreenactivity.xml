@@ -103,7 +103,7 @@
                 android:layout_marginLeft="@dimen/alligntop"
                 android:layout_marginRight="@dimen/alligntop"
                 android:layout_marginTop="@dimen/alligntop"
-                android:background="@drawable/customloginbutton"
+                android:background="@drawable/confirmbutton"
                 android:text="@string/done"
                 android:textColor="@color/colorWhite"
                 android:visibility="gone"
@@ -130,6 +130,16 @@
 
 
     </android.support.v4.widget.DrawerLayout>
+
+
+    <ProgressBar
+
+        android:id="@+id/progressbar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:visibility="gone"
+        />
 
     <RelativeLayout
         android:id="@+id/bottom_RelativeLayout"
