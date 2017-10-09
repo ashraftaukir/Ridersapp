@@ -58,6 +58,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
@@ -762,11 +763,13 @@ public class HomeScreenActivity extends BaseActivity implements GoogleApiClient.
         mMap.setOnCameraIdleListener(null);
         mMap.setOnCameraMoveStartedListener(null);
 
-
-
+//        Bitmap bmpicon = BitmapFactory.decodeResource(getResources(),
+//                R.drawable.mylocation);
+//
         mMap.addMarker(new MarkerOptions().
                 position(new LatLng(results.routes[0].legs[0].startLocation.lat,
                         results.routes[0].legs[0].startLocation.lng)).
+                //icon(BitmapDescriptorFactory.fromBitmap(bmpicon)).
                 title(results.routes[0].legs[0].startAddress));
         mMap.addMarker(new MarkerOptions().position(new LatLng(results.routes[0].
                 legs[0].endLocation.lat, results.routes[0].legs[0].endLocation.lng)).
