@@ -81,6 +81,7 @@
     <string name="setlocation">Set location on map</string>
     <string name="enterDestination">Enter destination later</string>
     <string name="setDestination">Tap to select destination</string>
+    <string name="setPickUp">Tap to select pickup location</string>
 
     <!--Drawerlayout info-->
 
