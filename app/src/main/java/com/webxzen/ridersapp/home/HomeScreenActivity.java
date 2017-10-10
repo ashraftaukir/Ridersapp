@@ -121,6 +121,7 @@ public class HomeScreenActivity extends BaseActivity implements GoogleApiClient.
     RelativeLayout bottomRelativeLayout;
     boolean confirmbuttonClickChecker = false;
     boolean cameraMoving = false;
+    boolean mapAdding=false;
     ProgressBar progressbar;
     Marker dropUpMarker;
 
@@ -627,13 +628,13 @@ public class HomeScreenActivity extends BaseActivity implements GoogleApiClient.
                     mCurrLocationMarker.remove();
                     setDropPointAddressMarker();
                     setPicPointAddressMarker(0);
+                    mapAdding=true;
 
 
                 } else {
                     picUpLatLong = place.getLatLng();
                     pickupAddress.setText(place.getAddress().toString());
                 }
-                // cameraMoving=false;
 
             } else if (resultCode == PlaceAutocomplete.RESULT_ERROR) {
                 Status status = PlaceAutocomplete.getStatus(this, data);
@@ -651,13 +652,13 @@ public class HomeScreenActivity extends BaseActivity implements GoogleApiClient.
     private void setPicPointAddressMarker(int cameraUdpateValue) {
 
 
-        //picUpaddress marker added to the project
-        MarkerOptions markerOptions = new MarkerOptions();
-        markerOptions.position(picUpLatLong);
-        mCurrLocationMarker = mGoogleMap.addMarker(markerOptions);
         if (cameraUdpateValue == 1) {
-            mGoogleMap.moveCamera(CameraUpdateFactory.newLatLng(dropUpLatLong));
+            mGoogleMap.moveCamera(CameraUpdateFactory.newLatLng(picUpLatLong));
             mGoogleMap.animateCamera(CameraUpdateFactory.zoomTo(15));
+        }else {
+            MarkerOptions markerOptions = new MarkerOptions();
+            markerOptions.position(picUpLatLong);
+            mCurrLocationMarker = mGoogleMap.addMarker(markerOptions);
         }
 
     }
@@ -675,6 +676,11 @@ public class HomeScreenActivity extends BaseActivity implements GoogleApiClient.
 
     }
 
+    private void setDropPointMarkerMover(){
+        mGoogleMap.moveCamera(CameraUpdateFactory.newLatLng(dropUpLatLong));
+        mGoogleMap.animateCamera(CameraUpdateFactory.zoomTo(15));
+    }
+
 
     @Override
     public void onClick(View v) {
@@ -685,16 +691,25 @@ public class HomeScreenActivity extends BaseActivity implements GoogleApiClient.
                 mDrawerLayout.openDrawer(Gravity.LEFT);
                 break;
             case R.id.pickup_tv:
-                googleActivityCallingTracker = true;
-                gotoGoogleActivity();
+
+                if(mapAdding){
+                    setPicPointAddressMarker(1);
+                }else{
+                    googleActivityCallingTracker = true;
+                    gotoGoogleActivity();
+                }
                 break;
             case R.id.dropup_tv:
-                googleActivityCallingTracker = false;
-                gotoGoogleActivity();
+
+                if(mapAdding){
+                    setDropPointMarkerMover();
+                }else{
+                    googleActivityCallingTracker = false;
+                    gotoGoogleActivity();
+                }
                 break;
             case R.id.done_btn:
 
-                //  mCurrLocationMarker.remove();
                 if (!dropupAddress.getText().toString().isEmpty() && !pickupAddress.getText().toString().isEmpty()) {
                     if (isNetworkAvailable()) {
                         callDrawPloyLineApi(pickupAddress.getText().toString(), dropupAddress.getText().toString());
@@ -704,7 +719,6 @@ public class HomeScreenActivity extends BaseActivity implements GoogleApiClient.
                 }
                 break;
             case R.id.confirm_btn:
-                // mCurrLocationMarker.remove();
 
 
                 if (!confirmbuttonClickChecker) {
@@ -790,9 +804,6 @@ public class HomeScreenActivity extends BaseActivity implements GoogleApiClient.
 
         mCurrLocationMarker.remove();
         dropUpMarker.remove();
-        // mMap.clear();
-        // setDropPointAddressMarker();
-        //setPicPointAddressMarker(1);
 
         mMap.addMarker(new MarkerOptions().
                 position(new LatLng(results.routes[0].legs[0].startLocation.lat,
