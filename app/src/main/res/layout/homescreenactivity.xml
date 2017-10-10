@@ -52,7 +52,10 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/margin30dp"
                         android:contentDescription="@string/navicon"
-                        android:src="@drawable/ic_menu_black_24dp" />
+                        android:src="@drawable/ic_menu_black_24dp"
+                        android:paddingTop="@dimen/margin5dp"
+                        android:paddingRight="@dimen/alligntop"
+                        />
 
                     <TextView
                         android:id="@+id/pickup_tv"
