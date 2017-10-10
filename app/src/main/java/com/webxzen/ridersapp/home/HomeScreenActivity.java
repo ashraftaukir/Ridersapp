@@ -192,7 +192,7 @@ public class HomeScreenActivity extends BaseActivity implements GoogleApiClient.
         confirm_btn = (Button) findViewById(R.id.confirm_btn);
         bottomRelativeLayout = (RelativeLayout) findViewById(R.id.bottom_RelativeLayout);
         taxiprice = (TextView) findViewById(R.id.taxiprice);
-        progressbar=(ProgressBar)findViewById(R.id.progressbar);
+        progressbar = (ProgressBar) findViewById(R.id.progressbar);
         // searchBarLinearLayout = (LinearLayout) findViewById(R.id.searchBarLinearlayout);
 
         String[] navDrawerTitles = getResources().getStringArray(R.array.string_array_name);
@@ -669,7 +669,7 @@ public class HomeScreenActivity extends BaseActivity implements GoogleApiClient.
                     if (isNetworkAvailable()) {
 
                         callDrawPloyLineApi();
-                    }else{
+                    } else {
                         dialogUtil.showDialogOk(getString(R.string.no_internet));
 
                     }
@@ -679,9 +679,9 @@ public class HomeScreenActivity extends BaseActivity implements GoogleApiClient.
 
                 if (!buttonClickChecker) {
 
-                //    dialogUtil.showProgressDialog();
+                    //    dialogUtil.showProgressDialog();
                     confirm_btn.setText(getString(R.string.cancel));
-                    buttonClickChecker=true;
+                    buttonClickChecker = true;
                     progressbar.setVisibility(View.VISIBLE);
 
                 } else {
@@ -720,7 +720,7 @@ public class HomeScreenActivity extends BaseActivity implements GoogleApiClient.
             addPolyline(result, mGoogleMap);
             addMarkersToMap(result, mGoogleMap);
             String value = "BDT";
-            value = value +" "+ String.valueOf(setTaxiPrice(result));
+            value = value + " " + String.valueOf(setTaxiPrice(result));
             taxiprice.setText(value);
             bottomRelativeLayout.setVisibility(View.VISIBLE);
             pickupAddress.setEnabled(false);
@@ -745,7 +745,7 @@ public class HomeScreenActivity extends BaseActivity implements GoogleApiClient.
 
         String str = result.routes[0].legs[0].distance.humanReadable;
         str = str.replaceAll("[^\\d.]", "");
-           Double kilometre = Double.valueOf(str)* 20;
+        Double kilometre = Double.valueOf(str) * 20;
         return kilometre.intValue();
     }
 
@@ -758,7 +758,7 @@ public class HomeScreenActivity extends BaseActivity implements GoogleApiClient.
 
     private void addMarkersToMap(DirectionsResult results, GoogleMap mMap) {
 
-         mCurrLocationMarker.remove();
+        mCurrLocationMarker.remove();
         mMap.setOnCameraMoveListener(null);
         mMap.setOnCameraIdleListener(null);
         mMap.setOnCameraMoveStartedListener(null);
@@ -770,22 +770,22 @@ public class HomeScreenActivity extends BaseActivity implements GoogleApiClient.
                 position(new LatLng(results.routes[0].legs[0].startLocation.lat,
                         results.routes[0].legs[0].startLocation.lng)).
                 //icon(BitmapDescriptorFactory.fromBitmap(bmpicon)).
-                title(results.routes[0].legs[0].startAddress));
+                        title(results.routes[0].legs[0].startAddress));
         mMap.addMarker(new MarkerOptions().position(new LatLng(results.routes[0].
                 legs[0].endLocation.lat, results.routes[0].legs[0].endLocation.lng)).
                 icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE)).
-                       title(results.routes[0].legs[0].startAddress).snippet(getEndLocationTitle(results)));
+                title(results.routes[0].legs[0].startAddress).snippet(getEndLocationTitle(results)));
 
-        LatLng picupBound=new LatLng(results.routes[0].bounds.northeast.lat,
+        LatLng picupBound = new LatLng(results.routes[0].bounds.northeast.lat,
                 results.routes[0].bounds.northeast.lng);
-        LatLng dropupBound=new LatLng(results.routes[0].bounds.southwest.lat,
+        LatLng dropupBound = new LatLng(results.routes[0].bounds.southwest.lat,
                 results.routes[0].bounds.southwest.lng);
 
         LatLngBounds.Builder builder = new LatLngBounds.Builder();
         builder.include(picupBound);
         builder.include(dropupBound);
         LatLngBounds bounds = builder.build();
-        int padding = 0; // offset from edges of the map in pixels
+        int padding = 10; // offset from edges of the map in pixels
         CameraUpdate zoomlevel = CameraUpdateFactory.newLatLngBounds(bounds, padding);
         mGoogleMap.animateCamera(zoomlevel);
 
