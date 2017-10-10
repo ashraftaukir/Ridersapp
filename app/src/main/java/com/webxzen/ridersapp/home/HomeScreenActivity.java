@@ -776,11 +776,16 @@ public class HomeScreenActivity extends BaseActivity implements GoogleApiClient.
                 icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE)).
                        title(results.routes[0].legs[0].startAddress).snippet(getEndLocationTitle(results)));
 
+        LatLng picupBound=new LatLng(results.routes[0].bounds.northeast.lat,
+                results.routes[0].bounds.northeast.lng);
+        LatLng dropupBound=new LatLng(results.routes[0].bounds.southwest.lat,
+                results.routes[0].bounds.southwest.lng);
+
         LatLngBounds.Builder builder = new LatLngBounds.Builder();
-        builder.include(picUpLatLong);
-        builder.include(dropUpLatLong);
+        builder.include(picupBound);
+        builder.include(dropupBound);
         LatLngBounds bounds = builder.build();
-        int padding = 50; // offset from edges of the map in pixels
+        int padding = 0; // offset from edges of the map in pixels
         CameraUpdate zoomlevel = CameraUpdateFactory.newLatLngBounds(bounds, padding);
         mGoogleMap.animateCamera(zoomlevel);
 
