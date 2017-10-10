@@ -94,7 +94,7 @@ public class HomeScreenActivity extends BaseActivity implements GoogleApiClient.
         View.OnClickListener
         // ,CallBackListener
 {
-
+    private static final String TAG = "TEST";
     RecyclerView cardListRecylerview;
     AdvertisementAdapter advertisementAdapter;
     ArrayList<AdvertisementModel> advertiseList = new ArrayList<>();
@@ -119,7 +119,8 @@ public class HomeScreenActivity extends BaseActivity implements GoogleApiClient.
     Button doneButton, confirm_btn;
     View bottomSheet;
     RelativeLayout bottomRelativeLayout;
-    boolean buttonClickChecker = false;
+    boolean confirmbuttonClickChecker = false;
+    boolean cameraMoving = false;
     ProgressBar progressbar;
 
     @Override
@@ -144,7 +145,7 @@ public class HomeScreenActivity extends BaseActivity implements GoogleApiClient.
     }
 
     private void clearPickupLocation() {
-        pickupAddress.setText("");
+            pickupAddress.setText("");
     }
 
 
@@ -162,7 +163,6 @@ public class HomeScreenActivity extends BaseActivity implements GoogleApiClient.
         pickupAddress.setOnClickListener(this);
         dropupAddress.setOnClickListener(this);
         doneButton.setOnClickListener(this);
-        doneButton.setEnabled(false);
         confirm_btn.setOnClickListener(this);
     }
 
@@ -277,7 +277,6 @@ public class HomeScreenActivity extends BaseActivity implements GoogleApiClient.
     @Override
     public void onLocationChanged(Location location) {
 
-        Log.d("onLocationChanged", "onLocationChanged");
         mLastLocation = location;
         if (mCurrLocationMarker != null) {
             mCurrLocationMarker.remove();
@@ -328,7 +327,7 @@ public class HomeScreenActivity extends BaseActivity implements GoogleApiClient.
             @Override
             public void onCameraMove() {
 
-                Log.d("setOnCameraMoveListener", "setOnCameraMoveListener");
+                Log.d(TAG, "setOnCameraMoveListener");
                 //Remove previous center if it exists
                 if (mCurrLocationMarker != null) {
                     mCurrLocationMarker.remove();
@@ -345,18 +344,27 @@ public class HomeScreenActivity extends BaseActivity implements GoogleApiClient.
         mGoogleMap.setOnCameraIdleListener(new GoogleMap.OnCameraIdleListener() {
             @Override
             public void onCameraIdle() {
-                Log.d("setOnCameraIdleListener", "setOnCameraIdleListener");
-                LatLng position = mGoogleMap.getCameraPosition().target;
-                setPickupLocation(position);
+                Log.d(TAG, "setOnCameraIdleListener");
+
+                if (!cameraMoving) {
+                    Log.d(TAG, "onCameraIdle:");
+                    LatLng position = mGoogleMap.getCameraPosition().target;
+                    setPickupLocation(position);
+                }
             }
         });
+
 
         mGoogleMap.setOnCameraMoveStartedListener(new GoogleMap.OnCameraMoveStartedListener() {
 
             @Override
             public void onCameraMoveStarted(int i) {
-                Log.d("MoveStartedListener", "tartedListener");
-                clearPickupLocation();
+                Log.d(TAG, "startedListener");
+                if(!cameraMoving){
+                    Log.d(TAG, "onCameraMoveStarted: ");
+                    clearPickupLocation();
+                }
+
             }
         });
 
@@ -556,7 +564,6 @@ public class HomeScreenActivity extends BaseActivity implements GoogleApiClient.
         try {
 
             List<Address> addresses = geocoder.getFromLocation(LATITUDE, LONGITUDE, 1);
-            Log.d("AddressString", "AddressString");
             if (addresses != null) {
 
                 // strAdd=addresses.get(0).getLocality();
@@ -571,7 +578,6 @@ public class HomeScreenActivity extends BaseActivity implements GoogleApiClient.
                 //   strReturnedAddress.append(address.getPostalCode()).append("\n");
                 // strReturnedAddress.append(returnedAddress.getCountryName());
                 strAdd = strReturnedAddress.toString();
-                Log.d("Current loction ", strReturnedAddress.toString());
             } else {
                 Log.d("Current loction", "No Address returned!");
             }
@@ -605,9 +611,12 @@ public class HomeScreenActivity extends BaseActivity implements GoogleApiClient.
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == PLACE_AUTOCOMPLETE_REQUEST_CODE_FOR_DROPUP) {
             if (resultCode == RESULT_OK) {
+
                 Place place = PlaceAutocomplete.getPlace(this, data);
                 if (!tracker) {
 
+                    Log.d(TAG, "onActivityResult: ");
+                    cameraMoving = true;
                     dropUpLatLong = place.getLatLng();
                     dropupAddress.setText(place.getAddress().toString());
 
@@ -615,16 +624,20 @@ public class HomeScreenActivity extends BaseActivity implements GoogleApiClient.
 
                     bottomSheet.setVisibility(View.GONE);
                     doneButton.setVisibility(View.VISIBLE);
-                    doneButton.setEnabled(true);
 
+                    mCurrLocationMarker.remove();
+                    MarkerOptions markerOptions = new MarkerOptions();
+
+                    markerOptions.position(dropUpLatLong);
+                    markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE));
+                    mCurrLocationMarker = mGoogleMap.addMarker(markerOptions);
+                    mGoogleMap.moveCamera(CameraUpdateFactory.newLatLng(dropUpLatLong));
+                    mGoogleMap.animateCamera(CameraUpdateFactory.zoomTo(15));
                 } else {
-
                     picUpLatLong = place.getLatLng();
                     pickupAddress.setText(place.getAddress().toString());
-
-
                 }
-
+               // cameraMoving=false;
 
             } else if (resultCode == PlaceAutocomplete.RESULT_ERROR) {
                 Status status = PlaceAutocomplete.getStatus(this, data);
@@ -649,39 +662,34 @@ public class HomeScreenActivity extends BaseActivity implements GoogleApiClient.
                 mDrawerLayout.openDrawer(Gravity.LEFT);
                 break;
             case R.id.pickup_tv:
-
                 tracker = true;
                 gotoGoogleActivity();
-//                 initFragment(new SearchViewFragment(), Appinfo.SEARCHFRAGMENT,R.id.frame_container);
-//                getSupportFragmentManager().beginTransaction()
-//                        .setCustomAnimations(R.anim.in_from_bottom, 0)
-//                        .add(R.id.frame_container, new SearchViewFragment(mLastLocation.getLatitude(),
-//                                mLastLocation.getLongitude()), Appinfo.SEARCHFRAGMENT)
-//                        .commit();
-
                 break;
             case R.id.dropup_tv:
                 tracker = false;
                 gotoGoogleActivity();
-                //goToSearchViewActivity();
+                break;
             case R.id.done_btn:
-                if (!dropupAddress.getText().toString().isEmpty()) {
+
+
+                if (!dropupAddress.getText().toString().isEmpty()&&!pickupAddress.getText().toString().isEmpty()) {
                     if (isNetworkAvailable()) {
 
-                        callDrawPloyLineApi();
+                        callDrawPloyLineApi(pickupAddress.getText().toString(),dropupAddress.getText().toString());
                     } else {
                         dialogUtil.showDialogOk(getString(R.string.no_internet));
 
                     }
                 }
+
+
                 break;
             case R.id.confirm_btn:
-
-                if (!buttonClickChecker) {
+                if (!confirmbuttonClickChecker) {
 
                     //    dialogUtil.showProgressDialog();
                     confirm_btn.setText(getString(R.string.cancel));
-                    buttonClickChecker = true;
+                    confirmbuttonClickChecker = true;
                     progressbar.setVisibility(View.VISIBLE);
 
                 } else {
@@ -693,7 +701,6 @@ public class HomeScreenActivity extends BaseActivity implements GoogleApiClient.
                     startActivity(getIntent());
                 }
 
-                //Toast.makeText(this, "Test", Toast.LENGTH_SHORT).show();
 
                 break;
 
@@ -704,18 +711,19 @@ public class HomeScreenActivity extends BaseActivity implements GoogleApiClient.
 
     }
 
-    private void callDrawPloyLineApi() {
-        Log.d("callDrawPloyLineApi", "callDrawPloyLineApi: ");
+    private void callDrawPloyLineApi(String pickup,String dropup) {
+        Log.d(TAG, "callDrawPloyLineApi: ");
         DateTime now = new DateTime();
         try {
 
-            dialogUtil.showProgressDialog();
+            //dialogUtil.showProgressDialog();
             DirectionsResult result = DirectionsApi.newRequest(getGeoContext())
-                    .mode(TravelMode.DRIVING).origin(/*String.valueOf(picUpLatLong)*/pickupAddress.getText().toString())
-                    .destination(/*String.valueOf(dropUpLatLong)*/dropupAddress.getText().toString())
+                    .mode(TravelMode.DRIVING).origin(pickup/*String.valueOf(picUpLatLong)pickupAddress.getText().toString()*/)
+                    .destination(dropup/*String.valueOf(dropUpLatLong)dropupAddress.getText().toString()*/)
                     .departureTime(now)
                     .await();
-            dialogUtil.dismissProgress();
+            Log.d(TAG, "endDrawPloyLineApi: ");
+            //dialogUtil.dismissProgress();
 
             addPolyline(result, mGoogleMap);
             addMarkersToMap(result, mGoogleMap);
@@ -763,9 +771,6 @@ public class HomeScreenActivity extends BaseActivity implements GoogleApiClient.
         mMap.setOnCameraIdleListener(null);
         mMap.setOnCameraMoveStartedListener(null);
 
-//        Bitmap bmpicon = BitmapFactory.decodeResource(getResources(),
-//                R.drawable.mylocation);
-//
         mMap.addMarker(new MarkerOptions().
                 position(new LatLng(results.routes[0].legs[0].startLocation.lat,
                         results.routes[0].legs[0].startLocation.lng)).
