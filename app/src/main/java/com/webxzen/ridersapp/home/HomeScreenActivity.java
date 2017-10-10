@@ -698,6 +698,9 @@ public class HomeScreenActivity extends BaseActivity implements GoogleApiClient.
 
                 break;
             case R.id.confirm_btn:
+
+
+
                 if (!confirmbuttonClickChecker) {
 
                     //    dialogUtil.showProgressDialog();
@@ -803,7 +806,6 @@ public class HomeScreenActivity extends BaseActivity implements GoogleApiClient.
         int padding = 10; // offset from edges of the map in pixels
         CameraUpdate zoomlevel = CameraUpdateFactory.newLatLngBounds(bounds, padding);
         mGoogleMap.animateCamera(zoomlevel);
-
 
     }
 
