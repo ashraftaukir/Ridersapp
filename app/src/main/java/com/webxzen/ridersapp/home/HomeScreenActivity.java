@@ -322,22 +322,39 @@ public class HomeScreenActivity extends BaseActivity implements GoogleApiClient.
         mGoogleMap.setPadding(0, 450, 0, 0);
 
 
+
+        mGoogleMap.setOnCameraMoveStartedListener(new GoogleMap.OnCameraMoveStartedListener() {
+
+            @Override
+            public void onCameraMoveStarted(int i) {
+                Log.d(TAG, "MoveStartedListener");
+                if(!cameraMoving){
+                    Log.d(TAG, "onCameraMoveStarted: ");
+                    clearPickupLocation();
+                }
+
+            }
+        });
+
+
+
         //centerise marker in google map
         mGoogleMap.setOnCameraMoveListener(new GoogleMap.OnCameraMoveListener() {
             @Override
             public void onCameraMove() {
 
                 Log.d(TAG, "setOnCameraMoveListener");
-                //Remove previous center if it exists
-                if (mCurrLocationMarker != null) {
-                    mCurrLocationMarker.remove();
+                if(!cameraMoving) {
+                    //Remove previous center if it exists
+                    if (mCurrLocationMarker != null) {
+                        mCurrLocationMarker.remove();
+                    }
+
+                    LatLng position = mGoogleMap.getCameraPosition().target;
+                    mCurrLocationMarker =
+                            mGoogleMap.addMarker(new MarkerOptions().position(position).anchor(0.5f, 1.0f).title("Pickup"));
+
                 }
-
-                LatLng position = mGoogleMap.getCameraPosition().target;
-                mCurrLocationMarker =
-                        mGoogleMap.addMarker(new MarkerOptions().position(position).anchor(0.5f, 1.0f).title("Pickup"));
-
-
             }
         });
 
@@ -355,18 +372,6 @@ public class HomeScreenActivity extends BaseActivity implements GoogleApiClient.
         });
 
 
-        mGoogleMap.setOnCameraMoveStartedListener(new GoogleMap.OnCameraMoveStartedListener() {
-
-            @Override
-            public void onCameraMoveStarted(int i) {
-                Log.d(TAG, "startedListener");
-                if(!cameraMoving){
-                    Log.d(TAG, "onCameraMoveStarted: ");
-                    clearPickupLocation();
-                }
-
-            }
-        });
 
 
     }
@@ -626,13 +631,21 @@ public class HomeScreenActivity extends BaseActivity implements GoogleApiClient.
                     doneButton.setVisibility(View.VISIBLE);
 
                     mCurrLocationMarker.remove();
-                    MarkerOptions markerOptions = new MarkerOptions();
 
+
+                    //dropUpaddress Marker added to the project
+                    MarkerOptions markerOptions = new MarkerOptions();
                     markerOptions.position(dropUpLatLong);
                     markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE));
                     mCurrLocationMarker = mGoogleMap.addMarker(markerOptions);
                     mGoogleMap.moveCamera(CameraUpdateFactory.newLatLng(dropUpLatLong));
                     mGoogleMap.animateCamera(CameraUpdateFactory.zoomTo(15));
+
+                    //picUpaddress marker added to the project
+                    markerOptions = new MarkerOptions();
+                    markerOptions.position(picUpLatLong);
+                    mCurrLocationMarker = mGoogleMap.addMarker(markerOptions);
+
                 } else {
                     picUpLatLong = place.getLatLng();
                     pickupAddress.setText(place.getAddress().toString());
@@ -767,9 +780,6 @@ public class HomeScreenActivity extends BaseActivity implements GoogleApiClient.
     private void addMarkersToMap(DirectionsResult results, GoogleMap mMap) {
 
         mCurrLocationMarker.remove();
-        mMap.setOnCameraMoveListener(null);
-        mMap.setOnCameraIdleListener(null);
-        mMap.setOnCameraMoveStartedListener(null);
 
         mMap.addMarker(new MarkerOptions().
                 position(new LatLng(results.routes[0].legs[0].startLocation.lat,
