@@ -113,7 +113,7 @@ public class HomeScreenActivity extends BaseActivity implements GoogleApiClient.
     //  LinearLayout searchBarLinearLayout;
     TextView pickupAddress, dropupAddress, taxiprice;
     int PLACE_AUTOCOMPLETE_REQUEST_CODE_FOR_DROPUP = 1;
-    public boolean tracker = false;
+    public boolean googleActivityCallingTracker = false;
     public LatLng picUpLatLong;
     public LatLng dropUpLatLong;
     Button doneButton, confirm_btn;
@@ -122,6 +122,7 @@ public class HomeScreenActivity extends BaseActivity implements GoogleApiClient.
     boolean confirmbuttonClickChecker = false;
     boolean cameraMoving = false;
     ProgressBar progressbar;
+    Marker dropUpMarker;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -145,7 +146,7 @@ public class HomeScreenActivity extends BaseActivity implements GoogleApiClient.
     }
 
     private void clearPickupLocation() {
-            pickupAddress.setText("");
+        pickupAddress.setText("");
     }
 
 
@@ -322,13 +323,12 @@ public class HomeScreenActivity extends BaseActivity implements GoogleApiClient.
         mGoogleMap.setPadding(0, 450, 0, 0);
 
 
-
         mGoogleMap.setOnCameraMoveStartedListener(new GoogleMap.OnCameraMoveStartedListener() {
 
             @Override
             public void onCameraMoveStarted(int i) {
                 Log.d(TAG, "MoveStartedListener");
-                if(!cameraMoving){
+                if (!cameraMoving) {
                     Log.d(TAG, "onCameraMoveStarted: ");
                     clearPickupLocation();
                 }
@@ -337,14 +337,13 @@ public class HomeScreenActivity extends BaseActivity implements GoogleApiClient.
         });
 
 
-
         //centerise marker in google map
         mGoogleMap.setOnCameraMoveListener(new GoogleMap.OnCameraMoveListener() {
             @Override
             public void onCameraMove() {
 
                 Log.d(TAG, "setOnCameraMoveListener");
-                if(!cameraMoving) {
+                if (!cameraMoving) {
                     //Remove previous center if it exists
                     if (mCurrLocationMarker != null) {
                         mCurrLocationMarker.remove();
@@ -370,8 +369,6 @@ public class HomeScreenActivity extends BaseActivity implements GoogleApiClient.
                 }
             }
         });
-
-
 
 
     }
@@ -618,39 +615,25 @@ public class HomeScreenActivity extends BaseActivity implements GoogleApiClient.
             if (resultCode == RESULT_OK) {
 
                 Place place = PlaceAutocomplete.getPlace(this, data);
-                if (!tracker) {
+                if (!googleActivityCallingTracker) {
 
                     Log.d(TAG, "onActivityResult: ");
                     cameraMoving = true;
                     dropUpLatLong = place.getLatLng();
                     dropupAddress.setText(place.getAddress().toString());
-
                     //invisible bottom sheet and visible button
-
                     bottomSheet.setVisibility(View.GONE);
                     doneButton.setVisibility(View.VISIBLE);
-
                     mCurrLocationMarker.remove();
+                    setDropPointAddressMarker();
+                    setPicPointAddressMarker(0);
 
-
-                    //dropUpaddress Marker added to the project
-                    MarkerOptions markerOptions = new MarkerOptions();
-                    markerOptions.position(dropUpLatLong);
-                    markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE));
-                    mCurrLocationMarker = mGoogleMap.addMarker(markerOptions);
-                    mGoogleMap.moveCamera(CameraUpdateFactory.newLatLng(dropUpLatLong));
-                    mGoogleMap.animateCamera(CameraUpdateFactory.zoomTo(15));
-
-                    //picUpaddress marker added to the project
-                    markerOptions = new MarkerOptions();
-                    markerOptions.position(picUpLatLong);
-                    mCurrLocationMarker = mGoogleMap.addMarker(markerOptions);
 
                 } else {
                     picUpLatLong = place.getLatLng();
                     pickupAddress.setText(place.getAddress().toString());
                 }
-               // cameraMoving=false;
+                // cameraMoving=false;
 
             } else if (resultCode == PlaceAutocomplete.RESULT_ERROR) {
                 Status status = PlaceAutocomplete.getStatus(this, data);
@@ -665,6 +648,33 @@ public class HomeScreenActivity extends BaseActivity implements GoogleApiClient.
         }
     }
 
+    private void setPicPointAddressMarker(int cameraUdpateValue) {
+
+
+        //picUpaddress marker added to the project
+        MarkerOptions markerOptions = new MarkerOptions();
+        markerOptions.position(picUpLatLong);
+        mCurrLocationMarker = mGoogleMap.addMarker(markerOptions);
+        if (cameraUdpateValue == 1) {
+            mGoogleMap.moveCamera(CameraUpdateFactory.newLatLng(dropUpLatLong));
+            mGoogleMap.animateCamera(CameraUpdateFactory.zoomTo(15));
+        }
+
+    }
+
+    private void setDropPointAddressMarker() {
+
+        //dropUpaddress Marker added to the project
+        MarkerOptions markerOptions = new MarkerOptions();
+        markerOptions.position(dropUpLatLong);
+        markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE));
+        dropUpMarker = mGoogleMap.addMarker(markerOptions);
+        mGoogleMap.moveCamera(CameraUpdateFactory.newLatLng(dropUpLatLong));
+        mGoogleMap.animateCamera(CameraUpdateFactory.zoomTo(15));
+
+
+    }
+
 
     @Override
     public void onClick(View v) {
@@ -675,30 +685,26 @@ public class HomeScreenActivity extends BaseActivity implements GoogleApiClient.
                 mDrawerLayout.openDrawer(Gravity.LEFT);
                 break;
             case R.id.pickup_tv:
-                tracker = true;
+                googleActivityCallingTracker = true;
                 gotoGoogleActivity();
                 break;
             case R.id.dropup_tv:
-                tracker = false;
+                googleActivityCallingTracker = false;
                 gotoGoogleActivity();
                 break;
             case R.id.done_btn:
 
-
-                if (!dropupAddress.getText().toString().isEmpty()&&!pickupAddress.getText().toString().isEmpty()) {
+                //  mCurrLocationMarker.remove();
+                if (!dropupAddress.getText().toString().isEmpty() && !pickupAddress.getText().toString().isEmpty()) {
                     if (isNetworkAvailable()) {
-
-                        callDrawPloyLineApi(pickupAddress.getText().toString(),dropupAddress.getText().toString());
+                        callDrawPloyLineApi(pickupAddress.getText().toString(), dropupAddress.getText().toString());
                     } else {
                         dialogUtil.showDialogOk(getString(R.string.no_internet));
-
                     }
                 }
-
-
                 break;
             case R.id.confirm_btn:
-
+                // mCurrLocationMarker.remove();
 
 
                 if (!confirmbuttonClickChecker) {
@@ -727,7 +733,7 @@ public class HomeScreenActivity extends BaseActivity implements GoogleApiClient.
 
     }
 
-    private void callDrawPloyLineApi(String pickup,String dropup) {
+    private void callDrawPloyLineApi(String pickup, String dropup) {
         Log.d(TAG, "callDrawPloyLineApi: ");
         DateTime now = new DateTime();
         try {
@@ -783,17 +789,23 @@ public class HomeScreenActivity extends BaseActivity implements GoogleApiClient.
     private void addMarkersToMap(DirectionsResult results, GoogleMap mMap) {
 
         mCurrLocationMarker.remove();
+        dropUpMarker.remove();
+        // mMap.clear();
+        // setDropPointAddressMarker();
+        //setPicPointAddressMarker(1);
 
         mMap.addMarker(new MarkerOptions().
                 position(new LatLng(results.routes[0].legs[0].startLocation.lat,
                         results.routes[0].legs[0].startLocation.lng)).
                 //icon(BitmapDescriptorFactory.fromBitmap(bmpicon)).
-                        title(results.routes[0].legs[0].startAddress));
+                        title(results.routes[0].legs[0].startAddress).snippet(getEndLocationTitle(results)));
         mMap.addMarker(new MarkerOptions().position(new LatLng(results.routes[0].
                 legs[0].endLocation.lat, results.routes[0].legs[0].endLocation.lng)).
                 icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE)).
-                title(results.routes[0].legs[0].startAddress).snippet(getEndLocationTitle(results)));
+                title(results.routes[0].legs[0].endAddress).snippet(getEndLocationTitle(results)));
 
+
+        //show camera  bwtween bounds
         LatLng picupBound = new LatLng(results.routes[0].bounds.northeast.lat,
                 results.routes[0].bounds.northeast.lng);
         LatLng dropupBound = new LatLng(results.routes[0].bounds.southwest.lat,
