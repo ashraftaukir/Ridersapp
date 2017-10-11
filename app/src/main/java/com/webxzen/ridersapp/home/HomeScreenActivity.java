@@ -780,13 +780,16 @@ public class HomeScreenActivity extends BaseActivity implements GoogleApiClient.
             Log.d("ApiException", "Canont get Address!", e);
         } catch (InterruptedException e) {
             e.printStackTrace();
-        } catch (Exception e) {
+        } catch (IOException e) {
             e.printStackTrace();
-            Toast.makeText(this, "Please select place between bangladesh", Toast.LENGTH_SHORT).show();
-
-            finish();
-            startActivity(getIntent());
         }
+//        catch (Exception e) {
+//            e.printStackTrace();
+//            Toast.makeText(this, "Please select place between bangladesh", Toast.LENGTH_SHORT).show();
+//
+//            finish();
+//            startActivity(getIntent());
+//        }
 
 
     }
