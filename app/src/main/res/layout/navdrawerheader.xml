@@ -12,8 +12,7 @@
         android:background="@color/colorBlack">
 
 
-        <de.hdodenhof.circleimageview.CircleImageView
-            xmlns:app="http://schemas.android.com/apk/res-auto"
+        <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
             android:id="@+id/profile_image"
             android:layout_width="80dp"
             android:layout_height="70dp"
@@ -24,26 +23,53 @@
             app:civ_border_color="#FF000000"
             app:civ_border_width="2dp" />
 
-
-        <RatingBar
-            android:id="@+id/ratingBar"
+        <RelativeLayout
+            android:id="@+id/ratingbarRelativeLayout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/profile_image"
             android:layout_centerHorizontal="true"
-            android:isIndicator="true"
-            android:numStars="5"
-            android:rating="4.5"
-            android:scaleX="0.4"
-            android:scaleY="0.4"
-            android:stepSize="0.1" />
+
+            >
+            <ImageView
+                android:id="@+id/ratingicon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/alligntop"
+                android:background="@drawable/star"
+                android:contentDescription="@string/done" />
+
+            <TextView
+                android:id="@+id/rating_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/alligntop"
+                android:layout_toRightOf="@+id/ratingicon"
+                android:text="@string/rateItem"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/margin20sp" />
+        </RelativeLayout>
+
+        <!--<RatingBar-->
+        <!--android:id="@+id/ratingBar"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_below="@+id/profile_image"-->
+        <!--android:layout_centerHorizontal="true"-->
+        <!--android:isIndicator="true"-->
+        <!--android:numStars="5"-->
+        <!--android:rating="4.5"-->
+        <!--android:scaleX="0.4"-->
+        <!--android:scaleY="0.4"-->
+        <!--android:stepSize="0.1" />-->
 
         <TextView
 
             android:id="@+id/riderName_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/ratingBar"
+            android:layout_below="@+id/ratingbarRelativeLayout"
             android:layout_centerHorizontal="true"
             android:layout_gravity="center_horizontal"
             android:text="@string/driverEmailAddress"

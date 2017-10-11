@@ -121,9 +121,10 @@ public class HomeScreenActivity extends BaseActivity implements GoogleApiClient.
     RelativeLayout bottomRelativeLayout;
     boolean confirmbuttonClickChecker = false;
     boolean cameraMoving = false;
-    boolean mapAdding=false;
+    boolean mapAdding = false;
     ProgressBar progressbar;
     Marker dropUpMarker;
+
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -225,10 +226,12 @@ public class HomeScreenActivity extends BaseActivity implements GoogleApiClient.
 
     private void ratingBarSetup() {
 
-        RatingBar ratingBar = (RatingBar) header.findViewById(R.id.ratingBar);
-        LayerDrawable stars = (LayerDrawable) ratingBar.getProgressDrawable();
-        stars.getDrawable(2).setColorFilter(getResources().getColor(R.color.colorWhite),
-                PorterDuff.Mode.SRC_ATOP);
+        TextView ratingtv = (TextView) header.findViewById(R.id.rating_tv);
+        ratingtv.setText("/" + " " + "3.3");
+//        RatingBar ratingBar = (RatingBar) header.findViewById(R.id.ratingBar);
+//        LayerDrawable stars = (LayerDrawable) ratingBar.getProgressDrawable();
+//        stars.getDrawable(2).setColorFilter(getResources().getColor(R.color.colorWhite),
+//                PorterDuff.Mode.SRC_ATOP);
     }
 
     private void navHeaderSetup() {
@@ -628,7 +631,7 @@ public class HomeScreenActivity extends BaseActivity implements GoogleApiClient.
                     mCurrLocationMarker.remove();
                     setDropPointAddressMarker();
                     setPicPointAddressMarker(0);
-                    mapAdding=true;
+                    mapAdding = true;
 
 
                 } else {
@@ -655,7 +658,7 @@ public class HomeScreenActivity extends BaseActivity implements GoogleApiClient.
         if (cameraUdpateValue == 1) {
             mGoogleMap.moveCamera(CameraUpdateFactory.newLatLng(picUpLatLong));
             mGoogleMap.animateCamera(CameraUpdateFactory.zoomTo(15));
-        }else {
+        } else {
             MarkerOptions markerOptions = new MarkerOptions();
             markerOptions.position(picUpLatLong);
             mCurrLocationMarker = mGoogleMap.addMarker(markerOptions);
@@ -676,7 +679,7 @@ public class HomeScreenActivity extends BaseActivity implements GoogleApiClient.
 
     }
 
-    private void setDropPointMarkerMover(){
+    private void setDropPointMarkerMover() {
         mGoogleMap.moveCamera(CameraUpdateFactory.newLatLng(dropUpLatLong));
         mGoogleMap.animateCamera(CameraUpdateFactory.zoomTo(15));
     }
@@ -692,18 +695,18 @@ public class HomeScreenActivity extends BaseActivity implements GoogleApiClient.
                 break;
             case R.id.pickup_tv:
 
-                if(mapAdding){
+                if (mapAdding) {
                     setPicPointAddressMarker(1);
-                }else{
+                } else {
                     googleActivityCallingTracker = true;
                     gotoGoogleActivity();
                 }
                 break;
             case R.id.dropup_tv:
 
-                if(mapAdding){
+                if (mapAdding) {
                     setDropPointMarkerMover();
-                }else{
+                } else {
                     googleActivityCallingTracker = false;
                     gotoGoogleActivity();
                 }
@@ -777,8 +780,12 @@ public class HomeScreenActivity extends BaseActivity implements GoogleApiClient.
             Log.d("ApiException", "Canont get Address!", e);
         } catch (InterruptedException e) {
             e.printStackTrace();
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
+            Toast.makeText(this, "Please select place between bangladesh", Toast.LENGTH_SHORT).show();
+
+            finish();
+            startActivity(getIntent());
         }
 
 
@@ -794,6 +801,7 @@ public class HomeScreenActivity extends BaseActivity implements GoogleApiClient.
     }
 
     private void addPolyline(DirectionsResult results, GoogleMap mMap) {
+
         List<LatLng> decodedPath =
                 PolyUtil.decode(results.routes[0].overviewPolyline.getEncodedPath());
         mMap.addPolyline(new PolylineOptions().addAll(decodedPath));
@@ -804,6 +812,7 @@ public class HomeScreenActivity extends BaseActivity implements GoogleApiClient.
 
         mCurrLocationMarker.remove();
         dropUpMarker.remove();
+
 
         mMap.addMarker(new MarkerOptions().
                 position(new LatLng(results.routes[0].legs[0].startLocation.lat,

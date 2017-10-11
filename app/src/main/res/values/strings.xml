@@ -84,6 +84,7 @@
     <string name="setPickUp">Tap to select pickup location</string>
     <string name="value">Price</string>
     <string name="confirm">Confirm</string>
+    <string name="rateItem">Rating Info</string>
 
     <!--Drawerlayout info-->
 
